@@ -1,0 +1,43 @@
+@startuml
+title Use Case Diagram - Football Platform
+
+left to right direction
+
+actor "User (Visitor)" as User
+actor "Administrator" as Admin
+
+rectangle "Platform System" {
+  usecase "View Standings" as UC_ViewStandings
+  usecase "View Match Schedule" as UC_ViewSchedule
+  usecase "View Match Results" as UC_ViewResults
+  usecase "Explore Team/Player Profiles" as UC_ViewProfiles
+
+  usecase "Manage Competitions" as UC_ManageComp
+  usecase "Manage Teams" as UC_ManageTeams
+  usecase "Manage Players" as UC_ManagePlayers
+  usecase "Generate Match Schedule" as UC_GenerateSchedule
+  usecase "Enter/Validate Results" as UC_EnterResults
+  usecase "Automatically Update Standings" as UC_CalcStandings
+}
+
+' User Relationships (Read-Only)
+User --> UC_ViewStandings
+User --> UC_ViewSchedule
+User --> UC_ViewResults
+User --> UC_ViewProfiles
+
+' The Administrator inherits all viewing rights
+Admin --|> User
+
+' Administrator Relationships (Full Control)
+Admin --> UC_ManageComp
+Admin --> UC_ManageTeams
+Admin --> UC_ManagePlayers
+Admin --> UC_GenerateSchedule
+Admin --> UC_EnterResults
+
+' Internal Business Logic
+UC_EnterResults ..> UC_CalcStandings : <<triggers>>
+UC_ViewStandings ..> UC_CalcStandings : <<uses>>
+
+@enduml
