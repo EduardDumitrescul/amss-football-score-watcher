@@ -66,3 +66,14 @@ docker-compose down
 ```
 
 *Note: Your database data is safe. It is stored in a Docker volume (`db-data`) and will be available the next time you run `docker-compose up`.*
+
+
+# Architecture
+
+## High-Level Architecture
+
+![Architecture](/out/docs/general-architecture/general-architecture.svg)
+
+## Database Entity Relationship Diagram (ERD)
+
+![Database ERD](/out/docs/database/database.svg)
