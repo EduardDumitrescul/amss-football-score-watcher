@@ -23,9 +23,25 @@ entity Player {
   first_name: VARCHAR
   last_name: VARCHAR
   position: VARCHAR
+  shirt_number: INT
+  nationality: VARCHAR
 }
 
+entity Contract {
+  +id: UUID <<PK>>
+  --
+  player_id: UUID <<FK>>
+  team_id: UUID <<FK>>
+  start_date: DATE
+  end_date: DATE
+}
 
+entity Coach {
+  +id: UUID <<PK>>
+  --
+  first_name: VARCHAR
+  last_name: VARCHAR
+}
 
 entity Match {
   +id: UUID <<PK>>
@@ -54,6 +70,17 @@ entity MatchEvent {
   minute: INT
 }
 
+entity PlayerEditionStats {
+    +edition_id: UUID <<PK>> <<FK>>
+    +player_id: UUID <<PK>> <<FK>>
+    --
+    goals: INT
+    assists: INT
+    yellow_cards: INT
+    red_cards: INT
+    minutes_played: INT
+}
+
 
 entity Competition {
   +id: UUID <<PK>>
@@ -65,7 +92,7 @@ entity Edition {
   +id: UUID <<PK>>
   --
   competition_id: UUID <<FK>>
-  name: VARCHAR ' e.g., "2025/26 Season"
+  year: INT
 }
 
 entity EditionTeam {
@@ -97,6 +124,10 @@ entity StandingsEntry {
 
 ' Relationships
 Team "1" -- "0..*" Player : has
+Player "1" -- "0..*" Contract : has
+Team "1" -- "0..*" Contract : signs
+
+Team "1" -- "0..1" Coach : is coached by
 
 Competition "1" -- "0..*" Edition : has
 Edition "1" -- "1..*" EditionTeam : involves
@@ -114,6 +145,9 @@ Player "1" -- "0..*" MatchLineup : appears in
 
 Match "1" -- "0..*" MatchEvent : has events
 Player "1" -- "0..*" MatchEvent : is subject of
+
+Edition "1" -- "0..*" PlayerEditionStats : has stats for
+Player "1" -- "0..*" PlayerEditionStats : has stats in
 
 ' Standings relationships
 Edition "1" -- "1" Standings : has
