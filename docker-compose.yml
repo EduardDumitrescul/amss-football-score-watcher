@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # 1. The Database Service (MySQL)
+  db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: football-db
+      MYSQL_USER: mysql-user
+      MYSQL_PASSWORD: mysql-pass
+    ports:
+      # Maps your local machine's port 3306 to the container's port 3306
+      - "3306:3306"
+    volumes:
+      # This saves your database data even if the container is removed
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
+
+  # 2. The Backend Service (Spring Boot)
+  backend:
+    build:
+      context: ./backend # Looks for the Dockerfile in the './backend' folder
+    container_name: spring-boot-app
+    ports:
+      - "8080:8080"
+    environment:
+      # CRITICAL: Tell Spring to connect to the 'db' service, not 'localhost'
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/football-db
+      SPRING_DATASOURCE_USERNAME: mysql-user
+      SPRING_DATASOURCE_PASSWORD: mysql-pass
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      db:
+        condition: service_healthy # Tells Docker to wait for the 'db' service to be healthy
+
+  # 3. The Frontend Service (React + Nginx)
+  frontend:
+    build:
+      context: ./frontend # Looks for the Dockerfile in the './frontend' folder
+    container_name: react-app
+    ports:
+      # Maps your local machine's port 3000 to the container's port 80
+      - "3000:80"
+    depends_on:
+      - backend # Wait for the backend to be started
+
+# Defines the named volume we used for the database
+volumes:
+  db-data:
