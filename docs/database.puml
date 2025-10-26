@@ -1,0 +1,123 @@
+@startuml
+
+title Databse Schema
+
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+
+entity Team {
+  +id: UUID <<PK>>
+  --
+  name: VARCHAR
+  logo_url: VARCHAR
+}
+
+entity Player {
+  +id: UUID <<PK>>
+  --
+  team_id: UUID <<FK>>
+  first_name: VARCHAR
+  last_name: VARCHAR
+  position: VARCHAR
+}
+
+
+
+entity Match {
+  +id: UUID <<PK>>
+  --
+  edition_id: UUID <<FK>>
+  match_date: TIMESTAMP
+  home_team_id: UUID <<FK>>
+  away_team_id: UUID <<FK>>
+  home_score: INT
+  away_score: INT
+}
+
+entity MatchLineup {
+  +match_id: UUID <<PK>> <<FK>>
+  +player_id: UUID <<PK>> <<FK>>
+  --
+  status: VARCHAR ' STARTER, SUBSTITUTE
+}
+
+entity MatchEvent {
+  +id: UUID <<PK>>
+  --
+  match_id: UUID <<FK>>
+  player_id: UUID <<FK>>
+  event_type: VARCHAR ' GOAL, OWN_GOAL, YELLOW_CARD, RED_CARD, SUB_IN, SUB_OUT
+  minute: INT
+}
+
+
+entity Competition {
+  +id: UUID <<PK>>
+  --
+  name: VARCHAR ' e.g., "Premier League"
+}
+
+entity Edition {
+  +id: UUID <<PK>>
+  --
+  competition_id: UUID <<FK>>
+  name: VARCHAR ' e.g., "2025/26 Season"
+}
+
+entity EditionTeam {
+  +edition_id: UUID <<PK>> <<FK>>
+  +team_id: UUID <<PK>> <<FK>>
+}
+
+
+
+
+entity Standings {
+    +edition_id: UUID <<PK>> <<FK>>
+    --
+    ' This table is a materialized view/cache for performance
+}
+
+entity StandingsEntry {
+    +edition_id: UUID <<PK>> <<FK>>
+    +team_id: UUID <<PK>> <<FK>>
+    --
+    wins: INT
+    draws: INT
+    losses: INT
+    goals_for: INT
+    goals_against: INT
+}
+
+
+
+' Relationships
+Team "1" -- "0..*" Player : has
+
+Competition "1" -- "0..*" Edition : has
+Edition "1" -- "1..*" EditionTeam : involves
+Team "1" -- "1..*" EditionTeam : participates in
+
+Edition "1" -- "0..*" Match : contains
+
+' A match has a home team and an away team
+Team "1" -- "0..*" Match : as home team
+Team "1" -- "0..*" Match : as away team
+
+' Lineup and Events
+Match "1" -- "0..*" MatchLineup : has lineup
+Player "1" -- "0..*" MatchLineup : appears in
+
+Match "1" -- "0..*" MatchEvent : has events
+Player "1" -- "0..*" MatchEvent : is subject of
+
+' Standings relationships
+Edition "1" -- "1" Standings : has
+Standings "1" -- "1..*" StandingsEntry : consists of
+Team "1" -- "0..1" StandingsEntry : is ranked in
+
+@enduml
