@@ -12,8 +12,8 @@ skinparam linetype ortho
 entity Team {
   +id: UUID <<PK>>
   --
+  coach_id: UUID <<FK>>
   name: VARCHAR
-  logo_url: VARCHAR
 }
 
 entity Player {
@@ -34,6 +34,7 @@ entity Contract {
   team_id: UUID <<FK>>
   start_date: DATE
   end_date: DATE
+  salary_per_year: INT
 }
 
 entity Coach {
