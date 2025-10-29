@@ -38,16 +38,20 @@ services:
       db:
         condition: service_healthy # Tells Docker to wait for the 'db' service to be healthy
 
-  # 3. The Frontend Service (React + Nginx)
+  # 3. The Frontend Service (React + Vite)
   frontend:
     build:
-      context: ./frontend # Looks for the Dockerfile in the './frontend' folder
+      context: ./frontend
     container_name: react-app
     ports:
-      # Maps your local machine's port 3000 to the container's port 80
-      - "3000:80"
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     depends_on:
-      - backend # Wait for the backend to be started
+      - backend
 
 # Defines the named volume we used for the database
 volumes:
