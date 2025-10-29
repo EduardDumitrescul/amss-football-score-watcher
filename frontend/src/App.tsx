@@ -5,6 +5,9 @@ import { Routes, Route } from 'react-router-dom';
 import CreateCoachPage from './pages/CreateCoachPage';
 import { CoachListPage } from './pages/CoachListPage';
 import { CoachDetailPage } from './pages/CoachDetailPage';
+import { CreateTeamPage } from './pages/CreateTeamPage';
+import { TeamDetailPage } from './pages/TeamDetailPage';
+import { TeamListPage } from './pages/TeamListPage';
 
 // Placeholder for the home page content
 const HomePage = () => (
@@ -29,6 +32,10 @@ function App() {
         <Route path="/coaches" element={<CoachListPage/>} />
         <Route path="/coaches/new" element={<CreateCoachPage />} />
         <Route path="/coaches/:id" element={<CoachDetailPage />} />
+
+        <Route path="/teams" element={<TeamListPage />} />
+        <Route path="/teams/new" element={<CreateTeamPage />} />
+        <Route path="/teams/:id" element={<TeamDetailPage />} />
       </Routes>
     </React.Fragment>
   );

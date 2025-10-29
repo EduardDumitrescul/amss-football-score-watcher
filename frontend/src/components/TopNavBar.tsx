@@ -22,19 +22,35 @@ const coachMenuItems = [
   { label: 'New Coach', path: '/coaches/new' }
 ];
 
+// Define team menu items
+const teamMenuItems = [
+  { label: 'View Teams', path: '/teams' },
+  { label: 'New Team', path: '/teams/new' }
+];
+
+
 export const TopNavBar: React.FC = () => {
-  // State to manage the anchor element of the menu
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const isMenuOpen = Boolean(anchorEl);
+  // State for Coaches menu
+  const [coachAnchorEl, setCoachAnchorEl] = React.useState<null | HTMLElement>(null);
+  const isCoachMenuOpen = Boolean(coachAnchorEl);
 
-  // Function to open the menu
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  // State for Teams menu
+  const [teamAnchorEl, setTeamAnchorEl] = React.useState<null | HTMLElement>(null);
+  const isTeamMenuOpen = Boolean(teamAnchorEl);
+
+  // --- Specific handlers for each menu ---
+  const handleCoachMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setCoachAnchorEl(event.currentTarget);
   };
-
-  // Function to close the menu
-  const handleMenuClose = () => {
-    setAnchorEl(null);
+  const handleCoachMenuClose = () => {
+    setCoachAnchorEl(null);
+  };
+  
+  const handleTeamMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setTeamAnchorEl(event.currentTarget);
+  };
+  const handleTeamMenuClose = () => {
+    setTeamAnchorEl(null);
   };
 
   return (
@@ -80,29 +96,69 @@ export const TopNavBar: React.FC = () => {
             {/* Coaches Menu Button */}
             <Button
               sx={{ color: '#fff' }}
-              onClick={handleMenuOpen} // Open menu on click
+              onClick={handleCoachMenuOpen} // Open coaches menu
               endIcon={<ArrowDropDownIcon />} // Add dropdown arrow
-              aria-controls={isMenuOpen ? 'coaches-menu' : undefined}
+              aria-controls={isCoachMenuOpen ? 'coaches-menu' : undefined}
               aria-haspopup="true"
-              aria-expanded={isMenuOpen ? 'true' : undefined}
+              aria-expanded={isCoachMenuOpen ? 'true' : undefined}
             >
               Coaches
+            </Button>
+
+            {/* Teams Menu Button */}
+            <Button
+              sx={{ color: '#fff' }}
+              onClick={handleTeamMenuOpen} // Open teams menu
+              endIcon={<ArrowDropDownIcon />}
+              aria-controls={isTeamMenuOpen ? 'teams-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={isTeamMenuOpen ? 'true' : undefined}
+            >
+              Teams
             </Button>
 
             {/* Coaches Dropdown Menu */}
             <Menu
               id="coaches-menu"
-              anchorEl={anchorEl}
-              open={isMenuOpen}
-              onClose={handleMenuClose}
-              MenuListProps={{
-                'aria-labelledby': 'coaches-button',
+              anchorEl={coachAnchorEl}
+              open={isCoachMenuOpen}
+              onClose={handleCoachMenuClose}
+              // Fix: Replaced deprecated MenuListProps with slotProps.list
+              slotProps={{
+                list: {
+                  'aria-labelledby': 'coaches-button',
+                },
               }}
             >
               {coachMenuItems.map((item) => (
                 <MenuItem 
                   key={item.label} 
-                  onClick={handleMenuClose} // Close menu on item click
+                  onClick={handleCoachMenuClose} // Close coaches menu
+                  component={RouterLink}
+                  to={item.path}
+                >
+                  {item.label}
+                </MenuItem>
+              ))}
+            </Menu>
+
+            {/* Teams Dropdown Menu */}
+            <Menu
+              id="teams-menu"
+              anchorEl={teamAnchorEl}
+              open={isTeamMenuOpen}
+              onClose={handleTeamMenuClose}
+              // Fix: Replaced deprecated MenuListProps with slotProps.list
+              slotProps={{
+                list: {
+                  'aria-labelledby': 'teams-button',
+                },
+              }}
+            >
+              {teamMenuItems.map((item) => (
+                <MenuItem 
+                  key={item.label} 
+                  onClick={handleTeamMenuClose} // Close teams menu
                   component={RouterLink}
                   to={item.path}
                 >
@@ -117,3 +173,4 @@ export const TopNavBar: React.FC = () => {
     </Box>
   );
 };
+
