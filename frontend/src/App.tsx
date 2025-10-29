@@ -1,45 +1,80 @@
 import React from 'react';
-import { TopNavBar } from './components/TopNavBar';
-import { CssBaseline, Container, Typography } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
-import CreateCoachPage from './pages/CreateCoachPage';
+import { CssBaseline, Container, Typography } from '@mui/material';
+import { TopNavBar } from './components/TopNavBar';
+import { CoachListPage } from './pages/CoachListPage';
+import { CoachDetailPage } from './pages/CoachDetailPage';
+// Import your Team pages
+import { TeamListPage } from './pages/TeamListPage';
+import { TeamDetailPage } from './pages/TeamDetailPage';
+import { CreateTeamPage } from './pages/CreateTeamPage';
+// --- NEW Player Page Imports ---
+import { PlayerListPage } from './pages/PlayerListPage';
+import { PlayerDetailPage } from './pages/PlayerDetailPage';
+import { CreatePlayerPage } from './pages/CreatePlayerPage';
+// --- END NEW ---
 
-// Placeholder for the home page content
-const HomePage = () => (
+// Placeholder for Home
+const HomePage: React.FC = () => (
   <Container sx={{ mt: 4 }}>
     <Typography variant="h4" component="h1" gutterBottom>
-      Welcome to the App
-    </Typography>
-    <Typography variant="body1">
-      This is the main content area below the navigation bar.
+      Welcome to the Football App
     </Typography>
   </Container>
 );
 
-// Placeholder for the coaches page
-const CoachesPage = () => (
+// Placeholder for Create Coach Page
+const CreateCoachPage: React.FC = () => (
   <Container sx={{ mt: 4 }}>
     <Typography variant="h4" component="h1" gutterBottom>
-      Coaches
+      Create New Coach
     </Typography>
-    <Typography variant="body1">
-      This page will list the coaches.
-    </Typography>
+    {/* You would import and render your CreateCoachForm component here */}
   </Container>
 );
+
 
 function App() {
   return (
     <React.Fragment>
-      <CssBaseline /> 
-      <TopNavBar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/coaches" element={<CoachesPage />} />
-        <Route path="/coaches/new" element={<CreateCoachPage />} />
-      </Routes>
+      <CssBaseline />
+        {/* TopNavBar is inside BrowserRouter so it can use RouterLink */}
+        <TopNavBar />
+
+        {/* Define all application routes */}
+        <Routes>
+          {/* Home Route */}
+          <Route path="/" element={<HomePage />} />
+
+          {/* Coach Routes */}
+          <Route path="/coaches" element={<CoachListPage />} />
+          <Route path="/coaches/new" element={<CreateCoachPage />} />
+          <Route path="/coaches/:id" element={<CoachDetailPage />} />
+
+          {/* Team Routes */}
+          <Route path="/teams" element={<TeamListPage />} />
+          <Route path="/teams/new" element={<CreateTeamPage />} />
+          <Route path="/teams/:id" element={<TeamDetailPage />} />
+
+          {/* --- NEW Player Routes --- */}
+          <Route path="/players" element={<PlayerListPage />} />
+          <Route path="/players/new" element={<CreatePlayerPage />} />
+          <Route path="/players/:id" element={<PlayerDetailPage />} />
+          {/* --- END NEW --- */}
+
+          {/* Fallback route for 404 */}
+          <Route 
+            path="*" 
+            element={
+              <Container sx={{ mt: 4 }}>
+                <Typography variant="h4">404 - Page Not Found</Typography>
+              </Container>
+            } 
+          />
+        </Routes>
     </React.Fragment>
   );
 }
 
 export default App;
+
