@@ -8,17 +8,20 @@ import {
   Box 
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+// Import the Link component from react-router-dom for navigation
+import { Link as RouterLink } from 'react-router-dom';
 
-// Define the navigation items
-const navItems = ['Home', 'About', 'Contact'];
+
+// Define navigation items as objects with labels and paths
+const navItems = [
+  { label: 'Home', path: '/' },
+  { label: 'Coaches', path: '/coaches' },
+  { label: 'Create Coach', path: '/coaches/new' }
+];
 
 export const TopNavBar: React.FC = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {/* The AppBar's Toolbar is already a flex container and 
-        provides a 'relative' position context, which we need 
-        for absolute positioning the links.
-      */}
       <AppBar position="static">
         <Toolbar>
           {/* Icon Button for mobile menu (optional) */}
@@ -27,7 +30,7 @@ export const TopNavBar: React.FC = () => {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2, display: { sm: 'none' } }} // Show only on small screens
+            sx={{ mr: 2, display: { sm: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
@@ -36,28 +39,28 @@ export const TopNavBar: React.FC = () => {
           <Typography 
             variant="h6" 
             component="div" 
-            // We remove { flexGrow: 1 } so it doesn't push the links
           >
             My App
           </Typography>
 
-          {/* Navigation Links for desktop (Now Centered) */}
+          {/* Navigation Links for desktop (Centered) */}
           <Box sx={{ 
-              display: { xs: 'none', sm: 'block' }, // Hide on extra-small screens
-              
-              // --- This is the fix ---
-              // 1. Set position to absolute
+              display: { xs: 'none', sm: 'block' },
               position: 'absolute',
-              // 2. Move the left edge to the 50% mark
               left: '50%',
-              // 3. Translate it back by 50% of *its own width*
               transform: 'translateX(-50%)'
-              // --- End of fix ---
             }}
           >
+            {/* Map over the new navItems array */}
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
+              <Button 
+                key={item.label} 
+                sx={{ color: '#fff' }}
+                // Use RouterLink for navigation
+                component={RouterLink}
+                to={item.path}
+              >
+                {item.label}
               </Button>
             ))}
           </Box>
