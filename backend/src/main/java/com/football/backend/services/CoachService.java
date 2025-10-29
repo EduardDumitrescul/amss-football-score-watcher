@@ -1,5 +1,7 @@
 package com.football.backend.services;
 
+import java.util.List;
+
 import com.football.backend.dto.CoachDto;
 import com.football.backend.dto.CreateCoachRequest;
 
@@ -9,4 +11,10 @@ import com.football.backend.dto.CreateCoachRequest;
  */
 public interface CoachService {
     CoachDto createCoach(CreateCoachRequest createCoachRequest);
+
+    /**
+     * Retrieves all coaches.
+     * @return A list of all coach DTOs.
+     */
+    List<CoachDto> getAllCoaches();
 }

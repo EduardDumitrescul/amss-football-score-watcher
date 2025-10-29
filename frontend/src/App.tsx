@@ -3,6 +3,7 @@ import { TopNavBar } from './components/TopNavBar';
 import { CssBaseline, Container, Typography } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 import CreateCoachPage from './pages/CreateCoachPage';
+import { CoachListPage } from './pages/CoachListPage';
 
 // Placeholder for the home page content
 const HomePage = () => (
@@ -16,17 +17,6 @@ const HomePage = () => (
   </Container>
 );
 
-// Placeholder for the coaches page
-const CoachesPage = () => (
-  <Container sx={{ mt: 4 }}>
-    <Typography variant="h4" component="h1" gutterBottom>
-      Coaches
-    </Typography>
-    <Typography variant="body1">
-      This page will list the coaches.
-    </Typography>
-  </Container>
-);
 
 function App() {
   return (
@@ -35,7 +25,7 @@ function App() {
       <TopNavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/coaches" element={<CoachesPage />} />
+        <Route path="/coaches" element={<CoachListPage/>} />
         <Route path="/coaches/new" element={<CreateCoachPage />} />
       </Routes>
     </React.Fragment>

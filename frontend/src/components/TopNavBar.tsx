@@ -5,21 +5,38 @@ import {
   Typography, 
   IconButton, 
   Button, 
-  Box 
+  Box,
+  Menu, // Import Menu component
+  MenuItem // Import MenuItem component
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-// Import the Link component from react-router-dom for navigation
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'; // Icon for dropdown
 import { Link as RouterLink } from 'react-router-dom';
 
+// Define navigation items
+const homeNavItem = { label: 'Home', path: '/' };
 
-// Define navigation items as objects with labels and paths
-const navItems = [
-  { label: 'Home', path: '/' },
-  { label: 'Coaches', path: '/coaches' },
-  { label: 'Create Coach', path: '/coaches/new' }
+// Define coach menu items
+const coachMenuItems = [
+  { label: 'View Coaches', path: '/coaches' },
+  { label: 'New Coach', path: '/coaches/new' }
 ];
 
 export const TopNavBar: React.FC = () => {
+  // State to manage the anchor element of the menu
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const isMenuOpen = Boolean(anchorEl);
+
+  // Function to open the menu
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  // Function to close the menu
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -51,18 +68,48 @@ export const TopNavBar: React.FC = () => {
               transform: 'translateX(-50%)'
             }}
           >
-            {/* Map over the new navItems array */}
-            {navItems.map((item) => (
-              <Button 
-                key={item.label} 
-                sx={{ color: '#fff' }}
-                // Use RouterLink for navigation
-                component={RouterLink}
-                to={item.path}
-              >
-                {item.label}
-              </Button>
-            ))}
+            {/* Home Button */}
+            <Button 
+              sx={{ color: '#fff' }}
+              component={RouterLink}
+              to={homeNavItem.path}
+            >
+              {homeNavItem.label}
+            </Button>
+            
+            {/* Coaches Menu Button */}
+            <Button
+              sx={{ color: '#fff' }}
+              onClick={handleMenuOpen} // Open menu on click
+              endIcon={<ArrowDropDownIcon />} // Add dropdown arrow
+              aria-controls={isMenuOpen ? 'coaches-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={isMenuOpen ? 'true' : undefined}
+            >
+              Coaches
+            </Button>
+
+            {/* Coaches Dropdown Menu */}
+            <Menu
+              id="coaches-menu"
+              anchorEl={anchorEl}
+              open={isMenuOpen}
+              onClose={handleMenuClose}
+              MenuListProps={{
+                'aria-labelledby': 'coaches-button',
+              }}
+            >
+              {coachMenuItems.map((item) => (
+                <MenuItem 
+                  key={item.label} 
+                  onClick={handleMenuClose} // Close menu on item click
+                  component={RouterLink}
+                  to={item.path}
+                >
+                  {item.label}
+                </MenuItem>
+              ))}
+            </Menu>
           </Box>
 
         </Toolbar>

@@ -3,6 +3,9 @@ package com.football.backend.controllers;
 import com.football.backend.dto.CoachDto;
 import com.football.backend.dto.CreateCoachRequest;
 import com.football.backend.services.CoachService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/coaches")
-@CrossOrigin(origins = "http://localhost:3000") // Allow requests from your React app
+@CrossOrigin(origins = "http://localhost:5173") // Allow requests from your React app
 public class CoachController {
 
     private final CoachService coachService;
@@ -35,5 +38,15 @@ public class CoachController {
         
         CoachDto newCoach = coachService.createCoach(createCoachRequest);
         return new ResponseEntity<>(newCoach, HttpStatus.CREATED);
+    }
+
+    /**
+     * Handles GET requests to fetch all coaches.
+     * @return A list of all coach DTOs.
+     */
+    @GetMapping
+    public ResponseEntity<List<CoachDto>> getAllCoaches() {
+        List<CoachDto> coaches = coachService.getAllCoaches(); 
+        return new ResponseEntity<>(coaches, HttpStatus.OK);
     }
 }

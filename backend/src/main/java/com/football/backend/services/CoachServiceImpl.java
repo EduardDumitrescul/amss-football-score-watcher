@@ -4,6 +4,10 @@ import com.football.backend.dto.CoachDto;
 import com.football.backend.dto.CreateCoachRequest;
 import com.football.backend.entities.CoachEntity;
 import com.football.backend.repositories.CoachRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +43,21 @@ public class CoachServiceImpl implements CoachService {
         
         // Convert the saved entity back to a DTO to return it
         return new CoachDto(savedCoach);
+    }
+
+    /**
+     * Retrieves all coaches from the database.
+     * @return A list of DTOs for all coaches.
+     */
+    @Override
+    public List<CoachDto> getAllCoaches() {
+        // Fetch all entities from the repository
+        List<CoachEntity> coaches = coachRepository.findAll();
+        
+        // Convert the list of entities to a list of DTOs
+        // This assumes your CoachDto has a constructor that takes a CoachEntity
+        return coaches.stream()
+                .map(CoachDto::new) 
+                .collect(Collectors.toList());
     }
 }

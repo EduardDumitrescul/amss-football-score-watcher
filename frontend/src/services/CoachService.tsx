@@ -39,3 +39,24 @@ export const createCoach = async (coachData: CoachFormData): Promise<Coach> => {
   }
 };
 
+
+/**
+ * Fetches all coaches from the backend API.
+ * This function is the "service" that talks to the controller.
+ * * @returns A promise that resolves to an array of Coach objects.
+ * @throws An error if the network response is not ok.
+ */
+export const getAllCoaches = async (): Promise<Coach[]> => {
+  // Call the controller endpoint
+  const response = await fetch(`${API_BASE_URL}`);
+
+  if (!response.ok) {
+    // Try to get more error details from the response body
+    const errorText = await response.text();
+    throw new Error(`Failed to fetch coaches: ${response.status} ${response.statusText} - ${errorText}`);
+  }
+
+  // Parse the JSON response
+  const data: Coach[] = await response.json();
+  return data;
+};
