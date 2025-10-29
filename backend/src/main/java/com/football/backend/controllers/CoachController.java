@@ -2,6 +2,7 @@ package com.football.backend.controllers;
 
 import com.football.backend.dto.CoachDto;
 import com.football.backend.dto.CreateCoachRequest;
+import com.football.backend.exceptions.ResourceNotFoundException;
 import com.football.backend.services.CoachService;
 
 import java.util.List;
@@ -48,5 +49,21 @@ public class CoachController {
     public ResponseEntity<List<CoachDto>> getAllCoaches() {
         List<CoachDto> coaches = coachService.getAllCoaches(); 
         return new ResponseEntity<>(coaches, HttpStatus.OK);
+    }
+
+    /**
+     * GET /api/coaches/{id}
+     * Handles GET requests to fetch a single coach by their ID.
+     * @param id The UUID of the coach.
+     * @return The coach DTO.
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<CoachDto> getCoachById(@PathVariable String id) {
+        try {
+            CoachDto coach = coachService.getCoachById(id);
+            return new ResponseEntity<>(coach, HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 }

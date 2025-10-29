@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import type { Coach } from '../models/Coach'; // Import the shared interface
-import { getAllCoaches } from '../services/CoachService'; // Import the new service
+// Import useNavigate to handle navigation
+import { useNavigate } from 'react-router-dom'; 
+import type { Coach } from '../models/Coach'; 
+import { getAllCoaches } from '../services/CoachService';
 import {
   Container,
   Typography,
@@ -16,27 +18,19 @@ import {
   Box
 } from '@mui/material';
 
-/**
- * A page component that fetches and displays a list of all coaches
- * using a dedicated service.
- */
 export const CoachListPage: React.FC = () => {
-  // State to store the list of coaches
   const [coaches, setCoaches] = useState<Coach[]>([]);
-  // State to manage loading status
   const [loading, setLoading] = useState<boolean>(true);
-  // State to store any potential errors
   const [error, setError] = useState<string | null>(null);
+  
+  // Get the navigate function from React Router
+  const navigate = useNavigate();
 
-  // useEffect to fetch data when the component mounts
   useEffect(() => {
-    // Define an async function to fetch coaches
     const fetchCoaches = async () => {
       setLoading(true);
       setError(null);
       try {
-        // --- UPDATED ---
-        // Use the service to fetch data instead of fetching directly
         const data = await getAllCoaches();
         setCoaches(data);
       } catch (e) {
@@ -46,17 +40,18 @@ export const CoachListPage: React.FC = () => {
           setError('An unknown error occurred.');
         }
       } finally {
-        // Ensure loading is set to false even if there's an error
         setLoading(false);
       }
     };
 
     fetchCoaches();
-  }, []); // Empty dependency array means this runs once on mount
+  }, []); 
 
-  // --- Render Logic (This part remains the same) ---
+  // --- NEW: Handler for clicking a row ---
+  const handleRowClick = (id: string) => {
+    navigate(`/coaches/${id}`);
+  };
 
-  // 1. Show a loading spinner while fetching
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
@@ -65,7 +60,6 @@ export const CoachListPage: React.FC = () => {
     );
   }
 
-  // 2. Show an error message if fetching failed
   if (error) {
     return (
       <Container maxWidth="md" sx={{ mt: 4 }}>
@@ -76,14 +70,12 @@ export const CoachListPage: React.FC = () => {
     );
   }
 
-  // 3. Show the main content
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom>
         All Coaches
       </Typography>
       
-      {/* Show a message if no coaches are found */}
       {coaches.length === 0 ? (
         <Alert severity="info">No coaches found.</Alert>
       ) : (
@@ -100,13 +92,16 @@ export const CoachListPage: React.FC = () => {
               {coaches.map((coach) => (
                 <TableRow 
                   key={coach.id}
+                  // --- ADDED: onClick and styling ---
+                  onClick={() => handleRowClick(coach.id)}
                   sx={{ 
+                    cursor: 'pointer', // Show clickable cursor
+                    '&:hover': { backgroundColor: 'action.selected' }, // Add hover effect
                     '&:nth-of-type(odd)': { backgroundColor: 'action.hover' },
                     '&:last-child td, &:last-child th': { border: 0 } 
                   }}
                 >
                   <TableCell component="th" scope="row">
-                    {/* Displaying only a part of UUID for brevity, but full ID is fine */}
                     {coach.id.substring(0, 8)}...
                   </TableCell>
                   <TableCell>{coach.firstname}</TableCell>
@@ -120,5 +115,4 @@ export const CoachListPage: React.FC = () => {
     </Container>
   );
 };
-
 

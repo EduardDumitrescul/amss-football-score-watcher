@@ -4,6 +4,7 @@ import { CssBaseline, Container, Typography } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 import CreateCoachPage from './pages/CreateCoachPage';
 import { CoachListPage } from './pages/CoachListPage';
+import { CoachDetailPage } from './pages/CoachDetailPage';
 
 // Placeholder for the home page content
 const HomePage = () => (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/coaches" element={<CoachListPage/>} />
         <Route path="/coaches/new" element={<CreateCoachPage />} />
+        <Route path="/coaches/:id" element={<CoachDetailPage />} />
       </Routes>
     </React.Fragment>
   );

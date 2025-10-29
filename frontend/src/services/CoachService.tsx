@@ -60,3 +60,24 @@ export const getAllCoaches = async (): Promise<Coach[]> => {
   const data: Coach[] = await response.json();
   return data;
 };
+
+/**
+ * Fetches a single coach by their ID from the backend API.
+ * @param id The ID of the coach to fetch.
+ * @returns A promise that resolves to a single Coach object.
+ */
+export const getCoachById = async (id: string): Promise<Coach> => {
+  const response = await fetch(`${API_BASE_URL}/${id}`); // Calls GET /api/coaches/{id}
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw new Error(`Coach not found with id: ${id}`);
+    }
+    const errorText = await response.text();
+    throw new Error(`Failed to fetch coach: ${response.status} ${response.statusText} - ${errorText}`);
+  }
+
+  const data: Coach = await response.json();
+  return data;
+};
+
