@@ -2,10 +2,8 @@ package com.football.backend.services;
 
 import com.football.backend.dto.CreateTeamRequest;
 import com.football.backend.dto.TeamDto;
-import com.football.backend.entities.CoachEntity;
 import com.football.backend.entities.TeamEntity;
 import com.football.backend.exceptions.ResourceNotFoundException;
-import com.football.backend.repositories.CoachRepository;
 import com.football.backend.repositories.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
