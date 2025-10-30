@@ -30,4 +30,11 @@ public class TeamEntity {
     private CoachEntity coach;
 
     private String name;
+
+    public void setCoach(CoachEntity coach) {
+        this.coach = coach;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
 }

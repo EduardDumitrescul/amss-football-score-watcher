@@ -74,8 +74,8 @@ export const TeamListPage: React.FC = () => {
             <TableHead>
               <TableRow>
                 <TableCell>Name</TableCell>
-                <TableCell>Coach</TableCell>
                 <TableCell>ID</TableCell>
+                <TableCell>Coach</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -90,6 +90,16 @@ export const TeamListPage: React.FC = () => {
                     {team.name}
                   </TableCell>
                   <TableCell>{team.id}</TableCell>
+                  <TableCell>
+                    {team.coachId ? (
+                      // Use a template literal to combine the names
+                      `${team.coachFirstname} ${team.coachLastname}`
+                    ) : (
+                      <Typography variant="body2" sx={{ fontStyle: 'italic', color: 'text.secondary' }}>
+                        No Coach
+                      </Typography>
+                    )}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

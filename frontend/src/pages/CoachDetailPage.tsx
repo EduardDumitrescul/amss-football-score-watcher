@@ -1,54 +1,74 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import type { Coach } from '../models/Coach'; // Assuming path is correct
-import { getCoachById } from '../services/CoachService'; // Assuming path is correct
+import React, { useState, useEffect, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
+import type { Coach } from '../models/Coach';
+import { getCoachById } from '../services/CoachService';
+import { AssignCoachToTeam } from '../components/AssignCoachToTeamComponent'; 
 import {
   Container,
   Typography,
-  Paper,
-  Box,
+  Card,
+  CardContent,
   CircularProgress,
   Alert,
+  Box,
   Grid,
-  Button
+  Divider
 } from '@mui/material';
+
+// Helper component to display a single detail
+const DetailItem: React.FC<{ title: string; value: string | null | undefined }> = ({ title, value }) => (
+  <Grid item xs={12} sm={6}>
+    <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+      {title}
+    </Typography>
+    <Typography variant="body1">
+      {value || <em>Not set</em>}
+    </Typography>
+  </Grid>
+);
 
 export const CoachDetailPage: React.FC = () => {
   const [coach, setCoach] = useState<Coach | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  
   // Get the 'id' from the URL
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
 
-  useEffect(() => {
+  // Wrap fetchCoach in useCallback
+  const fetchCoach = useCallback(async () => {
     if (!id) {
-      setError('No coach ID provided.');
+      setError("No coach ID provided.");
       setLoading(false);
       return;
     }
 
-    // FIX: Removed the erroneous '_bak' from the function definition
-    const fetchCoach = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const data = await getCoachById(id);
-        setCoach(data);
-      } catch (e) {
-        if (e instanceof Error) {
-          setError(e.message);
-        } else {
-          setError('An unknown error occurred.');
-        }
-      } finally {
-        setLoading(false);
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await getCoachById(id);
+      setCoach(data);
+    } catch (e) {
+      if (e instanceof Error) {
+        setError(e.message);
+      } else {
+        setError('An unknown error occurred.');
       }
-    };
+    } finally {
+      setLoading(false);
+    }
+  }, [id]); // Dependency array includes 'id'
 
+  // Initial fetch
+  useEffect(() => {
     fetchCoach();
-  }, [id]); // Re-run effect if ID changes
+  }, [fetchCoach]); // Dependency array includes 'fetchCoach'
+
+  // Callback for the assignment component to trigger a refresh
+  const handleAssignmentSuccess = () => {
+    // Re-fetch the coach data to show the updated team
+    fetchCoach(); 
+  };
 
   if (loading) {
     return (
@@ -64,13 +84,6 @@ export const CoachDetailPage: React.FC = () => {
         <Alert severity="error">
           <strong>Error:</strong> {error}
         </Alert>
-        <Button 
-          variant="outlined" 
-          onClick={() => navigate('/coaches')}
-          sx={{ mt: 2 }}
-        >
-          Back to List
-        </Button>
       </Container>
     );
   }
@@ -78,72 +91,40 @@ export const CoachDetailPage: React.FC = () => {
   if (!coach) {
     return (
       <Container maxWidth="md" sx={{ mt: 4 }}>
-        <Alert severity="info">No coach data available.</Alert>
+        <Alert severity="info">Coach data could not be loaded.</Alert>
       </Container>
     );
   }
 
+  // Display Coach Details
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Paper sx={{ p: { xs: 2, sm: 4 }, borderRadius: 2, boxShadow: 3 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Coach Details
-        </Typography>
-        
-        {/* FIX: The 'item' prop is not used on Grid children in MUI v5. 
-          You just place the breakpoint props (xs, sm) directly on the Grid
-          component, and it will act as an item.
-        */}
-        <Grid container spacing={2} sx={{ mt: 2 }}>
-          {/* Label */}
-          <Grid xs={12} sm={4}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-              First Name:
-            </Typography>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Coach Details
+      </Typography>
+      
+      <Card sx={{ borderRadius: 2, boxShadow: 3 }}>
+        <CardContent>
+          <Grid container spacing={2}>
+            <DetailItem title="Coach ID" value={`${coach.id.substring(0, 8)}...`} />
+            <DetailItem title="First Name" value={coach.firstname} />
+            <DetailItem title="Last Name" value={coach.lastname} />
+            
+            {/* Display Current Team */}
+            <DetailItem title="Current Team" value={coach.teamName ? coach.teamName : "Unassigned"} />
           </Grid>
-          {/* Value */}
-          <Grid xs={12} sm={8}>
-            <Typography variant="body1">
-              {coach.firstname}
-            </Typography>
-          </Grid>
-
-          {/* Label */}
-          <Grid xs={12} sm={4}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-              Last Name:
-            </Typography>
-          </Grid>
-          {/* Value */}
-          <Grid xs={12} sm={8}>
-            <Typography variant="body1">
-              {coach.lastname}
-            </Typography>
-          </Grid>
-
-          {/* Label */}
-          <Grid xs={12} sm={4}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-              ID:
-            </Typography>
-          </Grid>
-          {/* Value */}
-          <Grid xs={12} sm={8}>
-            <Typography variant="body1" sx={{ fontFamily: 'monospace', wordBreak: 'break-all' }}>
-              {coach.id}
-            </Typography>
-          </Grid>
-        </Grid>
-
-        <Box sx={{ mt: 4, display: 'flex', justifyContent: 'flex-start' }}>
-          <Button 
-            variant="outlined" 
-            onClick={() => navigate('/coaches')}
-          >
-            Back to List
-          </Button>
-        </Box>
-      </Paper>
+        </CardContent>
+      </Card>
+      
+      {/* --- New Assign Coach Component --- */}
+      {/* This component will only render its UI if the coach is unassigned 
+        and will handle all its own logic.
+      */}
+      <AssignCoachToTeam 
+        coach={coach} 
+        onAssignmentSuccess={handleAssignmentSuccess} 
+      />
+      
     </Container>
   );
 };

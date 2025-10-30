@@ -1,7 +1,10 @@
-import type { Coach } from './Coach';
-
 export interface Team {
   id: string;
   name: string;
-  coach: Coach; // Nest the coach model
+
+  // Flattened coach info
+  coachId: string | null;
+  coachFirstname: string | null;
+  coachLastname: string | null;
 }
+
