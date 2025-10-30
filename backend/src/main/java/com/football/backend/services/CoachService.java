@@ -10,8 +10,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.hibernate.Hibernate; // Import Hibernate
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional; // Import Transactional
 
 /**
  * The concrete implementation of the CoachService.
@@ -32,6 +34,7 @@ public class CoachService {
      * @param request The DTO containing the new coach's data.
      * @return A DTO of the newly created coach.
      */
+    @Transactional
     public CoachDto createCoach(CreateCoachRequest request) {
         // Use the @Builder from your entity for clean object creation
         CoachEntity newCoach = CoachEntity.builder()
@@ -40,7 +43,7 @@ public class CoachService {
                 .build();
         
         // Save the new entity to the database
-        CoachEntity savedCoach = coachRepository.saveAndFlush(newCoach);
+        CoachEntity savedCoach = coachRepository.saveAndFlush(newCoach); // Use saveAndFlush
         
         // Convert the saved entity back to a DTO to return it
         return new CoachDto(savedCoach);
@@ -50,14 +53,18 @@ public class CoachService {
      * Retrieves all coaches from the database.
      * @return A list of DTOs for all coaches.
      */
+    @Transactional(readOnly = true) // Add Transactional
     public List<CoachDto> getAllCoaches() {
         // Fetch all entities from the repository
         List<CoachEntity> coaches = coachRepository.findAll();
         
         // Convert the list of entities to a list of DTOs
-        // This assumes your CoachDto has a constructor that takes a CoachEntity
         return coaches.stream()
-                .map(CoachDto::new) 
+                .map(coach -> {
+                    // Explicitly initialize the team to avoid lazy loading issues
+                    Hibernate.initialize(coach.getTeam()); 
+                    return new CoachDto(coach);
+                }) 
                 .collect(Collectors.toList());
     }
 
@@ -67,12 +74,17 @@ public class CoachService {
      * @return A DTO of the found coach.
      * @throws ResourceNotFoundException if no coach is found with the given ID.
      */
+    @Transactional(readOnly = true) // Add Transactional
     public CoachDto getCoachById(String id) {
-    // Use findById to check for existence immediately
-    CoachEntity coach = coachRepository.findById(UUID.fromString(id))
-            .orElseThrow(() -> new ResourceNotFoundException("Coach not found with id: " + id));
-    
-    // Now you know the coach exists, so you can safely create the DTO
-    return new CoachDto(coach);
+        // Use findById to check for existence immediately
+        CoachEntity coach = coachRepository.findById(UUID.fromString(id))
+                .orElseThrow(() -> new ResourceNotFoundException("Coach not found with id: " + id));
+        
+        // Explicitly initialize the team before returning
+        Hibernate.initialize(coach.getTeam());
+
+        // Now you know the coach exists, so you can safely create the DTO
+        return new CoachDto(coach);
+    }
 }
-}
+

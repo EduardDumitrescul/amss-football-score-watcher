@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-// Import useNavigate to handle navigation
 import { useNavigate } from 'react-router-dom'; 
 import type { Coach } from '../models/Coach'; 
-import { getAllCoaches } from '../services/CoachService';
+import { getAllCoaches } from '../services/CoachService'; // Corrected path
 import {
   Container,
   Typography,
@@ -23,7 +22,6 @@ export const CoachListPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   
-  // Get the navigate function from React Router
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,7 +45,6 @@ export const CoachListPage: React.FC = () => {
     fetchCoaches();
   }, []); 
 
-  // --- NEW: Handler for clicking a row ---
   const handleRowClick = (id: string) => {
     navigate(`/coaches/${id}`);
   };
@@ -86,17 +83,18 @@ export const CoachListPage: React.FC = () => {
                 <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>ID</TableCell>
                 <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>First Name</TableCell>
                 <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>Last Name</TableCell>
+                {/* --- NEW COLUMN --- */}
+                <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>Assigned Team</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {coaches.map((coach) => (
                 <TableRow 
                   key={coach.id}
-                  // --- ADDED: onClick and styling ---
                   onClick={() => handleRowClick(coach.id)}
                   sx={{ 
-                    cursor: 'pointer', // Show clickable cursor
-                    '&:hover': { backgroundColor: 'action.selected' }, // Add hover effect
+                    cursor: 'pointer',
+                    '&:hover': { backgroundColor: 'action.selected' },
                     '&:nth-of-type(odd)': { backgroundColor: 'action.hover' },
                     '&:last-child td, &:last-child th': { border: 0 } 
                   }}
@@ -106,6 +104,17 @@ export const CoachListPage: React.FC = () => {
                   </TableCell>
                   <TableCell>{coach.firstname}</TableCell>
                   <TableCell>{coach.lastname}</TableCell>
+                  {/* --- NEW CELL --- */}
+                  <TableCell>
+                    {coach.teamName ? (
+                      // Use teamName from the flattened structure
+                      <Typography variant="body2">{coach.teamName}</Typography>
+                    ) : (
+                      <Typography variant="body2" sx={{ fontStyle: 'italic', color: 'text.secondary' }}>
+                        Unassigned
+                      </Typography>
+                    )}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

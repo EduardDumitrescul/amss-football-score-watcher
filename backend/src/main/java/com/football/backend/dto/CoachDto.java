@@ -1,28 +1,52 @@
 package com.football.backend.dto;
 
 import com.football.backend.entities.CoachEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.football.backend.entities.TeamEntity;
 
-import java.util.UUID;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class CoachDto {
-    // This is the data structure we will send back to the frontend
-    private UUID id;
+
+    private String id;
     private String firstname;
     private String lastname;
     
+    // Flattened team info
+    private String teamId;
+    private String teamName;
+
+    // Default constructor for JSON serialization
+    public CoachDto() {}
+
     /**
-     * Helper constructor to easily convert an Entity to a DTO.
-     * @param entity The CoachEntity from the database.
+     * Full constructor, used when fetching a Coach.
+     * This will map the associated team's details, flattened.
      */
-    public CoachDto(CoachEntity entity) {
-        this.id = entity.getId();
-        this.firstname = entity.getFirstname();
-        this.lastname = entity.getLastname();
+    public CoachDto(CoachEntity coach) {
+        this.id = coach.getId().toString();
+        this.firstname = coach.getFirstname();
+        this.lastname = coach.getLastname();
+        
+        TeamEntity team = coach.getTeam();
+        if (team != null) {
+            this.teamId = team.getId().toString();
+            this.teamName = team.getName();
+        } else {
+            this.teamId = null;
+            this.teamName = null;
+        }
     }
+
+    // Getters
+    public String getId() { return id; }
+    public String getFirstname() { return firstname; }
+    public String getLastname() { return lastname; }
+    public String getTeamId() { return teamId; }
+    public String getTeamName() { return teamName; }
+
+    // Setters
+    public void setId(String id) { this.id = id; }
+    public void setFirstname(String firstname) { this.firstname = firstname; }
+    public void setLastname(String lastname) { this.lastname = lastname; }
+    public void setTeamId(String teamId) { this.teamId = teamId; }
+    public void setTeamName(String teamName) { this.teamName = teamName; }
 }
+
