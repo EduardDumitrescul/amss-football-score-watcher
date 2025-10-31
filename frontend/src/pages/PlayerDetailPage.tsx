@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -9,11 +9,13 @@ import {
   Paper,
   Grid,
   Button,
-  Divider
+  Divider,
+  Modal
 } from '@mui/material';
 import { getPlayerById } from '../services/PlayerService';
 import type { Player } from '../models/Player';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import SignContractForm from '../components/SignContractForm';
 
 /**
  * Helper component to display a single piece of player data.
@@ -29,36 +31,53 @@ const InfoItem: React.FC<{ label: string; value?: string | number | null }> = ({
   </Grid>
 );
 
+const modalStyle = {
+  position: 'absolute' as const,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
+
 export const PlayerDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [player, setPlayer] = useState<Player | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
-  useEffect(() => {
+  const fetchPlayer = useCallback(async () => {
     if (!id) {
       setError('No player ID provided.');
       setIsLoading(false);
       return;
     }
 
-    const fetchPlayer = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const data = await getPlayerById(id);
-        setPlayer(data);
-      } catch (err) {
-        console.error('Failed to fetch player:', err);
-        setError(err instanceof Error ? err.message : 'An unknown error occurred.');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchPlayer();
+    setIsLoading(true);
+    setError(null);
+    try {
+      const data = await getPlayerById(id);
+      setPlayer(data);
+    } catch (err) {
+      console.error('Failed to fetch player:', err);
+      setError(err instanceof Error ? err.message : 'An unknown error occurred.');
+    } finally {
+      setIsLoading(false);
+    }
   }, [id]);
+
+  useEffect(() => {
+    fetchPlayer();
+  }, [fetchPlayer]);
+
+  const handleContractSigned = () => {
+    setIsFormOpen(false);
+    fetchPlayer(); // Refetch player data to show updated contract info
+  };
 
   // Format date for display
   const formattedDateOfBirth = player?.dateOfBirth
@@ -134,8 +153,28 @@ export const PlayerDetailPage: React.FC = () => {
             value={player.team ? player.team.name : 'N/A'} 
           /> */}
         </Grid>
+
+        <Button 
+          variant="contained" 
+          color="primary" 
+          onClick={() => setIsFormOpen(true)} 
+          sx={{ mt: 3 }}
+        >
+          Sign Contract
+        </Button>
+
       </Paper>
+
+      <Modal
+        open={isFormOpen}
+        onClose={() => setIsFormOpen(false)}
+        aria-labelledby="sign-contract-form-title"
+      >
+        <Box sx={modalStyle}>
+          <SignContractForm playerId={id!} onContractSigned={handleContractSigned} />
+        </Box>
+      </Modal>
+
     </Container>
   );
 };
-

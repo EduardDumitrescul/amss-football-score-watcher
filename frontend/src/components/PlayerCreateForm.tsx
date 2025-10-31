@@ -96,88 +96,100 @@ export const PlayerCreateForm: React.FC<PlayerCreateFormProps> = ({
       <Grid container spacing={2}>
         {/* First Name */}
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            fullWidth
-            id="firstname"
-            label="First Name"
-            name="firstname"
-            value={formData.firstname}
-            onChange={handleChange}
-            disabled={isSubmitting}
-          />
+          <div>
+            <TextField
+              required
+              fullWidth
+              id="firstname"
+              label="First Name"
+              name="firstname"
+              value={formData.firstname}
+              onChange={handleChange}
+              disabled={isSubmitting}
+            />
+          </div>
         </Grid>
 
         {/* Last Name */}
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            fullWidth
-            id="lastname"
-            label="Last Name"
-            name="lastname"
-            value={formData.lastname}
-            onChange={handleChange}
-            disabled={isSubmitting}
-          />
+        <Grid xs={12} sm={6}>
+          <div>
+            <TextField
+              required
+              fullWidth
+              id="lastname"
+              label="Last Name"
+              name="lastname"
+              value={formData.lastname}
+              onChange={handleChange}
+              disabled={isSubmitting}
+            />
+          </div>
         </Grid>
 
         {/* Position */}
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            id="position"
-            label="Position (e.g., Forward)"
-            name="position"
-            value={formData.position}
-            onChange={handleChange}
-            disabled={isSubmitting}
-          />
+        <Grid xs={12} sm={6}>
+          <div>
+            <TextField
+              fullWidth
+              id="position"
+              label="Position (e.g., Forward)"
+              name="position"
+              value={formData.position}
+              onChange={handleChange}
+              disabled={isSubmitting}
+            />
+          </div>
         </Grid>
 
         {/* Shirt Number */}
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            id="shirtNumber"
-            label="Shirt Number"
-            name="shirtNumber"
-            type="number"
-            value={formData.shirtNumber || ''} // Handle undefined for number input
-            onChange={handleChange}
-            disabled={isSubmitting}
-            inputProps={{ min: 1, max: 99 }}
-          />
+        <Grid xs={12} sm={6}>
+          <div>
+            <TextField
+              fullWidth
+              id="shirtNumber"
+              label="Shirt Number"
+              name="shirtNumber"
+              type="number"
+              value={formData.shirtNumber || ''} // Handle undefined for number input
+              onChange={handleChange}
+              disabled={isSubmitting}
+              inputProps={{ min: 1, max: 99 }}
+            />
+          </div>
         </Grid>
 
         {/* Nationality */}
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            id="nationality"
-            label="Nationality"
-            name="nationality"
-            value={formData.nationality}
-            onChange={handleChange}
-            disabled={isSubmitting}
-          />
+        <Grid xs={12} sm={6}>
+          <div>
+            <TextField
+              fullWidth
+              id="nationality"
+              label="Nationality"
+              name="nationality"
+              value={formData.nationality}
+              onChange={handleChange}
+              disabled={isSubmitting}
+            />
+          </div>
         </Grid>
 
         {/* Date of Birth */}
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            id="dateOfBirth"
-            label="Date of Birth"
-            name="dateOfBirth"
-            type="date"
-            value={formData.dateOfBirth || ''}
-            onChange={handleDateChange}
-            InputLabelProps={{
-              shrink: true, // Keep the label floated
-            }}
-            disabled={isSubmitting}
-          />
+        <Grid xs={12} sm={6}>
+          <div>
+            <TextField
+              fullWidth
+              id="dateOfBirth"
+              label="Date of Birth"
+              name="dateOfBirth"
+              type="date"
+              value={formData.dateOfBirth || ''}
+              onChange={handleDateChange}
+              InputLabelProps={{
+                shrink: true, // Keep the label floated
+              }}
+              disabled={isSubmitting}
+            />
+          </div>
         </Grid>
         
       </Grid>

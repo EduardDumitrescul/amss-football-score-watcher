@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Typography, Box, Paper } from '@mui/material';
+import { Container, Typography, Paper } from '@mui/material';
 import { PlayerCreateForm } from '../components/PlayerCreateForm';
 import { createPlayer } from '../services/PlayerService';
-import type { PlayerFormData } from '../services/playerService';
+import type { PlayerFormData } from '../components/PlayerCreateForm';
 // import { getAllTeams } from '../services/teamService'; // Uncomment when Team is ready
 // import type { Team } from '../models/Team'; // Uncomment when Team is ready
 

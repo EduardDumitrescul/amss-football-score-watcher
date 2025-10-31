@@ -1,6 +1,5 @@
 package com.football.backend.services;
 
-import com.football.backend.dto.CoachDto;
 import com.football.backend.dto.CreateTeamRequest;
 import com.football.backend.dto.TeamDto;
 import com.football.backend.entities.CoachEntity;

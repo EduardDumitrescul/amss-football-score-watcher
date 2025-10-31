@@ -4,6 +4,14 @@ import type { Player } from '../models/Player';
 // Base URL for the Player API
 const API_BASE_URL = 'http://localhost:8080/api/players';
 
+export type ContractFormData = {
+  playerId: string;
+  teamId: string;
+  startDate: string;
+  endDate: string;
+  salaryPerYear: number;
+};
+
 /**
  * Fetches all players from the backend.
  */
@@ -58,3 +66,21 @@ export const createPlayer = async (playerData: PlayerFormData): Promise<Player> 
   return response.json() as Promise<Player>;
 };
 
+/**
+ * Signs a contract for a player with a team.
+ * @param contractData The data from the contract form.
+ */
+export const signContract = async (contractData: ContractFormData): Promise<Player> => {
+  const response = await fetch(`${API_BASE_URL}/sign-contract`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(contractData),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to sign contract: ${response.statusText}`);
+  }
+  return response.json() as Promise<Player>;
+};

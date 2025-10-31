@@ -1,5 +1,6 @@
 package com.football.backend.controllers;
 
+import com.football.backend.dto.CreateContractRequest;
 import com.football.backend.dto.CreatePlayerRequest;
 import com.football.backend.dto.PlayerDto;
 import com.football.backend.exceptions.ResourceNotFoundException;
@@ -64,5 +65,17 @@ public class PlayerController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
-}
 
+    /**
+     * POST /api/players/sign-contract : Signs a contract for a player with a team.
+     */
+    @PostMapping("/sign-contract")
+    public ResponseEntity<PlayerDto> signContract(@RequestBody CreateContractRequest createContractRequest) {
+        try {
+            PlayerDto updatedPlayer = playerService.signContract(createContractRequest);
+            return new ResponseEntity<>(updatedPlayer, HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+}

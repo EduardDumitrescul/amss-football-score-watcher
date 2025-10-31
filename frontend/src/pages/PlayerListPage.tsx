@@ -74,14 +74,25 @@ export const PlayerListPage: React.FC = () => {
         <Typography variant="h4" component="h1">
           Players
         </Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          component={RouterLink}
-          to="/players/new"
-        >
-          Add New Player
-        </Button>
+        <Box>
+          <Button
+            variant="contained"
+            color="primary"
+            component={RouterLink}
+            to="/players/new"
+            sx={{ mr: 1 }}
+          >
+            Add New Player
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            component={RouterLink}
+            to="/players/sign-contract"
+          >
+            Sign Contract
+          </Button>
+        </Box>
       </Box>
 
       {/* Show table of players */}

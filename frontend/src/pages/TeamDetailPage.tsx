@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link as RouterLink } from 'react-router-dom';
 import type { Team } from '../models/Team'; 
 import { getTeamById, unassignCoach } from '../services/TeamService';
@@ -23,7 +23,7 @@ export const TeamDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const fetchTeam = async () => {
+  const fetchTeam = useCallback(async () => {
     if (!id) {
       setError('No team ID provided.');
       setLoading(false);
@@ -39,11 +39,11 @@ export const TeamDetailPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     fetchTeam();
-  }, [id]);
+  }, [fetchTeam]);
 
   // --- NEW: Handler for the fire coach button ---
   const handleFireCoach = async () => {
@@ -172,5 +172,4 @@ export const TeamDetailPage: React.FC = () => {
     </Container>
   );
 };
-
 

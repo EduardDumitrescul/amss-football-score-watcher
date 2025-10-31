@@ -1,12 +1,15 @@
 package com.football.backend.services;
 
+import com.football.backend.dto.CreateContractRequest;
 import com.football.backend.dto.CreatePlayerRequest;
 import com.football.backend.dto.PlayerDto;
+import com.football.backend.entities.ContractEntity;
 import com.football.backend.entities.PlayerEntity;
-// import com.football.backend.entities.TeamEntity; // Uncomment when Team is ready
+import com.football.backend.entities.TeamEntity;
 import com.football.backend.exceptions.ResourceNotFoundException;
+import com.football.backend.repositories.ContractRepository;
 import com.football.backend.repositories.PlayerRepository;
-// import com.football.backend.repositories.TeamRepository; // Uncomment when Team is ready
+import com.football.backend.repositories.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,12 +22,14 @@ import java.util.stream.Collectors;
 public class PlayerService {
 
     private final PlayerRepository playerRepository;
-    // private final TeamRepository teamRepository; // Uncomment when Team is ready
+    private final TeamRepository teamRepository;
+    private final ContractRepository contractRepository;
 
     @Autowired
-    public PlayerService(PlayerRepository playerRepository) { // Add TeamRepository to constructor
+    public PlayerService(PlayerRepository playerRepository, TeamRepository teamRepository, ContractRepository contractRepository) {
         this.playerRepository = playerRepository;
-        // this.teamRepository = teamRepository;
+        this.teamRepository = teamRepository;
+        this.contractRepository = contractRepository;
     }
 
     /**
@@ -35,12 +40,11 @@ public class PlayerService {
     @Transactional
     public PlayerDto createPlayer(CreatePlayerRequest request) {
         
-        // --- Team Logic (Uncomment when Team is ready) ---
-        // TeamEntity team = null;
-        // if (request.getTeamId() != null) {
-        //     team = teamRepository.findById(UUID.fromString(request.getTeamId()))
-        //             .orElseThrow(() -> new ResourceNotFoundException("Team not found with id: " + request.getTeamId()));
-        // }
+        TeamEntity team = null;
+        if (request.getTeamId() != null) {
+            team = teamRepository.findById(UUID.fromString(request.getTeamId()))
+                    .orElseThrow(() -> new ResourceNotFoundException("Team not found with id: " + request.getTeamId()));
+        }
 
         PlayerEntity newPlayer = PlayerEntity.builder()
                 .firstname(request.getFirstname())
@@ -49,7 +53,7 @@ public class PlayerService {
                 .shirtNumber(request.getShirtNumber())
                 .nationality(request.getNationality())
                 .dateOfBirth(request.getDateOfBirth())
-                // .team(team) // Uncomment when Team is ready
+                .team(team)
                 .build();
 
         PlayerEntity savedPlayer = playerRepository.saveAndFlush(newPlayer);
@@ -79,5 +83,33 @@ public class PlayerService {
                 .orElseThrow(() -> new ResourceNotFoundException("Player not found with id: " + id));
         return new PlayerDto(player);
     }
-}
 
+    /**
+     * Signs a contract for a player with a team.
+     * @param request DTO with contract data.
+     * @return DTO of the updated player.
+     */
+    @Transactional
+    public PlayerDto signContract(CreateContractRequest request) {
+        PlayerEntity player = playerRepository.findById(request.getPlayerId())
+                .orElseThrow(() -> new ResourceNotFoundException("Player not found with id: " + request.getPlayerId()));
+
+        TeamEntity team = teamRepository.findById(request.getTeamId())
+                .orElseThrow(() -> new ResourceNotFoundException("Team not found with id: " + request.getTeamId()));
+
+        ContractEntity newContract = ContractEntity.builder()
+                .player(player)
+                .team(team)
+                .startDate(request.getStartDate())
+                .endDate(request.getEndDate())
+                .salaryPerYear(request.getSalaryPerYear())
+                .build();
+
+        contractRepository.save(newContract);
+
+        player.setTeam(team);
+        playerRepository.save(player);
+
+        return new PlayerDto(player);
+    }
+}

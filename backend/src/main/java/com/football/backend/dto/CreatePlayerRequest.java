@@ -20,6 +20,6 @@ public class CreatePlayerRequest {
     
     // We only need the ID of the team to link it
     // The frontend will send a UUID string
-    // private String teamId; // Uncomment when Team relationship is ready
+    private String teamId; // Uncomment when Team relationship is ready
 }
 
