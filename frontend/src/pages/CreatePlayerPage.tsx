@@ -5,7 +5,7 @@ import { PlayerCreateForm } from '../components/PlayerCreateForm';
 import { createPlayer } from '../services/PlayerService';
 import type { PlayerFormData } from '../components/PlayerCreateForm';
 // import { getAllTeams } from '../services/teamService'; // Uncomment when Team is ready
-// import type { Team } from '../models/Team'; // Uncomment when Team is ready
+// import type { TeamSummary } from '../models/Team'; // Uncomment when Team is ready
 
 export const CreatePlayerPage: React.FC = () => {
   const navigate = useNavigate();

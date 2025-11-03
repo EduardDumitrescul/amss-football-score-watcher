@@ -1,12 +1,5 @@
 import type { Team } from '../models/Team';
-
-
-// Define the shape of the data for creating a team
-// We co-locate this here as it's directly related to the service call
-export interface CreateTeamFormData {
-  name: string;
-  // coachId is no longer required at creation
-}
+import type { CreateTeamFormData } from '../dto/CreateTeamRequest';
 
 const API_BASE_URL = 'http://localhost:8080/api/teams';
 
@@ -39,6 +32,7 @@ export const getTeamById = async (id: string): Promise<Team> => {
  * Creates a new team.
  */
 export const createTeam = async (teamData: CreateTeamFormData): Promise<Team> => {
+  console.log('Creating team with data:', teamData);
   const response = await fetch(API_BASE_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -47,7 +41,9 @@ export const createTeam = async (teamData: CreateTeamFormData): Promise<Team> =>
   if (!response.ok) {
     throw new Error('Failed to create team');
   }
-  return await response.json() as Team;
+  const newTeam = await response.json();
+  console.log('Team created successfully:', newTeam);
+  return newTeam as Team;
 };
 
 /**
@@ -95,4 +91,3 @@ export const unassignCoach = async (teamId: string): Promise<Team> => {
   }
   return await response.json() as Team;
 };
-

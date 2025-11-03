@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createTeam } from '../services/TeamService'; 
+import { createTeam } from '../services/TeamService';
+import type { CreateTeamFormData } from '../dto/CreateTeamRequest';
 import {
   Container,
   Typography,
@@ -12,19 +13,11 @@ import {
   Alert,
 } from '@mui/material';
 
-export interface TeamFormData {
-    name: string;
-}
-
 export const CreateTeamPage: React.FC = () => {
-  // Simplify state to just the team name
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-
-  // No longer need to fetch coaches
-  // useEffect(() => { ... });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -41,12 +34,8 @@ export const CreateTeamPage: React.FC = () => {
     setError(null);
 
     try {
-      // Create the team with just the name.
-      // This is compatible with TeamFormData since coachId is optional.
-      const teamData: TeamFormData = { name };
-      const newTeam = await createTeam(teamData); 
-      
-      // Navigate to the new team's detail page
+      const teamData: CreateTeamFormData = { name };
+      const newTeam = await createTeam(teamData);
       navigate(`/teams/${newTeam.id}`);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'An unknown error occurred');
@@ -60,8 +49,6 @@ export const CreateTeamPage: React.FC = () => {
         <Typography variant="h4" component="h1" gutterBottom>
           Create New Team
         </Typography>
-        
-        {/* Removed coach loading ternary */}
         <Box component="form" onSubmit={handleSubmit} noValidate>
           <TextField
             margin="normal"
@@ -72,11 +59,9 @@ export const CreateTeamPage: React.FC = () => {
             name="name"
             autoComplete="name"
             autoFocus
-            value={name} // Bind to name state
-            onChange={handleChange} // Use simplified handler
+            value={name}
+            onChange={handleChange}
           />
-          
-          {/* Removed the Coach Selection FormControl */}
 
           {error && (
             <Alert severity="error" sx={{ mt: 2 }}>
@@ -98,5 +83,3 @@ export const CreateTeamPage: React.FC = () => {
     </Container>
   );
 };
-
-
