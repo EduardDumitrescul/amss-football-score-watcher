@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import type { Coach } from '../models/Coach'; 
-import { getAllCoaches } from '../services/CoachService'; // Corrected path
+import type { CoachSummary } from '../models/Coach'; 
+import { getAllCoaches } from '../services/CoachService';
 import {
   Container,
   Typography,
@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 
 export const CoachListPage: React.FC = () => {
-  const [coaches, setCoaches] = useState<Coach[]>([]);
+  const [coaches, setCoaches] = useState<CoachSummary[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   
@@ -81,10 +81,7 @@ export const CoachListPage: React.FC = () => {
             <TableHead sx={{ backgroundColor: 'primary.main' }}>
               <TableRow>
                 <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>ID</TableCell>
-                <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>First Name</TableCell>
-                <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>Last Name</TableCell>
-                {/* --- NEW COLUMN --- */}
-                <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>Assigned Team</TableCell>
+                <TableCell sx={{ color: 'common.white', fontWeight: 'bold' }}>Full Name</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -102,19 +99,7 @@ export const CoachListPage: React.FC = () => {
                   <TableCell component="th" scope="row">
                     {coach.id.substring(0, 8)}...
                   </TableCell>
-                  <TableCell>{coach.firstname}</TableCell>
-                  <TableCell>{coach.lastname}</TableCell>
-                  {/* --- NEW CELL --- */}
-                  <TableCell>
-                    {coach.teamName ? (
-                      // Use teamName from the flattened structure
-                      <Typography variant="body2">{coach.teamName}</Typography>
-                    ) : (
-                      <Typography variant="body2" sx={{ fontStyle: 'italic', color: 'text.secondary' }}>
-                        Unassigned
-                      </Typography>
-                    )}
-                  </TableCell>
+                  <TableCell>{coach.fullName}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -124,4 +109,3 @@ export const CoachListPage: React.FC = () => {
     </Container>
   );
 };
-

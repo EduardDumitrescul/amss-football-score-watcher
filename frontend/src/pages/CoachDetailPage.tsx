@@ -1,88 +1,72 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
-import type { Coach } from '../models/Coach';
-import { getCoachById } from '../services/CoachService';
-import { AssignCoachToTeam } from '../components/AssignCoachToTeamComponent'; 
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Typography,
-  Card,
-  CardContent,
+  Box,
   CircularProgress,
   Alert,
-  Box,
+  Paper,
   Grid,
-  Divider
+  Card,
+  CardContent,
+  CardHeader,
+  Avatar,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Link,
+  Button
 } from '@mui/material';
-
-// Helper component to display a single detail
-const DetailItem: React.FC<{ title: string; value: string | null | undefined }> = ({ title, value }) => (
-  <Grid item xs={12} sm={6}>
-    <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-      {title}
-    </Typography>
-    <Typography variant="body1">
-      {value || <em>Not set</em>}
-    </Typography>
-  </Grid>
-);
+import { useParams, Link as RouterLink, useNavigate } from 'react-router-dom';
+import { getCoachById } from '../services/CoachService';
+import type { Coach } from '../models/Coach';
+import { Person, Shield, Group, ArrowBack } from '@mui/icons-material';
 
 export const CoachDetailPage: React.FC = () => {
-  const [coach, setCoach] = useState<Coach | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  
-  // Get the 'id' from the URL
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const [coach, setCoach] = useState<Coach | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Wrap fetchCoach in useCallback
-  const fetchCoach = useCallback(async () => {
+  useEffect(() => {
     if (!id) {
-      setError("No coach ID provided.");
-      setLoading(false);
+      setError('Coach ID is missing.');
+      setIsLoading(false);
       return;
     }
 
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await getCoachById(id);
-      setCoach(data);
-    } catch (e) {
-      if (e instanceof Error) {
-        setError(e.message);
-      } else {
-        setError('An unknown error occurred.');
+    const fetchCoach = async () => {
+      setIsLoading(true);
+      try {
+        const data = await getCoachById(id);
+        setCoach(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An unknown error occurred.');
+      } finally {
+        setIsLoading(false);
       }
-    } finally {
-      setLoading(false);
-    }
-  }, [id]); // Dependency array includes 'id'
+    };
 
-  // Initial fetch
-  useEffect(() => {
     fetchCoach();
-  }, [fetchCoach]); // Dependency array includes 'fetchCoach'
+  }, [id]);
 
-  // Callback for the assignment component to trigger a refresh
-  const handleAssignmentSuccess = () => {
-    // Re-fetch the coach data to show the updated team
-    fetchCoach(); 
-  };
-
-  if (loading) {
+  if (isLoading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-        <CircularProgress />
-      </Box>
+      <Container maxWidth="md">
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+          <CircularProgress />
+        </Box>
+      </Container>
     );
   }
 
   if (error) {
     return (
-      <Container maxWidth="md" sx={{ mt: 4 }}>
-        <Alert severity="error">
-          <strong>Error:</strong> {error}
+      <Container maxWidth="md">
+        <Alert severity="error" sx={{ mt: 3 }}>
+          {error}
         </Alert>
       </Container>
     );
@@ -90,42 +74,62 @@ export const CoachDetailPage: React.FC = () => {
 
   if (!coach) {
     return (
-      <Container maxWidth="md" sx={{ mt: 4 }}>
-        <Alert severity="info">Coach data could not be loaded.</Alert>
+      <Container maxWidth="md">
+        <Alert severity="warning" sx={{ mt: 3 }}>
+          Coach not found.
+        </Alert>
       </Container>
     );
   }
 
-  // Display Coach Details
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Coach Details
-      </Typography>
-      
-      <Card sx={{ borderRadius: 2, boxShadow: 3 }}>
-        <CardContent>
-          <Grid container spacing={2}>
-            <DetailItem title="Coach ID" value={`${coach.id.substring(0, 8)}...`} />
-            <DetailItem title="First Name" value={coach.firstname} />
-            <DetailItem title="Last Name" value={coach.lastname} />
-            
-            {/* Display Current Team */}
-            <DetailItem title="Current Team" value={coach.teamName ? coach.teamName : "Unassigned"} />
-          </Grid>
-        </CardContent>
-      </Card>
-      
-      {/* --- New Assign Coach Component --- */}
-      {/* This component will only render its UI if the coach is unassigned 
-        and will handle all its own logic.
-      */}
-      <AssignCoachToTeam 
-        coach={coach} 
-        onAssignmentSuccess={handleAssignmentSuccess} 
-      />
-      
+        <Button 
+            startIcon={<ArrowBack />} 
+            onClick={() => navigate('/coaches')} 
+            sx={{ mb: 2 }}
+        >
+            Back to Coach List
+        </Button>
+        <Card elevation={3}>
+            <CardHeader
+                avatar={
+                    <Avatar sx={{ bgcolor: 'primary.main' }}>
+                        <Person />
+                    </Avatar>
+                }
+                title={<Typography variant="h4">{`${coach.firstname} ${coach.lastname}`}</Typography>}
+                subheader="Coach Details"
+            />
+            <CardContent>
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <List>
+                            <ListItem>
+                                <ListItemIcon><Shield /></ListItemIcon>
+                                <ListItemText primary="Coach ID" secondary={coach.id} />
+                            </ListItem>
+                        </List>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Card variant="outlined">
+                            <CardHeader title="Current Team" />
+                            <CardContent>
+                                {coach.teamId ? (
+                                    <Typography variant="body1">
+                                        <Link component={RouterLink} to={`/teams/${coach.teamId}`}>
+                                            {coach.teamName}
+                                        </Link>
+                                    </Typography>
+                                ) : (
+                                    <Typography>Not currently coaching a team.</Typography>
+                                )}
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                </Grid>
+            </CardContent>
+        </Card>
     </Container>
   );
 };
-

@@ -2,6 +2,7 @@ package com.football.backend.controllers;
 
 import com.football.backend.dto.CreateTeamRequest;
 import com.football.backend.dto.TeamDto;
+import com.football.backend.dto.TeamSummaryDto;
 import com.football.backend.exceptions.ResourceNotFoundException;
 import com.football.backend.exceptions.TeamAssignmentException;
 import com.football.backend.services.TeamService;
@@ -26,17 +27,17 @@ public class TeamController {
     }
 
     @PostMapping
-    public ResponseEntity<TeamDto> createTeam(@RequestBody CreateTeamRequest createTeamRequest) {
+    public ResponseEntity<TeamSummaryDto> createTeam(@RequestBody CreateTeamRequest createTeamRequest) {
         if (createTeamRequest.getName() == null || createTeamRequest.getName().isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
-        TeamDto newTeam = teamService.createTeam(createTeamRequest);
+        TeamSummaryDto newTeam = teamService.createTeam(createTeamRequest);
         return new ResponseEntity<>(newTeam, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<TeamDto>> getAllTeams() {
-        List<TeamDto> teams = teamService.getAllTeams();
+    public ResponseEntity<List<TeamSummaryDto>> getAllTeams() {
+        List<TeamSummaryDto> teams = teamService.getAllTeams();
         return new ResponseEntity<>(teams, HttpStatus.OK);
     }
 
@@ -70,13 +71,6 @@ public class TeamController {
         }
     }
 
-    // --- NEW ENDPOINT ---
-    /**
-     * Handles PUT requests to un-assign (fire) a coach from a team.
-     * We use PUT here as we are updating the team resource.
-     * @param teamId The ID of the team to update.
-     * @return The updated TeamDto.
-     */
     @PutMapping("/{teamId}/unassignCoach")
     public ResponseEntity<?> unassignCoach(@PathVariable String teamId) {
         try {
@@ -102,4 +96,3 @@ public class TeamController {
         return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.CONFLICT);
     }
 }
-

@@ -47,6 +47,10 @@ public class PlayerEntity {
         this.contracts = contracts;
     }
 
+    public void setTeam(TeamEntity team) {
+        this.team = team;
+    }
+
 }
 
     

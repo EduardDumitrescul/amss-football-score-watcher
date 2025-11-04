@@ -1,4 +1,4 @@
-import type { Coach } from '../models/Coach.tsx';
+import type { Coach, CoachSummary } from '../models/Coach.tsx';
 import type { CoachFormData } from '../components/CoachForm';
 
 // Base URL for your backend API
@@ -46,7 +46,7 @@ export const createCoach = async (coachData: CoachFormData): Promise<Coach> => {
  * * @returns A promise that resolves to an array of Coach objects.
  * @throws An error if the network response is not ok.
  */
-export const getAllCoaches = async (): Promise<Coach[]> => {
+export const getAllCoaches = async (): Promise<CoachSummary[]> => {
   // Call the controller endpoint
   const response = await fetch(`${API_BASE_URL}`);
 
@@ -57,7 +57,7 @@ export const getAllCoaches = async (): Promise<Coach[]> => {
   }
 
   // Parse the JSON response
-  const data: Coach[] = await response.json();
+  const data: CoachSummary[] = await response.json();
   return data;
 };
 
@@ -81,3 +81,12 @@ export const getCoachById = async (id: string): Promise<Coach> => {
   return data;
 };
 
+export const getAvailableCoaches = async (): Promise<CoachSummary[]> => {
+  const response = await fetch(`${API_BASE_URL}/available`);
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to fetch available coaches: ${response.status} ${response.statusText} - ${errorText}`);
+  }
+  const data: CoachSummary[] = await response.json();
+  return data;
+};

@@ -4,7 +4,10 @@ import {
   TextField,
   Button,
   CircularProgress,
+  Grid,
+  InputAdornment,
 } from '@mui/material';
+import { Person } from '@mui/icons-material';
 
 export interface CoachFormData {
   firstname: string;
@@ -35,34 +38,52 @@ export const CoachForm: React.FC<CoachFormProps> = ({
     <Box 
       component="form" 
       onSubmit={onSubmit} 
-      sx={{ 
-        display: 'flex', 
-        flexDirection: 'column', 
-        gap: 3 // Adds spacing between form elements
-      }}
+      sx={{ mt: 3 }} // Margin top for spacing from title
       noValidate
     >
-      <TextField
-        label="First Name"
-        variant="outlined"
-        name="firstname" // Matches CoachFormData
-        value={formData.firstname}
-        onChange={onFieldChange}
-        required
-        disabled={isSubmitting}
-      />
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="First Name"
+            variant="outlined"
+            name="firstname"
+            value={formData.firstname}
+            onChange={onFieldChange}
+            required
+            fullWidth
+            disabled={isSubmitting}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Person />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Grid>
 
-      <TextField
-        label="Last Name"
-        variant="outlined"
-        name="lastname" // Matches CoachFormData
-        value={formData.lastname}
-        onChange={onFieldChange}
-        required
-        disabled={isSubmitting}
-      />
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Last Name"
+            variant="outlined"
+            name="lastname"
+            value={formData.lastname}
+            onChange={onFieldChange}
+            required
+            fullWidth
+            disabled={isSubmitting}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Person />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Grid>
+      </Grid>
 
-      <Box sx={{ position: 'relative', mt: 2 }}>
+      <Box sx={{ position: 'relative', mt: 3 }}>
         <Button
           type="submit"
           variant="contained"
@@ -71,7 +92,7 @@ export const CoachForm: React.FC<CoachFormProps> = ({
           disabled={isSubmitting}
           size="large"
         >
-          {isSubmitting ? 'Creating Coach...' : 'Create Coach'}
+          {isSubmitting ? 'Creating...' : 'Create Coach'}
         </Button>
         {isSubmitting && (
           <CircularProgress

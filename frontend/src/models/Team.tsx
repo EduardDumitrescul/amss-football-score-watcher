@@ -1,10 +1,11 @@
+export interface TeamSummary {
+  id: string;
+  name: string;
+  coachName: string | null;
+}
+
 export interface Team {
   id: string;
   name: string;
-
-  // Flattened coach info
   coachId: string | null;
-  coachFirstname: string | null;
-  coachLastname: string | null;
 }
-

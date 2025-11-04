@@ -1,29 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link as RouterLink } from 'react-router-dom';
 import type { Team } from '../models/Team'; 
+import type { Coach } from '../models/Coach';
 import { getTeamById, unassignCoach } from '../services/TeamService';
+import { getCoachById } from '../services/CoachService';
 import {
   Container,
   Typography,
-  Paper,
   Box,
   CircularProgress,
   Alert,
   Grid,
   Button,
-  Link
+  Link,
+  Card,
+  CardContent,
+  CardHeader,
+  Avatar,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
 } from '@mui/material';
+import { ArrowBack, Group, Person, Shield } from '@mui/icons-material';
 
 export const TeamDetailPage: React.FC = () => {
   const [team, setTeam] = useState<Team | null>(null);
+  const [coach, setCoach] = useState<Coach | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadingCoach, setLoadingCoach] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  // Add a new loading state for the fire action
+  const [coachError, setCoachError] = useState<string | null>(null);
   const [isFiring, setIsFiring] = useState<boolean>(false); 
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const fetchTeam = async () => {
+  const fetchTeam = useCallback(async () => {
     if (!id) {
       setError('No team ID provided.');
       setLoading(false);
@@ -32,30 +44,43 @@ export const TeamDetailPage: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const data = await getTeamById(id);
-      setTeam(data);
+      const teamData = await getTeamById(id);
+      setTeam(teamData);
+
+      if (teamData.coachId) {
+        setLoadingCoach(true);
+        setCoachError(null);
+        try {
+          const coachData = await getCoachById(teamData.coachId);
+          setCoach(coachData);
+        } catch (e) {
+          setCoachError(e instanceof Error ? e.message : 'Failed to fetch coach details.');
+        } finally {
+          setLoadingCoach(false);
+        }
+      } else {
+        setCoach(null);
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : 'An unknown error occurred.');
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     fetchTeam();
-  }, [id]);
+  }, [fetchTeam]);
 
-  // --- NEW: Handler for the fire coach button ---
   const handleFireCoach = async () => {
     if (!team) return;
 
     setIsFiring(true);
     setError(null);
     try {
-      // Call the service function
       const updatedTeam = await unassignCoach(team.id);
-      // Update the local state to show the change immediately
       setTeam(updatedTeam); 
+      setCoach(null); // Coach is unassigned
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Failed to fire coach.');
     } finally {
@@ -71,8 +96,7 @@ export const TeamDetailPage: React.FC = () => {
     );
   }
 
-  // Show a general error for fetching
-  if (error && !isFiring) { // Only show fetch error if not firing
+  if (error) {
     return (
       <Container maxWidth="md" sx={{ mt: 4 }}>
         <Alert severity="error">
@@ -94,83 +118,83 @@ export const TeamDetailPage: React.FC = () => {
   }
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Paper sx={{ p: { xs: 2, sm: 4 }, borderRadius: 2, boxShadow: 3 }}>
-        {/* Show a specific error for the firing action */}
-        {error && isFiring && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            <strong>Error:</strong> {error}
-          </Alert>
-        )}
-
-        <Typography variant="h4" component="h1" gutterBottom>
-          {team.name}
-        </Typography>
-        
-        <Grid container spacing={2} sx={{ mt: 2 }}>
-          {/* Team Name */}
-          <Grid item xs={12} sm={4}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-              Team Name:
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={8}>
-            <Typography variant="body1">
-              {team.name}
-            </Typography>
-          </Grid>
-
-          {/* Team ID */}
-          <Grid item xs={12} sm={4}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-              Team ID:
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={8}>
-            <Typography variant="body1" sx={{ fontFamily: 'monospace', wordBreak: 'break-all' }}>
-              {team.id}
-            </Typography>
-          </Grid>
-
-          {/* Assigned Coach */}
-          <Grid item xs={12} sm={4}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-              Assigned Coach:
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={8}>
-            {team.coachId ? (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                <Link component={RouterLink} to={`/coaches/${team.coachId}`} sx={{ fontWeight: 'medium' }}>
-                  {team.coachFirstname} {team.coachLastname}
-                </Link>
-                {/* --- NEW: Fire Coach Button --- */}
-                <Button
-                  variant="contained"
-                  color="error"
-                  size="small"
-                  onClick={handleFireCoach}
-                  disabled={isFiring}
-                >
-                  {isFiring ? <CircularProgress size={20} color="inherit" /> : 'Fire Coach'}
-                </Button>
-              </Box>
-            ) : (
-              <Typography variant="body1" sx={{ fontStyle: 'italic', color: 'text.secondary' }}>
-                No Coach Assigned
-              </Typography>
-            )}
-          </Grid>
+    <Container maxWidth="lg" sx={{ mt: 4 }}>
+      <Button 
+        startIcon={<ArrowBack />} 
+        onClick={() => navigate('/teams')} 
+        sx={{ mb: 2 }}
+      >
+        Back to Team List
+      </Button>
+      <Grid container spacing={3}>
+        {/* Team Details Card */}
+        <Grid item xs={12} md={6}>
+          <Card elevation={3}>
+            <CardHeader
+              avatar={<Avatar sx={{ bgcolor: 'primary.main' }}><Group /></Avatar>}
+              title={<Typography variant="h5">{team.name}</Typography>}
+              subheader="Team Details"
+            />
+            <CardContent>
+              <List>
+                <ListItem>
+                  <ListItemIcon><Shield /></ListItemIcon>
+                  <ListItemText primary="Team ID" secondary={team.id} />
+                </ListItem>
+              </List>
+            </CardContent>
+          </Card>
         </Grid>
 
-        <Box sx={{ mt: 4, display: 'flex', justifyContent: 'flex-start' }}>
-          <Button variant="outlined" onClick={() => navigate('/teams')}>
-            Back to List
-          </Button>
-        </Box>
-      </Paper>
+        {/* Coach Details Card */}
+        <Grid item xs={12} md={6}>
+          <Card elevation={3}>
+            <CardHeader
+              avatar={<Avatar><Person /></Avatar>}
+              title={<Typography variant="h5">Coach</Typography>}
+            />
+            <CardContent>
+              {loadingCoach ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}><CircularProgress size={20} /></Box>
+              ) : coachError ? (
+                <Alert severity="error">{coachError}</Alert>
+              ) : coach ? (
+                <Box>
+                  <Typography variant="h6">
+                    <Link component={RouterLink} to={`/coaches/${coach.id}`}>
+                      {coach.firstname} {coach.lastname}
+                    </Link>
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    size="small"
+                    onClick={handleFireCoach}
+                    disabled={isFiring}
+                    sx={{ mt: 2 }}
+                  >
+                    {isFiring ? <CircularProgress size={20} color="inherit" /> : 'Fire Coach'}
+                  </Button>
+                </Box>
+              ) : (
+                <Box>
+                  <Typography sx={{ fontStyle: 'italic', color: 'text.secondary' }}>
+                    No coach assigned.
+                  </Typography>
+                  <Button 
+                    variant="outlined" 
+                    sx={{ mt: 2 }} 
+                    onClick={() => navigate(`/teams/${team.id}/assign-coach`)} 
+                  >
+                    Assign Coach
+                  </Button>
+                </Box>
+              )}
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </Container>
   );
 };
-
 

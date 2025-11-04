@@ -18,3 +18,9 @@ export interface Player {
   // };
 }
 
+export interface PlayerSummary {
+  id: string;
+  fullName: string;
+  position?: string;
+  shirtNumber?: number;
+}
