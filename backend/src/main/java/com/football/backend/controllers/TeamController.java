@@ -36,8 +36,8 @@ public class TeamController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TeamDto>> getAllTeams() {
-        List<TeamDto> teams = teamService.getAllTeams();
+    public ResponseEntity<List<TeamSummaryDto>> getAllTeams() {
+        List<TeamSummaryDto> teams = teamService.getAllTeams();
         return new ResponseEntity<>(teams, HttpStatus.OK);
     }
 

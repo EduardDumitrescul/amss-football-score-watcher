@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Team } from '../models/Team';
+import type { TeamSummary } from '../models/Team';
 import { getAllTeams } from '../services/TeamService';
 import {
   Container,
@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 
 export const TeamListPage: React.FC = () => {
-  const [teams, setTeams] = useState<Team[]>([]);
+  const [teams, setTeams] = useState<TeamSummary[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -91,9 +91,8 @@ export const TeamListPage: React.FC = () => {
                   </TableCell>
                   <TableCell>{team.id}</TableCell>
                   <TableCell>
-                    {team.coachId ? (
-                      // Use a template literal to combine the names
-                      `${team.coachFirstname} ${team.coachLastname}`
+                    {team.coachName ? (
+                      team.coachName
                     ) : (
                       <Typography variant="body2" sx={{ fontStyle: 'italic', color: 'text.secondary' }}>
                         No Coach

@@ -42,10 +42,10 @@ public class TeamService {
     }
 
     @Transactional(readOnly = true)
-    public List<TeamDto> getAllTeams() {
+    public List<TeamSummaryDto> getAllTeams() {
         List<TeamEntity> teams = teamRepository.findAll();
         return teams.stream()
-                .map(TeamDto::new)
+                .map(TeamSummaryDto::new)
                 .collect(Collectors.toList());
     }
 

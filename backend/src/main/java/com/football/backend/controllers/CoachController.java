@@ -48,7 +48,7 @@ public class CoachController {
             CoachDto coach = coachService.getCoachById(id);
             return new ResponseEntity<>(coach, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 

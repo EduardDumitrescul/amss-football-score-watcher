@@ -63,7 +63,7 @@ public class PlayerController {
             PlayerDto player = playerService.getPlayerById(id);
             return new ResponseEntity<>(player, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -76,7 +76,7 @@ public class PlayerController {
             PlayerDto updatedPlayer = playerService.signContract(createContractRequest);
             return new ResponseEntity<>(updatedPlayer, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 }

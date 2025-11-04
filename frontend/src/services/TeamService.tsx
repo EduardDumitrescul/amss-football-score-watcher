@@ -1,4 +1,4 @@
-import type { Team } from '../models/Team';
+import type { Team, TeamSummary } from '../models/Team';
 import type { CreateTeamFormData } from '../dto/CreateTeamRequest';
 
 const API_BASE_URL = 'http://localhost:8080/api/teams';
@@ -6,12 +6,12 @@ const API_BASE_URL = 'http://localhost:8080/api/teams';
 /**
  * Fetches all teams from the backend API.
  */
-export const getAllTeams = async (): Promise<Team[]> => {
+export const getAllTeams = async (): Promise<TeamSummary[]> => {
   const response = await fetch(API_BASE_URL);
   if (!response.ok) {
     throw new Error('Failed to fetch teams');
   }
-  return await response.json() as Team[];
+  return await response.json() as TeamSummary[];
 };
 
 /**
