@@ -3,11 +3,17 @@ import {
   TextField,
   Button,
   Box,
-  Typography,
   Grid,
   CircularProgress,
-  Alert
 } from '@mui/material';
+import {
+  Person,
+  SportsSoccer,
+  Numbers,
+  Flag,
+  CalendarMonth,
+} from '@mui/icons-material';
+import InputAdornment from '@mui/material/InputAdornment';
 
 // This is the shape of data from the PlayerCreateForm
 export interface PlayerFormData {
@@ -81,10 +87,7 @@ export const PlayerCreateForm: React.FC<PlayerCreateFormProps> = ({
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} noValidate>
-      <Typography variant="h5" gutterBottom>
-        Player Details
-      </Typography>
+    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
       
       {/* Error message display */}
       {submitError && (
@@ -96,114 +99,159 @@ export const PlayerCreateForm: React.FC<PlayerCreateFormProps> = ({
       <Grid container spacing={2}>
         {/* First Name */}
         <Grid item xs={12} sm={6}>
-          <div>
-            <TextField
-              required
-              fullWidth
-              id="firstname"
-              label="First Name"
-              name="firstname"
-              value={formData.firstname}
-              onChange={handleChange}
-              disabled={isSubmitting}
-            />
-          </div>
+          <TextField
+            required
+            fullWidth
+            id="firstname"
+            label="First Name"
+            name="firstname"
+            value={formData.firstname}
+            onChange={handleChange}
+            disabled={isSubmitting}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Person />
+                </InputAdornment>
+              ),
+            }}
+          />
         </Grid>
 
         {/* Last Name */}
-        <Grid xs={12} sm={6}>
-          <div>
-            <TextField
-              required
-              fullWidth
-              id="lastname"
-              label="Last Name"
-              name="lastname"
-              value={formData.lastname}
-              onChange={handleChange}
-              disabled={isSubmitting}
-            />
-          </div>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            fullWidth
+            id="lastname"
+            label="Last Name"
+            name="lastname"
+            value={formData.lastname}
+            onChange={handleChange}
+            disabled={isSubmitting}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Person />
+                </InputAdornment>
+              ),
+            }}
+          />
         </Grid>
 
         {/* Position */}
-        <Grid xs={12} sm={6}>
-          <div>
-            <TextField
-              fullWidth
-              id="position"
-              label="Position (e.g., Forward)"
-              name="position"
-              value={formData.position}
-              onChange={handleChange}
-              disabled={isSubmitting}
-            />
-          </div>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            fullWidth
+            id="position"
+            label="Position (e.g., Forward)"
+            name="position"
+            value={formData.position}
+            onChange={handleChange}
+            disabled={isSubmitting}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SportsSoccer />
+                </InputAdornment>
+              ),
+            }}
+          />
         </Grid>
 
         {/* Shirt Number */}
-        <Grid xs={12} sm={6}>
-          <div>
-            <TextField
-              fullWidth
-              id="shirtNumber"
-              label="Shirt Number"
-              name="shirtNumber"
-              type="number"
-              value={formData.shirtNumber || ''} // Handle undefined for number input
-              onChange={handleChange}
-              disabled={isSubmitting}
-              inputProps={{ min: 1, max: 99 }}
-            />
-          </div>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            fullWidth
+            id="shirtNumber"
+            label="Shirt Number"
+            name="shirtNumber"
+            type="number"
+            value={formData.shirtNumber || ''} // Handle undefined for number input
+            onChange={handleChange}
+            disabled={isSubmitting}
+            inputProps={{ min: 1, max: 99 }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Numbers />
+                </InputAdornment>
+              ),
+            }}
+          />
         </Grid>
 
         {/* Nationality */}
-        <Grid xs={12} sm={6}>
-          <div>
-            <TextField
-              fullWidth
-              id="nationality"
-              label="Nationality"
-              name="nationality"
-              value={formData.nationality}
-              onChange={handleChange}
-              disabled={isSubmitting}
-            />
-          </div>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            fullWidth
+            id="nationality"
+            label="Nationality"
+            name="nationality"
+            value={formData.nationality}
+            onChange={handleChange}
+            disabled={isSubmitting}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Flag />
+                </InputAdornment>
+              ),
+            }}
+          />
         </Grid>
 
         {/* Date of Birth */}
-        <Grid xs={12} sm={6}>
-          <div>
-            <TextField
-              fullWidth
-              id="dateOfBirth"
-              label="Date of Birth"
-              name="dateOfBirth"
-              type="date"
-              value={formData.dateOfBirth || ''}
-              onChange={handleDateChange}
-              InputLabelProps={{
-                shrink: true, // Keep the label floated
-              }}
-              disabled={isSubmitting}
-            />
-          </div>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            fullWidth
+            id="dateOfBirth"
+            label="Date of Birth"
+            name="dateOfBirth"
+            type="date"
+            value={formData.dateOfBirth || ''}
+            onChange={handleDateChange}
+            InputLabelProps={{
+              shrink: true, // Keep the label floated
+            }}
+            disabled={isSubmitting}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <CalendarMonth />
+                </InputAdornment>
+              ),
+            }}
+          />
         </Grid>
         
       </Grid>
 
       {/* Submit Button */}
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2, height: 40 }} // Fixed height
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? <CircularProgress size={24} color="inherit" /> : 'Create Player'}
-      </Button>
+      <Box sx={{ position: 'relative', mt: 3 }}>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          sx={{ height: 40 }}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Creating...' : 'Create Player'}
+        </Button>
+        {isSubmitting && (
+          <CircularProgress
+            size={24}
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              marginTop: '-12px',
+              marginLeft: '-12px',
+            }}
+          />
+        )}
+      </Box>
     </Box>
   );
 };

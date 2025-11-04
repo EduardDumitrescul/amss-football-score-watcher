@@ -3,6 +3,7 @@ package com.football.backend.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import com.football.backend.dto.PlayerSummaryDto;
 import com.football.backend.entities.PlayerEntity;
 import com.football.backend.models.Player;
 
@@ -18,4 +19,10 @@ public interface PlayerMapper {
 
     @Mapping(target = "contracts", ignore = true)
     Player toDomain(PlayerEntity entity);
+
+    @Mapping(target = "fullName", expression = "java(player.getFirstname() + ' ' + player.getLastname())")
+    PlayerSummaryDto toSummaryDto(Player player);
+
+    @Mapping(target = "fullName", expression = "java(entity.getFirstname() + ' ' + entity.getLastname())")
+    PlayerSummaryDto toSummaryDto(PlayerEntity entity);
 }

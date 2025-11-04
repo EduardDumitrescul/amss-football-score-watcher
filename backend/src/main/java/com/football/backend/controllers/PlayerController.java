@@ -3,6 +3,7 @@ package com.football.backend.controllers;
 import com.football.backend.dto.CreateContractRequest;
 import com.football.backend.dto.CreatePlayerRequest;
 import com.football.backend.dto.PlayerDto;
+import com.football.backend.dto.PlayerSummaryDto;
 import com.football.backend.exceptions.ResourceNotFoundException;
 import com.football.backend.services.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +49,8 @@ public class PlayerController {
      * GET /api/players : Retrieves all players.
      */
     @GetMapping
-    public ResponseEntity<List<PlayerDto>> getAllPlayers() {
-        List<PlayerDto> players = playerService.getAllPlayers();
+    public ResponseEntity<List<PlayerSummaryDto>> getAllPlayers() {
+        List<PlayerSummaryDto> players = playerService.getAllPlayers();
         return new ResponseEntity<>(players, HttpStatus.OK);
     }
 

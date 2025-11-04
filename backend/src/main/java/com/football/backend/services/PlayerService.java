@@ -3,10 +3,12 @@ package com.football.backend.services;
 import com.football.backend.dto.CreateContractRequest;
 import com.football.backend.dto.CreatePlayerRequest;
 import com.football.backend.dto.PlayerDto;
+import com.football.backend.dto.PlayerSummaryDto;
 import com.football.backend.entities.ContractEntity;
 import com.football.backend.entities.PlayerEntity;
 import com.football.backend.entities.TeamEntity;
 import com.football.backend.exceptions.ResourceNotFoundException;
+import com.football.backend.mappers.PlayerMapper;
 import com.football.backend.repositories.ContractRepository;
 import com.football.backend.repositories.PlayerRepository;
 import com.football.backend.repositories.TeamRepository;
@@ -24,12 +26,14 @@ public class PlayerService {
     private final PlayerRepository playerRepository;
     private final TeamRepository teamRepository;
     private final ContractRepository contractRepository;
+    private final PlayerMapper playerMapper;
 
     @Autowired
-    public PlayerService(PlayerRepository playerRepository, TeamRepository teamRepository, ContractRepository contractRepository) {
+    public PlayerService(PlayerRepository playerRepository, TeamRepository teamRepository, ContractRepository contractRepository, PlayerMapper playerMapper) {
         this.playerRepository = playerRepository;
         this.teamRepository = teamRepository;
         this.contractRepository = contractRepository;
+        this.playerMapper = playerMapper;
     }
 
     /**
@@ -65,9 +69,9 @@ public class PlayerService {
      * @return A list of all player DTOs.
      */
     @Transactional(readOnly = true)
-    public List<PlayerDto> getAllPlayers() {
+    public List<PlayerSummaryDto> getAllPlayers() {
         return playerRepository.findAll().stream()
-                .map(PlayerDto::new)
+                .map(playerMapper::toSummaryDto)
                 .collect(Collectors.toList());
     }
 
