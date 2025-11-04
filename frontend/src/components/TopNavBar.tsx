@@ -18,18 +18,18 @@ const homeNavItem = { label: 'Home', path: '/' };
 
 const coachMenuItems = [
   { label: 'View Coaches', path: '/coaches' },
-  { label: 'New Coach', path: '/coaches/new' }
+  { label: 'New Coach', path: '/coaches/create' }
 ];
 
 const teamMenuItems = [
   { label: 'View Teams', path: '/teams' },
-  { label: 'New Team', path: '/teams/new' }
+  { label: 'New Team', path: '/teams/create' }
 ];
 
 // --- NEW ---
 const playerMenuItems = [
   { label: 'View Players', path: '/players' },
-  { label: 'New Player', path: '/players/new' }
+  { label: 'New Player', path: '/players/create' }
 ];
 // --- END NEW ---
 

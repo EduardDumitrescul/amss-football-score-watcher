@@ -1,5 +1,5 @@
 import type { PlayerFormData } from '../components/PlayerCreateForm';
-import type { Player } from '../models/Player';
+import type { Player, PlayerSummary } from '../models/Player';
 
 // Base URL for the Player API
 const API_BASE_URL = 'http://localhost:8080/api/players';
@@ -15,12 +15,12 @@ export type ContractFormData = {
 /**
  * Fetches all players from the backend.
  */
-export const getAllPlayers = async (): Promise<Player[]> => {
+export const getAllPlayers = async (): Promise<PlayerSummary[]> => {
   const response = await fetch(API_BASE_URL);
   if (!response.ok) {
     throw new Error(`Failed to fetch players: ${response.statusText}`);
   }
-  return response.json() as Promise<Player[]>;
+  return response.json() as Promise<PlayerSummary[]>;
 };
 
 /**

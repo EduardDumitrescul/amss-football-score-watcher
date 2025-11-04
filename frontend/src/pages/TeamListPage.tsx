@@ -60,7 +60,7 @@ export const TeamListPage: React.FC = () => {
           <Typography variant="h4" component="h1">
             Teams
           </Typography>
-          <Button variant="contained" onClick={() => navigate('/teams/new')}>
+          <Button variant="contained" onClick={() => navigate('/teams/create')}>
             Create New Team
           </Button>
         </Box>

@@ -16,10 +16,10 @@ import {
 } from '@mui/material';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { getAllPlayers } from '../services/PlayerService';
-import type { Player } from '../models/Player';
+import type { PlayerSummary } from '../models/Player';
 
 export const PlayerListPage: React.FC = () => {
-  const [players, setPlayers] = useState<Player[]>([]);
+  const [players, setPlayers] = useState<PlayerSummary[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -79,7 +79,7 @@ export const PlayerListPage: React.FC = () => {
             variant="contained"
             color="primary"
             component={RouterLink}
-            to="/players/new"
+            to="/players/create"
             sx={{ mr: 1 }}
           >
             Add New Player
@@ -88,7 +88,7 @@ export const PlayerListPage: React.FC = () => {
             variant="contained"
             color="secondary"
             component={RouterLink}
-            to="/players/sign-contract"
+            to="/sign-contract"
           >
             Sign Contract
           </Button>
@@ -100,16 +100,15 @@ export const PlayerListPage: React.FC = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow sx={{ '& th': { fontWeight: 'bold', backgroundColor: 'action.hover' } }}>
-              <TableCell>Name</TableCell>
+              <TableCell>Full Name</TableCell>
               <TableCell>Position</TableCell>
-              <TableCell>Nationality</TableCell>
               <TableCell>Shirt Number</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {players.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={4} align="center">
+                <TableCell colSpan={3} align="center">
                   No players found.
                 </TableCell>
               </TableRow>
@@ -122,10 +121,9 @@ export const PlayerListPage: React.FC = () => {
                   sx={{ cursor: 'pointer', '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {player.firstname} {player.lastname}
+                    {player.fullName}
                   </TableCell>
                   <TableCell>{player.position || 'N/A'}</TableCell>
-                  <TableCell>{player.nationality || 'N/A'}</TableCell>
                   <TableCell>{player.shirtNumber || 'N/A'}</TableCell>
                 </TableRow>
               ))
@@ -136,4 +134,3 @@ export const PlayerListPage: React.FC = () => {
     </Container>
   );
 };
-
