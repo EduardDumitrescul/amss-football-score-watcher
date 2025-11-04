@@ -10,13 +10,22 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Avatar,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Link,
+  Button
 } from '@mui/material';
-import { useParams, Link as RouterLink } from 'react-router-dom';
+import { useParams, Link as RouterLink, useNavigate } from 'react-router-dom';
 import { getCoachById } from '../services/CoachService';
 import type { Coach } from '../models/Coach';
+import { Person, Shield, Group, ArrowBack } from '@mui/icons-material';
 
 export const CoachDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [coach, setCoach] = useState<Coach | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -75,48 +84,52 @@ export const CoachDetailPage: React.FC = () => {
 
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Paper elevation={3} sx={{ p: 3, borderRadius: 2 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          {coach.firstname} {coach.lastname}
-        </Typography>
-
-        <Grid container spacing={3} sx={{ mt: 2 }}>
-          {/* Personal Details */}
-          <Grid item xs={12} sm={6}>
-            <Card>
-              <CardHeader title="Personal Details" />
-              <CardContent>
-                <Typography variant="body1">
-                  <strong>First Name:</strong> {coach.firstname}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Last Name:</strong> {coach.lastname}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          {/* Current Team */}
-          <Grid item xs={12} sm={6}>
-            <Card>
-              <CardHeader title="Current Team" />
-              <CardContent>
-                {coach.teamId ? (
-                  <Typography variant="body1">
-                    <strong>Team:</strong> 
-                    <RouterLink to={`/teams/${coach.teamId}`}>
-                      {coach.teamName}
-                    </RouterLink>
-                  </Typography>
-                ) : (
-                  <Typography variant="body1">Not currently coaching a team.</Typography>
-                )}
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-      </Paper>
+        <Button 
+            startIcon={<ArrowBack />} 
+            onClick={() => navigate('/coaches')} 
+            sx={{ mb: 2 }}
+        >
+            Back to Coach List
+        </Button>
+        <Card elevation={3}>
+            <CardHeader
+                avatar={
+                    <Avatar sx={{ bgcolor: 'primary.main' }}>
+                        <Person />
+                    </Avatar>
+                }
+                title={<Typography variant="h4">{`${coach.firstname} ${coach.lastname}`}</Typography>}
+                subheader="Coach Details"
+            />
+            <CardContent>
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <List>
+                            <ListItem>
+                                <ListItemIcon><Shield /></ListItemIcon>
+                                <ListItemText primary="Coach ID" secondary={coach.id} />
+                            </ListItem>
+                        </List>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Card variant="outlined">
+                            <CardHeader title="Current Team" />
+                            <CardContent>
+                                {coach.teamId ? (
+                                    <Typography variant="body1">
+                                        <Link component={RouterLink} to={`/teams/${coach.teamId}`}>
+                                            {coach.teamName}
+                                        </Link>
+                                    </Typography>
+                                ) : (
+                                    <Typography>Not currently coaching a team.</Typography>
+                                )}
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                </Grid>
+            </CardContent>
+        </Card>
     </Container>
   );
 };
-
