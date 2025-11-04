@@ -8,7 +8,7 @@ import com.football.backend.models.Player;
 
 @Mapper(
     componentModel = "spring", 
-    uses = {ContractMapper.class, TeamMapper.class}
+    uses = {TeamMapper.class}
 )
 public interface PlayerMapper {
 

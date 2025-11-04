@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
-  Typography,
-  Paper,
+  Container,
+  Card,
+  CardContent,
+  CardHeader,
   Alert,
+  Button,
 } from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
 import { CoachForm } from '../components/CoachForm';
 import type { CoachFormData } from '../components/CoachForm';
 import { createCoach } from '../services/CoachService';
@@ -19,40 +24,24 @@ const initialState: CoachFormData = {
  * for creating a new coach.
  */
 const CreateCoachPage: React.FC = () => {
-  // State for the form fields
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<CoachFormData>(initialState);
-  
-  // State for loading and submission status
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
-  // State for handling errors and success messages
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
 
-  // --- Event Handlers ---
-
-  /** Handles changes in standard text fields */
   const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  /** Handles the form submission */
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent default form submission
-    
-    // Reset status
+    e.preventDefault();
     setError(null);
-    setSuccess(null);
     setIsSubmitting(true);
 
     try {
       const newCoach = await createCoach(formData);
-      setSuccess(`Successfully created coach: ${newCoach.firstname} ${newCoach.lastname}!`);
-      setFormData(initialState); // Clear the form on success
+      navigate(`/coaches/${newCoach.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An unknown error occurred.');
     } finally {
@@ -60,53 +49,39 @@ const CreateCoachPage: React.FC = () => {
     }
   };
 
-  // --- Rendering ---
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        padding: 4,
-        backgroundColor: '#f4f6f8',
-        minHeight: '100vh',
-      }}
-    >
-      <Paper
-        elevation={3}
-        sx={{
-          padding: 4,
-          width: '100%',
-          maxWidth: '500px',
-          borderRadius: 2,
-        }}
-      >
-        <Typography variant="h4" component="h1" gutterBottom align="center">
-          Create New Coach
-        </Typography>
-
-        {/* Success Message */}
-        {success && (
-          <Alert severity="success" sx={{ mb: 2 }}>
-            {success}
-          </Alert>
-        )}
-
-        {/* Error Message */}
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {error}
-          </Alert>
-        )}
-
-        <CoachForm
-          formData={formData}
-          isSubmitting={isSubmitting}
-          onFieldChange={handleFieldChange}
-          onSubmit={handleSubmit}
-        />
-      </Paper>
-    </Box>
+    <Container maxWidth="sm">
+      <Box sx={{ my: 4 }}>
+        <Button 
+          startIcon={<ArrowBack />} 
+          onClick={() => navigate(-1)} 
+          sx={{ mb: 2 }}
+        >
+          Go Back
+        </Button>
+        <Card elevation={3}>
+          <CardHeader
+            title="Create New Coach"
+            subheader="Fill in the details below to add a new coach"
+            titleTypographyProps={{ variant: 'h4', component: 'h1' }}
+            subheaderTypographyProps={{ variant: 'body1' }}
+          />
+          <CardContent>
+            {error && (
+              <Alert severity="error" sx={{ mb: 2 }}>
+                {error}
+              </Alert>
+            )}
+            <CoachForm
+              formData={formData}
+              isSubmitting={isSubmitting}
+              onFieldChange={handleFieldChange}
+              onSubmit={handleSubmit}
+            />
+          </CardContent>
+        </Card>
+      </Box>
+    </Container>
   );
 };
 

@@ -13,6 +13,5 @@ import java.util.UUID;
  */
 @Repository
 public interface CoachRepository extends JpaRepository<CoachEntity, UUID> {
-    // You can add custom query methods here if needed, e.g.:
-    // Optional<CoachEntity> findByFirstname(String firstname);
+
 }

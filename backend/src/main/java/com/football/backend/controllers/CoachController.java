@@ -1,6 +1,7 @@
 package com.football.backend.controllers;
 
 import com.football.backend.dto.CoachDto;
+import com.football.backend.dto.CoachSummaryDto;
 import com.football.backend.dto.CreateCoachRequest;
 import com.football.backend.exceptions.ResourceNotFoundException;
 import com.football.backend.services.CoachService;
@@ -31,7 +32,6 @@ public class CoachController {
      */
     @PostMapping
     public ResponseEntity<CoachDto> createCoach(@RequestBody CreateCoachRequest createCoachRequest) {
-        // Basic validation
         if (createCoachRequest.getFirstname() == null || createCoachRequest.getFirstname().isEmpty() ||
             createCoachRequest.getLastname() == null || createCoachRequest.getLastname().isEmpty()) {
             return ResponseEntity.badRequest().build(); // Or return a proper error message
@@ -46,8 +46,8 @@ public class CoachController {
      * @return A list of all coach DTOs.
      */
     @GetMapping
-    public ResponseEntity<List<CoachDto>> getAllCoaches() {
-        List<CoachDto> coaches = coachService.getAllCoaches(); 
+    public ResponseEntity<List<CoachSummaryDto>> getAllCoaches() {
+        List<CoachSummaryDto> coaches = coachService.getAllCoaches(); 
         return new ResponseEntity<>(coaches, HttpStatus.OK);
     }
 

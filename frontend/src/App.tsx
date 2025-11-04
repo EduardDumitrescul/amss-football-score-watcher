@@ -4,15 +4,13 @@ import { CssBaseline, Container, Typography } from '@mui/material';
 import { TopNavBar } from './components/TopNavBar';
 import { CoachListPage } from './pages/CoachListPage';
 import { CoachDetailPage } from './pages/CoachDetailPage';
-// Import your Team pages
 import { TeamListPage } from './pages/TeamListPage';
 import { TeamDetailPage } from './pages/TeamDetailPage';
 import { CreateTeamPage } from './pages/CreateTeamPage';
-// --- NEW Player Page Imports ---
 import { PlayerListPage } from './pages/PlayerListPage';
 import { PlayerDetailPage } from './pages/PlayerDetailPage';
 import { CreatePlayerPage } from './pages/CreatePlayerPage';
-// --- END NEW ---
+import CreateCoachPage from './pages/CreateCoachPage';
 
 // Placeholder for Home
 const HomePage: React.FC = () => (
@@ -20,16 +18,6 @@ const HomePage: React.FC = () => (
     <Typography variant="h4" component="h1" gutterBottom>
       Welcome to the Football App
     </Typography>
-  </Container>
-);
-
-// Placeholder for Create Coach Page
-const CreateCoachPage: React.FC = () => (
-  <Container sx={{ mt: 4 }}>
-    <Typography variant="h4" component="h1" gutterBottom>
-      Create New Coach
-    </Typography>
-    {/* You would import and render your CreateCoachForm component here */}
   </Container>
 );
 
