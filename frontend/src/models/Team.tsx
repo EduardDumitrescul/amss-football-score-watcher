@@ -3,3 +3,9 @@ export interface TeamSummary {
   name: string;
   coachName: string | null;
 }
+
+export interface Team {
+  id: string;
+  name: string;
+  coachId: string | null;
+}

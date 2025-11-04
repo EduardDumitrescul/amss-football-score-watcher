@@ -8,3 +8,8 @@ export interface Coach {
   teamName: string | null;
 }
 
+export interface CoachSummary {
+  id: string;
+  fullName: string;
+}
+

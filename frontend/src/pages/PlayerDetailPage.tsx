@@ -15,7 +15,7 @@ import {
 import { getPlayerById } from '../services/PlayerService';
 import type { Player } from '../models/Player';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import SignContractForm from '../components/SignContractForm';
+import { SignContractForm } from '../components/SignContractForm';
 
 /**
  * Helper component to display a single piece of player data.

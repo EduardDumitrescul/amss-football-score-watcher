@@ -21,7 +21,7 @@ interface SignContractFormProps {
     onContractSigned: () => void;
 }
 
-const SignContractForm: React.FC<SignContractFormProps> = ({ playerId, onContractSigned }) => {
+export const SignContractForm: React.FC<SignContractFormProps> = ({ playerId, onContractSigned }) => {
     const navigate = useNavigate();
     const [teams, setTeams] = useState<Team[]>([]);
     const [formData, setFormData] = useState<ContractFormData>({
@@ -136,5 +136,3 @@ const SignContractForm: React.FC<SignContractFormProps> = ({ playerId, onContrac
         </Box>
     );
 };
-
-export default SignContractForm;

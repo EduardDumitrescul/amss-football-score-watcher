@@ -12,11 +12,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.hibernate.Hibernate; 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 @Service
 public class CoachService {
@@ -30,11 +29,6 @@ public class CoachService {
         this.coachMapper = coachMapper;
     }
 
-    /**
-     * Creates a new coach in the database.
-     * @param request The DTO containing the new coach's data.
-     * @return A DTO of the newly created coach.
-     */
     @Transactional
     public CoachDto createCoach(CreateCoachRequest request) {
         CoachEntity newCoach = CoachEntity.builder()
@@ -42,16 +36,12 @@ public class CoachService {
                 .lastname(request.getLastname())
                 .build();
         
-        CoachEntity savedCoach = coachRepository.saveAndFlush(newCoach); // Use saveAndFlush
+        CoachEntity savedCoach = coachRepository.saveAndFlush(newCoach);
         
         return new CoachDto(savedCoach);
     }
 
-    /**
-     * Retrieves all coaches from the database.
-     * @return A list of DTOs for all coaches.
-     */
-    @Transactional(readOnly = true) // Add Transactional
+    @Transactional(readOnly = true)
     public List<CoachSummaryDto> getAllCoaches() {
         List<CoachEntity> coaches = coachRepository.findAll();
         
@@ -60,12 +50,6 @@ public class CoachService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Retrieves a single coach by their ID.
-     * @param id The UUID of the coach to find.
-     * @return A DTO of the found coach.
-     * @throws ResourceNotFoundException if no coach is found with the given ID.
-     */
     @Transactional(readOnly = true)
     public CoachDto getCoachById(String id) {
         CoachEntity coach = coachRepository.findById(UUID.fromString(id))
@@ -74,5 +58,13 @@ public class CoachService {
         Hibernate.initialize(coach.getTeam());
 
         return new CoachDto(coach);
+    }
+
+    @Transactional(readOnly = true)
+    public List<CoachSummaryDto> getAvailableCoaches() {
+        List<CoachEntity> coaches = coachRepository.findByTeamIsNull();
+        return coaches.stream()
+                .map(coachMapper::toSummaryDto)
+                .collect(Collectors.toList());
     }
 }

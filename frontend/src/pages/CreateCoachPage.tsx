@@ -23,7 +23,7 @@ const initialState: CoachFormData = {
  * A "smart" page component that manages state and logic
  * for creating a new coach.
  */
-const CreateCoachPage: React.FC = () => {
+export const CreateCoachPage: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<CoachFormData>(initialState);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -84,5 +84,3 @@ const CreateCoachPage: React.FC = () => {
     </Container>
   );
 };
-
-export default CreateCoachPage;
