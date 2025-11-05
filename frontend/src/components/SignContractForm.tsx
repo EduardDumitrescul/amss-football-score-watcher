@@ -12,9 +12,10 @@ import {
   Grid
 } from '@mui/material';
 import { signContract } from '../services/PlayerService';
-import type { ContractFormData } from '../services/PlayerService';
+import type { CreateContractRequest } from '../dto/CreateContractRequest';
 import { getAllTeams } from '../services/TeamService';
 import type { SelectChangeEvent } from '@mui/material';
+import type { TeamSummary } from '../models/Team';
 
 interface SignContractFormProps {
     playerId: string;
@@ -23,8 +24,8 @@ interface SignContractFormProps {
 
 export const SignContractForm: React.FC<SignContractFormProps> = ({ playerId, onContractSigned }) => {
     const navigate = useNavigate();
-    const [teams, setTeams] = useState<Team[]>([]);
-    const [formData, setFormData] = useState<ContractFormData>({
+    const [teams, setTeams] = useState<TeamSummary[]>([]);
+    const [formData, setFormData] = useState<CreateContractRequest>({
         playerId: playerId,
         teamId: '',
         startDate: '',

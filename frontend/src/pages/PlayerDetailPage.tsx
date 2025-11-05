@@ -13,7 +13,9 @@ import {
   Modal
 } from '@mui/material';
 import { getPlayerById } from '../services/PlayerService';
+import { getTeamById } from '../services/TeamService';
 import type { Player } from '../models/Player';
+import type { Team } from '../models/Team';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { SignContractForm } from '../components/SignContractForm';
 
@@ -46,11 +48,12 @@ export const PlayerDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [player, setPlayer] = useState<Player | null>(null);
+  const [team, setTeam] = useState<Team | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  const fetchPlayer = useCallback(async () => {
+  const fetchPlayerAndTeam = useCallback(async () => {
     if (!id) {
       setError('No player ID provided.');
       setIsLoading(false);
@@ -60,10 +63,16 @@ export const PlayerDetailPage: React.FC = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await getPlayerById(id);
-      setPlayer(data);
+      const playerData = await getPlayerById(id);
+      setPlayer(playerData);
+      console.log(playerData)
+
+      if (playerData.teamId) {
+        const teamData = await getTeamById(playerData.teamId);
+        setTeam(teamData);
+      }
     } catch (err) {
-      console.error('Failed to fetch player:', err);
+      console.error('Failed to fetch player or team:', err);
       setError(err instanceof Error ? err.message : 'An unknown error occurred.');
     } finally {
       setIsLoading(false);
@@ -71,12 +80,12 @@ export const PlayerDetailPage: React.FC = () => {
   }, [id]);
 
   useEffect(() => {
-    fetchPlayer();
-  }, [fetchPlayer]);
+    fetchPlayerAndTeam();
+  }, [fetchPlayerAndTeam]);
 
   const handleContractSigned = () => {
     setIsFormOpen(false);
-    fetchPlayer(); // Refetch player data to show updated contract info
+    fetchPlayerAndTeam(); // Refetch player and team data to show updated contract info
   };
 
   // Format date for display
@@ -146,13 +155,18 @@ export const PlayerDetailPage: React.FC = () => {
           <InfoItem label="Shirt Number" value={player.shirtNumber} />
           <InfoItem label="Nationality" value={player.nationality} />
           <InfoItem label="Date of Birth" value={formattedDateOfBirth} />
-          
-          {/* Uncomment when Team is ready */}
-          {/* <InfoItem 
-            label="Team" 
-            value={player.team ? player.team.name : 'N/A'} 
-          /> */}
         </Grid>
+
+        {team && (
+          <Box sx={{ mt: 3, p: 2, border: '1px solid #e0e0e0', borderRadius: 1 }}>
+            <Typography variant="h6" component="h2" gutterBottom>
+              Current Team
+            </Typography>
+            <Typography variant="body1">
+              {team.name}
+            </Typography>
+          </Box>
+        )}
 
         <Button 
           variant="contained" 

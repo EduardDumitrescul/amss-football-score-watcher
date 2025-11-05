@@ -19,6 +19,7 @@ public class PlayerDto {
     private Integer shirtNumber;
     private String nationality;
     private Date dateOfBirth;
+    private UUID teamId;
 
     /**
      * Constructor to map from an Entity to a DTO.
@@ -32,6 +33,9 @@ public class PlayerDto {
         this.shirtNumber = entity.getShirtNumber();
         this.nationality = entity.getNationality();
         this.dateOfBirth = entity.getDateOfBirth();
+        if (entity.getTeam() != null) {
+            this.teamId = entity.getTeam().getId();
+        }
     }
 }
 

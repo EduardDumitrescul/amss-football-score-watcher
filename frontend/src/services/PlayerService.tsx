@@ -1,16 +1,9 @@
 import type { PlayerFormData } from '../components/PlayerCreateForm';
 import type { Player, PlayerSummary } from '../models/Player';
+import type { CreateContractRequest } from '../dto/CreateContractRequest';
 
 // Base URL for the Player API
 const API_BASE_URL = 'http://localhost:8080/api/players';
-
-export type ContractFormData = {
-  playerId: string;
-  teamId: string;
-  startDate: string;
-  endDate: string;
-  salaryPerYear: number;
-};
 
 /**
  * Fetches all players from the backend.
@@ -70,7 +63,7 @@ export const createPlayer = async (playerData: PlayerFormData): Promise<Player> 
  * Signs a contract for a player with a team.
  * @param contractData The data from the contract form.
  */
-export const signContract = async (contractData: ContractFormData): Promise<Player> => {
+export const signContract = async (contractData: CreateContractRequest): Promise<Player> => {
   const response = await fetch(`${API_BASE_URL}/sign-contract`, {
     method: 'POST',
     headers: {

@@ -103,12 +103,13 @@ export const PlayerListPage: React.FC = () => {
               <TableCell>Full Name</TableCell>
               <TableCell>Position</TableCell>
               <TableCell>Shirt Number</TableCell>
+              <TableCell>Team</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {players.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={3} align="center">
+                <TableCell colSpan={4} align="center">
                   No players found.
                 </TableCell>
               </TableRow>
@@ -125,6 +126,7 @@ export const PlayerListPage: React.FC = () => {
                   </TableCell>
                   <TableCell>{player.position || 'N/A'}</TableCell>
                   <TableCell>{player.shirtNumber || 'N/A'}</TableCell>
+                  <TableCell>{player.teamName || 'N/A'}</TableCell>
                 </TableRow>
               ))
             )}

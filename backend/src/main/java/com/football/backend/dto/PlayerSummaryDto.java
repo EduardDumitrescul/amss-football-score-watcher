@@ -10,4 +10,5 @@ public class PlayerSummaryDto {
     private String fullName;
     private String position;
     private Integer shirtNumber;
+    private String teamName;
 }
