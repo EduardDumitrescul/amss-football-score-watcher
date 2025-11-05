@@ -32,7 +32,8 @@ export const getPlayerById = async (id: string): Promise<Player> => {
 };
 
 /**
- * Creates a new player.
+
+=* Creates a new player.
  * @param playerData The data from the create form.
  */
 export const createPlayer = async (playerData: PlayerFormData): Promise<Player> => {

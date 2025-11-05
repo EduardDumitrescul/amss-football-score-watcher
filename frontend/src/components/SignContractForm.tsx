@@ -2,19 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Button, 
-  Select, 
-  MenuItem, 
   TextField, 
-  FormControl, 
-  InputLabel, 
   Box, 
   Typography, 
   Grid
 } from '@mui/material';
+import { Autocomplete } from '@mui/material';
 import { signContract } from '../services/PlayerService';
 import type { CreateContractRequest } from '../dto/CreateContractRequest';
 import { getAllTeams } from '../services/TeamService';
-import type { SelectChangeEvent } from '@mui/material';
 import type { TeamSummary } from '../models/Team';
 
 interface SignContractFormProps {
@@ -51,10 +47,6 @@ export const SignContractForm: React.FC<SignContractFormProps> = ({ playerId, on
         setFormData(prev => ({ ...prev, [name as string]: value }));
     };
 
-    const handleSelectChange = (e: SelectChangeEvent<string>) => {
-        setFormData(prev => ({ ...prev, teamId: e.target.value as string }));
-    };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -67,31 +59,31 @@ export const SignContractForm: React.FC<SignContractFormProps> = ({ playerId, on
     };
 
     return (
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box 
+            component="form" 
+            onSubmit={handleSubmit} 
+            sx={{
+                mt: 3,
+                p: 2,
+                width: '100%'
+            }}
+        >
             <Typography variant="h6" gutterBottom>
                 Sign New Contract
             </Typography>
             <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <FormControl fullWidth required>
-                        <InputLabel id="team-select-label">Team</InputLabel>
-                        <Select
-                            labelId="team-select-label"
-                            id="teamId"
-                            name="teamId"
-                            value={formData.teamId}
-                            onChange={handleSelectChange}
-                        >
-                            <MenuItem value=""><em>Select a team</em></MenuItem>
-                            {teams.map(team => (
-                                <MenuItem key={team.id} value={team.id}>
-                                    {team.name}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                <Grid item size={12}>
+                    <Autocomplete
+                        options={teams}
+                        getOptionLabel={(team) => team.name}
+                        renderInput={(params) => <TextField {...params} label="Team" />}
+                        onChange={(event, newValue) => {
+                            setFormData(prev => ({ ...prev, teamId: newValue ? newValue.id : '' }));
+                        }}
+                        fullWidth
+                        />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item size={12}>
                     <TextField
                         name="startDate"
                         label="Start Date"
@@ -105,7 +97,7 @@ export const SignContractForm: React.FC<SignContractFormProps> = ({ playerId, on
                         required
                     />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item size={12}>
                     <TextField
                         name="endDate"
                         label="End Date"
@@ -119,7 +111,7 @@ export const SignContractForm: React.FC<SignContractFormProps> = ({ playerId, on
                         required
                     />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item size={12}>
                     <TextField
                         name="salaryPerYear"
                         label="Salary Per Year"
