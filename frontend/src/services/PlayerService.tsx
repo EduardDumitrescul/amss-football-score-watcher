@@ -73,8 +73,18 @@ export const signContract = async (contractData: CreateContractRequest): Promise
     body: JSON.stringify(contractData),
   });
 
-  if (!response.ok) {
-    throw new Error(`Failed to sign contract: ${response.statusText}`);
-  }
   return response.json() as Promise<Player>;
 };
+
+/**
+ * Fetches all players for a given team from the backend.
+ * @param teamId The UUID of the team.
+ */
+export const getPlayersByTeamId = async (teamId: string): Promise<PlayerSummary[]> => {
+  const response = await fetch(`${API_BASE_URL}/by-team/${teamId}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch players for team: ${response.statusText}`);
+  }
+  return response.json() as Promise<PlayerSummary[]>;
+};
+

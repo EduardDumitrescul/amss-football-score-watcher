@@ -87,6 +87,14 @@ public class PlayerService {
         return new PlayerDto(player);
     }
 
+    @Transactional(readOnly = true)
+    public List<PlayerSummaryDto> getPlayersByTeamId(String teamId) {
+        List<PlayerEntity> players = playerRepository.findAllByTeamId(UUID.fromString(teamId));
+        return players.stream()
+                .map(playerMapper::toSummaryDto)
+                .collect(Collectors.toList());
+    }
+
     /**
      * Signs a contract for a player with a team.
      * @param request DTO with contract data.
