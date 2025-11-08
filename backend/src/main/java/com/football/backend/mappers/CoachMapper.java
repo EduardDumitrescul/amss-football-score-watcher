@@ -9,7 +9,8 @@ import com.football.backend.entities.CoachEntity;
 import com.football.backend.models.Coach;
 
 @Mapper(
-    componentModel = "spring"
+    componentModel = "spring", 
+    uses = {TeamMapper.class}
 )
 public interface CoachMapper {
     @Mapping(target = "id", ignore = true)

@@ -5,7 +5,6 @@ import {
   Box,
   CircularProgress,
   Alert,
-  Paper,
   Grid,
   Card,
   CardContent,
@@ -21,7 +20,7 @@ import {
 import { useParams, Link as RouterLink, useNavigate } from 'react-router-dom';
 import { getCoachById } from '../services/CoachService';
 import type { Coach } from '../models/Coach';
-import { Person, Shield, Group, ArrowBack } from '@mui/icons-material';
+import { Person, Shield, ArrowBack } from '@mui/icons-material';
 
 export const CoachDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();

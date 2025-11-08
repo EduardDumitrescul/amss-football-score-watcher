@@ -4,14 +4,13 @@ import com.football.backend.dto.CreateContractRequest;
 import com.football.backend.dto.CreatePlayerRequest;
 import com.football.backend.dto.PlayerDto;
 import com.football.backend.dto.PlayerSummaryDto;
-import com.football.backend.entities.ContractEntity;
 import com.football.backend.entities.PlayerEntity;
 import com.football.backend.entities.TeamEntity;
 import com.football.backend.exceptions.ResourceNotFoundException;
 import com.football.backend.mappers.PlayerMapper;
-import com.football.backend.repositories.ContractRepository;
 import com.football.backend.repositories.PlayerRepository;
 import com.football.backend.repositories.TeamRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,15 +24,15 @@ public class PlayerService {
 
     private final PlayerRepository playerRepository;
     private final TeamRepository teamRepository;
-    private final ContractRepository contractRepository;
     private final PlayerMapper playerMapper;
+    private final ContractService contractService;
 
     @Autowired
-    public PlayerService(PlayerRepository playerRepository, TeamRepository teamRepository, ContractRepository contractRepository, PlayerMapper playerMapper) {
+    public PlayerService(PlayerRepository playerRepository, TeamRepository teamRepository, PlayerMapper playerMapper, ContractService contractService) {
         this.playerRepository = playerRepository;
         this.teamRepository = teamRepository;
-        this.contractRepository = contractRepository;
         this.playerMapper = playerMapper;
+        this.contractService = contractService;
     }
 
     /**
@@ -88,6 +87,14 @@ public class PlayerService {
         return new PlayerDto(player);
     }
 
+    @Transactional(readOnly = true)
+    public List<PlayerSummaryDto> getPlayersByTeamId(String teamId) {
+        List<PlayerEntity> players = playerRepository.findAllByTeamId(UUID.fromString(teamId));
+        return players.stream()
+                .map(playerMapper::toSummaryDto)
+                .collect(Collectors.toList());
+    }
+
     /**
      * Signs a contract for a player with a team.
      * @param request DTO with contract data.
@@ -101,15 +108,7 @@ public class PlayerService {
         TeamEntity team = teamRepository.findById(request.getTeamId())
                 .orElseThrow(() -> new ResourceNotFoundException("Team not found with id: " + request.getTeamId()));
 
-        ContractEntity newContract = ContractEntity.builder()
-                .player(player)
-                .team(team)
-                .startDate(request.getStartDate())
-                .endDate(request.getEndDate())
-                .salaryPerYear(request.getSalaryPerYear())
-                .build();
-
-        contractRepository.save(newContract);
+        contractService.createContract(request);
 
         player.setTeam(team);
         playerRepository.save(player);

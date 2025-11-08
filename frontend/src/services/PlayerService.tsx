@@ -1,16 +1,9 @@
 import type { PlayerFormData } from '../components/PlayerCreateForm';
 import type { Player, PlayerSummary } from '../models/Player';
+import type { CreateContractRequest } from '../dto/CreateContractRequest';
 
 // Base URL for the Player API
 const API_BASE_URL = 'http://localhost:8080/api/players';
-
-export type ContractFormData = {
-  playerId: string;
-  teamId: string;
-  startDate: string;
-  endDate: string;
-  salaryPerYear: number;
-};
 
 /**
  * Fetches all players from the backend.
@@ -39,7 +32,8 @@ export const getPlayerById = async (id: string): Promise<Player> => {
 };
 
 /**
- * Creates a new player.
+
+=* Creates a new player.
  * @param playerData The data from the create form.
  */
 export const createPlayer = async (playerData: PlayerFormData): Promise<Player> => {
@@ -70,7 +64,7 @@ export const createPlayer = async (playerData: PlayerFormData): Promise<Player> 
  * Signs a contract for a player with a team.
  * @param contractData The data from the contract form.
  */
-export const signContract = async (contractData: ContractFormData): Promise<Player> => {
+export const signContract = async (contractData: CreateContractRequest): Promise<Player> => {
   const response = await fetch(`${API_BASE_URL}/sign-contract`, {
     method: 'POST',
     headers: {
@@ -79,8 +73,18 @@ export const signContract = async (contractData: ContractFormData): Promise<Play
     body: JSON.stringify(contractData),
   });
 
-  if (!response.ok) {
-    throw new Error(`Failed to sign contract: ${response.statusText}`);
-  }
   return response.json() as Promise<Player>;
 };
+
+/**
+ * Fetches all players for a given team from the backend.
+ * @param teamId The UUID of the team.
+ */
+export const getPlayersByTeamId = async (teamId: string): Promise<PlayerSummary[]> => {
+  const response = await fetch(`${API_BASE_URL}/by-team/${teamId}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch players for team: ${response.statusText}`);
+  }
+  return response.json() as Promise<PlayerSummary[]>;
+};
+

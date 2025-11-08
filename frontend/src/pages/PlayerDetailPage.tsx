@@ -10,10 +10,17 @@ import {
   Grid,
   Button,
   Divider,
-  Modal
+  Modal,
+  List,
+  ListItem,
+  ListItemText
 } from '@mui/material';
 import { getPlayerById } from '../services/PlayerService';
+import { getTeamById } from '../services/TeamService';
+import { getContractsByPlayerId } from '../services/ContractService';
 import type { Player } from '../models/Player';
+import type { Team } from '../models/Team';
+import type { Contract } from '../models/ContractDto';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { SignContractForm } from '../components/SignContractForm';
 
@@ -46,11 +53,13 @@ export const PlayerDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [player, setPlayer] = useState<Player | null>(null);
+  const [team, setTeam] = useState<Team | null>(null);
+  const [contracts, setContracts] = useState<Contract[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  const fetchPlayer = useCallback(async () => {
+  const fetchPlayerAndTeam = useCallback(async () => {
     if (!id) {
       setError('No player ID provided.');
       setIsLoading(false);
@@ -60,10 +69,20 @@ export const PlayerDetailPage: React.FC = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await getPlayerById(id);
-      setPlayer(data);
+      const playerData = await getPlayerById(id);
+      setPlayer(playerData);
+      console.log(playerData)
+
+      if (playerData.teamId) {
+        const teamData = await getTeamById(playerData.teamId);
+        setTeam(teamData);
+      }
+
+      const contractsData = await getContractsByPlayerId(id);
+      console.log(contractsData)
+      setContracts(contractsData);
     } catch (err) {
-      console.error('Failed to fetch player:', err);
+      console.error('Failed to fetch player or team:', err);
       setError(err instanceof Error ? err.message : 'An unknown error occurred.');
     } finally {
       setIsLoading(false);
@@ -71,12 +90,12 @@ export const PlayerDetailPage: React.FC = () => {
   }, [id]);
 
   useEffect(() => {
-    fetchPlayer();
-  }, [fetchPlayer]);
+    fetchPlayerAndTeam();
+  }, [fetchPlayerAndTeam]);
 
   const handleContractSigned = () => {
     setIsFormOpen(false);
-    fetchPlayer(); // Refetch player data to show updated contract info
+    fetchPlayerAndTeam(); // Refetch player and team data to show updated contract info
   };
 
   // Format date for display
@@ -122,6 +141,11 @@ export const PlayerDetailPage: React.FC = () => {
     );
   }
 
+  const latestContract = contracts.reduce((latest, current) => {
+    if (!latest) return current;
+    return new Date(current.startDate) > new Date(latest.startDate) ? current : latest;
+  }, null as Contract | null);
+
   return (
     <Container maxWidth="md">
       <Paper sx={{ mt: 4, p: 3, borderRadius: 2, boxShadow: 3 }}>
@@ -146,13 +170,18 @@ export const PlayerDetailPage: React.FC = () => {
           <InfoItem label="Shirt Number" value={player.shirtNumber} />
           <InfoItem label="Nationality" value={player.nationality} />
           <InfoItem label="Date of Birth" value={formattedDateOfBirth} />
-          
-          {/* Uncomment when Team is ready */}
-          {/* <InfoItem 
-            label="Team" 
-            value={player.team ? player.team.name : 'N/A'} 
-          /> */}
         </Grid>
+
+        {team && (
+          <Box sx={{ mt: 3, p: 2, border: '1px solid #e0e0e0', borderRadius: 1 }}>
+            <Typography variant="h6" component="h2" gutterBottom>
+              Current Team
+            </Typography>
+            <Typography variant="body1">
+              {team.name}
+            </Typography>
+          </Box>
+        )}
 
         <Button 
           variant="contained" 
@@ -171,9 +200,25 @@ export const PlayerDetailPage: React.FC = () => {
         aria-labelledby="sign-contract-form-title"
       >
         <Box sx={modalStyle}>
-          <SignContractForm playerId={id!} onContractSigned={handleContractSigned} />
+          <SignContractForm playerId={id!} onContractSigned={handleContractSigned} latestContract={latestContract} />
         </Box>
       </Modal>
+
+      <Paper sx={{ mt: 4, p: 3, bordertRadius: 2, boxShadow: 3 }}>
+        <Typography variant="h6" component="h2" gutterBottom>
+          Contract History
+        </Typography>
+        <List>
+          {contracts.map((contract) => (
+            <ListItem key={contract.id}>
+              <ListItemText
+                primary={`${contract.teamName}`}
+                secondary={`From ${new Date(contract.startDate).toLocaleDateString()} to ${new Date(contract.endDate).toLocaleDateString()} - Salary: ${contract.salaryPerYear}`}
+              />
+            </ListItem>
+          ))}
+        </List>
+      </Paper>
 
     </Container>
   );

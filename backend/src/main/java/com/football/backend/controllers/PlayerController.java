@@ -68,6 +68,15 @@ public class PlayerController {
     }
 
     /**
+     * GET /api/players/by-team/{teamId} : Retrieves all players for a given team.
+     */
+    @GetMapping("/by-team/{teamId}")
+    public ResponseEntity<List<PlayerSummaryDto>> getPlayersByTeam(@PathVariable String teamId) {
+        List<PlayerSummaryDto> players = playerService.getPlayersByTeamId(teamId);
+        return new ResponseEntity<>(players, HttpStatus.OK);
+    }
+
+    /**
      * POST /api/players/sign-contract : Signs a contract for a player with a team.
      */
     @PostMapping("/sign-contract")

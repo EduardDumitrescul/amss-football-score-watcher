@@ -5,6 +5,7 @@ import {
   Box,
   Grid,
   CircularProgress,
+  Alert,
 } from '@mui/material';
 import {
   Person,
@@ -98,7 +99,7 @@ export const PlayerCreateForm: React.FC<PlayerCreateFormProps> = ({
 
       <Grid container spacing={2}>
         {/* First Name */}
-        <Grid item xs={12} sm={6}>
+        <Grid xs={12} sm={6}>
           <TextField
             required
             fullWidth
@@ -119,7 +120,7 @@ export const PlayerCreateForm: React.FC<PlayerCreateFormProps> = ({
         </Grid>
 
         {/* Last Name */}
-        <Grid item xs={12} sm={6}>
+        <Grid xs={12} sm={6}>
           <TextField
             required
             fullWidth
@@ -140,7 +141,7 @@ export const PlayerCreateForm: React.FC<PlayerCreateFormProps> = ({
         </Grid>
 
         {/* Position */}
-        <Grid item xs={12} sm={6}>
+        <Grid xs={12} sm={6}>
           <TextField
             fullWidth
             id="position"
@@ -160,7 +161,7 @@ export const PlayerCreateForm: React.FC<PlayerCreateFormProps> = ({
         </Grid>
 
         {/* Shirt Number */}
-        <Grid item xs={12} sm={6}>
+        <Grid xs={12} sm={6}>
           <TextField
             fullWidth
             id="shirtNumber"
@@ -182,7 +183,7 @@ export const PlayerCreateForm: React.FC<PlayerCreateFormProps> = ({
         </Grid>
 
         {/* Nationality */}
-        <Grid item xs={12} sm={6}>
+        <Grid xs={12} sm={6}>
           <TextField
             fullWidth
             id="nationality"
@@ -202,7 +203,7 @@ export const PlayerCreateForm: React.FC<PlayerCreateFormProps> = ({
         </Grid>
 
         {/* Date of Birth */}
-        <Grid item xs={12} sm={6}>
+        <Grid xs={12} sm={6}>
           <TextField
             fullWidth
             id="dateOfBirth"

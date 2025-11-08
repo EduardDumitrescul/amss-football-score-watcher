@@ -21,8 +21,10 @@ public interface PlayerMapper {
     Player toDomain(PlayerEntity entity);
 
     @Mapping(target = "fullName", expression = "java(player.getFirstname() + ' ' + player.getLastname())")
+    @Mapping(target = "teamName", source = "player.team.name")
     PlayerSummaryDto toSummaryDto(Player player);
 
     @Mapping(target = "fullName", expression = "java(entity.getFirstname() + ' ' + entity.getLastname())")
+    @Mapping(target = "teamName", source = "entity.team.name")
     PlayerSummaryDto toSummaryDto(PlayerEntity entity);
 }

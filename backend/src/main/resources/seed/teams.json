@@ -1,0 +1,18 @@
+[
+  { "name": "Real Madrid", "league": "La Liga" },
+  { "name": "Barcelona", "league": "La Liga" },
+  { "name": "Atlético Madrid", "league": "La Liga" },
+  { "name": "Sevilla", "league": "La Liga" },
+  { "name": "Valencia", "league": "La Liga" },
+  { "name": "Villarreal", "league": "La Liga" },
+  { "name": "Real Sociedad", "league": "La Liga" },
+  { "name": "Athletic Bilbao", "league": "La Liga" },
+  { "name": "Manchester City", "league": "Premier League" },
+  { "name": "Manchester United", "league": "Premier League" },
+  { "name": "Liverpool", "league": "Premier League" },
+  { "name": "Arsenal", "league": "Premier League" },
+  { "name": "Chelsea", "league": "Premier League" },
+  { "name": "Tottenham Hotspur", "league": "Premier League" },
+  { "name": "Newcastle United", "league": "Premier League" },
+  { "name": "Aston Villa", "league": "Premier League" }
+]
