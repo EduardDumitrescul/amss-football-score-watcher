@@ -10,12 +10,17 @@ import {
   Grid,
   Button,
   Divider,
-  Modal
+  Modal,
+  List,
+  ListItem,
+  ListItemText
 } from '@mui/material';
 import { getPlayerById } from '../services/PlayerService';
 import { getTeamById } from '../services/TeamService';
+import { getContractsByPlayerId } from '../services/ContractService';
 import type { Player } from '../models/Player';
 import type { Team } from '../models/Team';
+import type { Contract } from '../models/ContractDto';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { SignContractForm } from '../components/SignContractForm';
 
@@ -49,6 +54,7 @@ export const PlayerDetailPage: React.FC = () => {
   const navigate = useNavigate();
   const [player, setPlayer] = useState<Player | null>(null);
   const [team, setTeam] = useState<Team | null>(null);
+  const [contracts, setContracts] = useState<Contract[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -71,6 +77,10 @@ export const PlayerDetailPage: React.FC = () => {
         const teamData = await getTeamById(playerData.teamId);
         setTeam(teamData);
       }
+
+      const contractsData = await getContractsByPlayerId(id);
+      console.log(contractsData)
+      setContracts(contractsData);
     } catch (err) {
       console.error('Failed to fetch player or team:', err);
       setError(err instanceof Error ? err.message : 'An unknown error occurred.');
@@ -188,6 +198,22 @@ export const PlayerDetailPage: React.FC = () => {
           <SignContractForm playerId={id!} onContractSigned={handleContractSigned} />
         </Box>
       </Modal>
+
+      <Paper sx={{ mt: 4, p: 3, bordertRadius: 2, boxShadow: 3 }}>
+        <Typography variant="h6" component="h2" gutterBottom>
+          Contract History
+        </Typography>
+        <List>
+          {contracts.map((contract) => (
+            <ListItem key={contract.id}>
+              <ListItemText
+                primary={`${contract.teamName}`}
+                secondary={`From ${new Date(contract.startDate).toLocaleDateString()} to ${new Date(contract.endDate).toLocaleDateString()} - Salary: ${contract.salaryPerYear}`}
+              />
+            </ListItem>
+          ))}
+        </List>
+      </Paper>
 
     </Container>
   );

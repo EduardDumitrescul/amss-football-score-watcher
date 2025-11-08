@@ -72,18 +72,18 @@ export const SignContractForm: React.FC<SignContractFormProps> = ({ playerId, on
                 Sign New Contract
             </Typography>
             <Grid container spacing={2}>
-                <Grid item size={12}>
+                <Grid xs={12}>
                     <Autocomplete
                         options={teams}
                         getOptionLabel={(team) => team.name}
                         renderInput={(params) => <TextField {...params} label="Team" />}
-                        onChange={(event, newValue) => {
+                        onChange={(_, newValue) => {
                             setFormData(prev => ({ ...prev, teamId: newValue ? newValue.id : '' }));
                         }}
                         fullWidth
                         />
                 </Grid>
-                <Grid item size={12}>
+                <Grid xs={12}>
                     <TextField
                         name="startDate"
                         label="Start Date"
@@ -97,7 +97,7 @@ export const SignContractForm: React.FC<SignContractFormProps> = ({ playerId, on
                         required
                     />
                 </Grid>
-                <Grid item size={12}>
+                <Grid xs={12}>
                     <TextField
                         name="endDate"
                         label="End Date"
@@ -111,7 +111,7 @@ export const SignContractForm: React.FC<SignContractFormProps> = ({ playerId, on
                         required
                     />
                 </Grid>
-                <Grid item size={12}>
+                <Grid xs={12}>
                     <TextField
                         name="salaryPerYear"
                         label="Salary Per Year"

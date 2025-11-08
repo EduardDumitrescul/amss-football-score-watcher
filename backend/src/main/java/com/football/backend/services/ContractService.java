@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.UUID;
+
 @Service
 public class ContractService {
 
@@ -43,5 +46,10 @@ public class ContractService {
                 .build();
 
         return contractRepository.save(newContract);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ContractEntity> getContractsByPlayerId(String playerId) {
+        return contractRepository.findAllByPlayerId(UUID.fromString(playerId));
     }
 }
