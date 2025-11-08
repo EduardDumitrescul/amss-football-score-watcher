@@ -141,6 +141,11 @@ export const PlayerDetailPage: React.FC = () => {
     );
   }
 
+  const latestContract = contracts.reduce((latest, current) => {
+    if (!latest) return current;
+    return new Date(current.startDate) > new Date(latest.startDate) ? current : latest;
+  }, null as Contract | null);
+
   return (
     <Container maxWidth="md">
       <Paper sx={{ mt: 4, p: 3, borderRadius: 2, boxShadow: 3 }}>
@@ -195,7 +200,7 @@ export const PlayerDetailPage: React.FC = () => {
         aria-labelledby="sign-contract-form-title"
       >
         <Box sx={modalStyle}>
-          <SignContractForm playerId={id!} onContractSigned={handleContractSigned} />
+          <SignContractForm playerId={id!} onContractSigned={handleContractSigned} latestContract={latestContract} />
         </Box>
       </Modal>
 
