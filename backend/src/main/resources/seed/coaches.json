@@ -1,0 +1,18 @@
+[
+  { "firstname": "Xabi", "lastname": "Alonso", "teamName": "Real Madrid" },
+  { "firstname": "Hansi", "lastname": "Flick", "teamName": "Barcelona" },
+  { "firstname": "Diego", "lastname": "Simeone", "teamName": "Atlético Madrid" },
+  { "firstname": "Matias", "lastname": "Almeyda", "teamName": "Sevilla" },
+  { "firstname": "Carlos", "lastname": "Corberán", "teamName": "Valencia" },
+  { "firstname": "Marcelino", "lastname": "García Toral", "teamName": "Villarreal" },
+  { "firstname": "Sergio", "lastname": "Francisco", "teamName": "Real Sociedad" },
+  { "firstname": "Ernesto", "lastname": "Valverde", "teamName": "Athletic Bilbao" },
+  { "firstname": "Pep", "lastname": "Guardiola", "teamName": "Manchester City" },
+  { "firstname": "Ruben", "lastname": "Amorim", "teamName": "Manchester United" },
+  { "firstname": "Arne", "lastname": "Slot", "teamName": "Liverpool" },
+  { "firstname": "Mikel", "lastname": "Arteta", "teamName": "Arsenal" },
+  { "firstname": "Enzo", "lastname": "Maresca", "teamName": "Chelsea" },
+  { "firstname": "Thomas", "lastname": "Frank", "teamName": "Tottenham Hotspur" },
+  { "firstname": "Eddie", "lastname": "Howe", "teamName": "Newcastle United" },
+  { "firstname": "Unai", "lastname": "Emery", "teamName": "Aston Villa" }
+]

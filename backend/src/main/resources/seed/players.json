@@ -1,0 +1,2466 @@
+[
+  {
+    "firstname": "Thibaut",
+    "lastname": "Courtois",
+    "position": "Goalkeeper",
+    "shirtNumber": 1,
+    "nationality": "Belgian",
+    "dateOfBirth": "1992-05-11",
+    "teamName": "Real Madrid",
+    "contract": {
+      "startDate": "2021-08-09",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 15000000
+    }
+  },
+  {
+    "firstname": "Dani",
+    "lastname": "Carvajal",
+    "position": "Right-back",
+    "shirtNumber": 2,
+    "nationality": "Spanish",
+    "dateOfBirth": "1992-01-11",
+    "teamName": "Real Madrid",
+    "contract": {
+      "startDate": "2021-07-29",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 10000000
+    }
+  },
+  {
+    "firstname": "Éder",
+    "lastname": "Militão",
+    "position": "Centre-back",
+    "shirtNumber": 3,
+    "nationality": "Brazilian",
+    "dateOfBirth": "1998-01-18",
+    "teamName": "Real Madrid",
+    "contract": {
+      "startDate": "2024-01-23",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 7000000
+    }
+  },
+  {
+    "firstname": "David",
+    "lastname": "Alaba",
+    "position": "Centre-back",
+    "shirtNumber": 4,
+    "nationality": "Austrian",
+    "dateOfBirth": "1992-06-24",
+    "teamName": "Real Madrid",
+    "contract": {
+      "startDate": "2021-05-28",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 22500000
+    }
+  },
+  {
+    "firstname": "Jude",
+    "lastname": "Bellingham",
+    "position": "Midfielder",
+    "shirtNumber": 5,
+    "nationality": "English",
+    "dateOfBirth": "2003-06-29",
+    "teamName": "Real Madrid",
+    "contract": {
+      "startDate": "2023-06-14",
+      "endDate": "2029-06-30",
+      "salaryPerYear": 20000000
+    }
+  },
+  {
+    "firstname": "Nacho",
+    "lastname": "Fernández",
+    "position": "Centre-back",
+    "shirtNumber": 6,
+    "nationality": "Spanish",
+    "dateOfBirth": "1990-01-18",
+    "teamName": "Real Madrid",
+    "contract": {
+      "startDate": "2023-06-22",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 8500000
+    }
+  },
+  {
+    "firstname": "Vinícius",
+    "lastname": "Júnior",
+    "position": "Forward",
+    "shirtNumber": 7,
+    "nationality": "Brazilian",
+    "dateOfBirth": "2000-07-12",
+    "teamName": "Real Madrid",
+    "contract": {
+      "startDate": "2023-10-31",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 20000000
+    }
+  },
+  {
+    "firstname": "Toni",
+    "lastname": "Kroos",
+    "position": "Midfielder",
+    "shirtNumber": 8,
+    "nationality": "German",
+    "dateOfBirth": "1990-01-04",
+    "teamName": "Real Madrid",
+    "contract": {
+      "startDate": "2023-06-21",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 24000000
+    }
+  },
+  {
+    "firstname": "Kylian",
+    "lastname": "Mbappé",
+    "position": "Forward",
+    "shirtNumber": 9,
+    "nationality": "French",
+    "dateOfBirth": "1998-12-20",
+    "teamName": "Real Madrid",
+    "contract": {
+      "startDate": "2024-07-01",
+      "endDate": "2029-06-30",
+      "salaryPerYear": 50000000
+    }
+  },
+  {
+    "firstname": "Luka",
+    "lastname": "Modrić",
+    "position": "Midfielder",
+    "shirtNumber": 10,
+    "nationality": "Croatian",
+    "dateOfBirth": "1985-09-09",
+    "teamName": "Real Madrid",
+    "contract": {
+      "startDate": "2023-06-26",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 21000000
+    }
+  },
+  {
+    "firstname": "Rodrygo",
+    "lastname": "Goes",
+    "position": "Forward",
+    "shirtNumber": 11,
+    "nationality": "Brazilian",
+    "dateOfBirth": "2001-01-09",
+    "teamName": "Real Madrid",
+    "contract": {
+      "startDate": "2023-11-02",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 12000000
+    }
+  },
+  {
+    "firstname": "Marc-André",
+    "lastname": "ter Stegen",
+    "position": "Goalkeeper",
+    "shirtNumber": 1,
+    "nationality": "German",
+    "dateOfBirth": "1992-04-30",
+    "teamName": "Barcelona",
+    "contract": {
+      "startDate": "2020-10-20",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 9000000
+    }
+  },
+  {
+    "firstname": "João",
+    "lastname": "Cancelo",
+    "position": "Right-back",
+    "shirtNumber": 2,
+    "nationality": "Portuguese",
+    "dateOfBirth": "1994-05-27",
+    "teamName": "Barcelona",
+    "contract": {
+      "startDate": "2023-09-01",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 12000000
+    }
+  },
+  {
+    "firstname": "Alejandro",
+    "lastname": "Balde",
+    "position": "Left-back",
+    "shirtNumber": 3,
+    "nationality": "Spanish",
+    "dateOfBirth": "2003-10-18",
+    "teamName": "Barcelona",
+    "contract": {
+      "startDate": "2023-09-21",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 1500000
+    }
+  },
+  {
+    "firstname": "Ronald",
+    "lastname": "Araújo",
+    "position": "Centre-back",
+    "shirtNumber": 4,
+    "nationality": "Uruguayan",
+    "dateOfBirth": "1999-03-07",
+    "teamName": "Barcelona",
+    "contract": {
+      "startDate": "2022-04-29",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 7000000
+    }
+  },
+  {
+    "firstname": "Iñigo",
+    "lastname": "Martínez",
+    "position": "Centre-back",
+    "shirtNumber": 5,
+    "nationality": "Spanish",
+    "dateOfBirth": "1991-05-17",
+    "teamName": "Barcelona",
+    "contract": {
+      "startDate": "2023-07-05",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 9000000
+    }
+  },
+  {
+    "firstname": "Gavi",
+    "lastname": "",
+    "position": "Midfielder",
+    "shirtNumber": 6,
+    "nationality": "Spanish",
+    "dateOfBirth": "2004-08-05",
+    "teamName": "Barcelona",
+    "contract": {
+      "startDate": "2022-09-15",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 6800000
+    }
+  },
+  {
+    "firstname": "Ferran",
+    "lastname": "Torres",
+    "position": "Forward",
+    "shirtNumber": 7,
+    "nationality": "Spanish",
+    "dateOfBirth": "2000-02-29",
+    "teamName": "Barcelona",
+    "contract": {
+      "startDate": "2022-01-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 10000000
+    }
+  },
+  {
+    "firstname": "Pedri",
+    "lastname": "",
+    "position": "Midfielder",
+    "shirtNumber": 8,
+    "nationality": "Spanish",
+    "dateOfBirth": "2002-11-25",
+    "teamName": "Barcelona",
+    "contract": {
+      "startDate": "2021-10-14",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 9000000
+    }
+  },
+  {
+    "firstname": "Robert",
+    "lastname": "Lewandowski",
+    "position": "Forward",
+    "shirtNumber": 9,
+    "nationality": "Polish",
+    "dateOfBirth": "1988-08-21",
+    "teamName": "Barcelona",
+    "contract": {
+      "startDate": "2022-07-19",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 26000000
+    }
+  },
+  {
+    "firstname": "Raphinha",
+    "lastname": "",
+    "position": "Forward",
+    "shirtNumber": 11,
+    "nationality": "Brazilian",
+    "dateOfBirth": "1996-12-14",
+    "teamName": "Barcelona",
+    "contract": {
+      "startDate": "2022-07-13",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 12000000
+    }
+  },
+  {
+    "firstname": "Lamine",
+    "lastname": "Yamal",
+    "position": "Forward",
+    "shirtNumber": 27,
+    "nationality": "Spanish",
+    "dateOfBirth": "2007-07-13",
+    "teamName": "Barcelona",
+    "contract": {
+      "startDate": "2023-10-02",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 1600000
+    }
+  },
+  {
+    "firstname": "Jan",
+    "lastname": "Oblak",
+    "position": "Goalkeeper",
+    "shirtNumber": 13,
+    "nationality": "Slovenian",
+    "dateOfBirth": "1993-01-07",
+    "teamName": "Atlético Madrid",
+    "contract": {
+      "startDate": "2019-04-17",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 10000000
+    }
+  },
+  {
+    "firstname": "José",
+    "lastname": "Giménez",
+    "position": "Centre-back",
+    "shirtNumber": 2,
+    "nationality": "Uruguayan",
+    "dateOfBirth": "1995-01-20",
+    "teamName": "Atlético Madrid",
+    "contract": {
+      "startDate": "2023-10-06",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 8000000
+    }
+  },
+  {
+    "firstname": "César",
+    "lastname": "Azpilicueta",
+    "position": "Right-back",
+    "shirtNumber": 3,
+    "nationality": "Spanish",
+    "dateOfBirth": "1989-08-28",
+    "teamName": "Atlético Madrid",
+    "contract": {
+      "startDate": "2023-07-06",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 8000000
+    }
+  },
+  {
+    "firstname": "Koke",
+    "lastname": "",
+    "position": "Midfielder",
+    "shirtNumber": 6,
+    "nationality": "Spanish",
+    "dateOfBirth": "1992-01-08",
+    "teamName": "Atlético Madrid",
+    "contract": {
+      "startDate": "2024-03-25",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 8000000
+    }
+  },
+  {
+    "firstname": "Antoine",
+    "lastname": "Griezmann",
+    "position": "Forward",
+    "shirtNumber": 7,
+    "nationality": "French",
+    "dateOfBirth": "1991-03-21",
+    "teamName": "Atlético Madrid",
+    "contract": {
+      "startDate": "2023-07-01",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 12000000
+    }
+  },
+  {
+    "firstname": "Memphis",
+    "lastname": "Depay",
+    "position": "Forward",
+    "shirtNumber": 9,
+    "nationality": "Dutch",
+    "dateOfBirth": "1994-02-13",
+    "teamName": "Atlético Madrid",
+    "contract": {
+      "startDate": "2023-01-20",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 8000000
+    }
+  },
+  {
+    "firstname": "Ángel",
+    "lastname": "Correa",
+    "position": "Forward",
+    "shirtNumber": 10,
+    "nationality": "Argentinian",
+    "dateOfBirth": "1995-03-09",
+    "teamName": "Atlético Madrid",
+    "contract": {
+      "startDate": "2022-01-11",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 5000000
+    }
+  },
+  {
+    "firstname": "Rodrigo",
+    "lastname": "De Paul",
+    "position": "Midfielder",
+    "shirtNumber": 5,
+    "nationality": "Argentinian",
+    "dateOfBirth": "1994-05-24",
+    "teamName": "Atlético Madrid",
+    "contract": {
+      "startDate": "2021-07-12",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 7000000
+    }
+  },
+  {
+    "firstname": "Marcos",
+    "lastname": "Llorente",
+    "position": "Midfielder",
+    "shirtNumber": 14,
+    "nationality": "Spanish",
+    "dateOfBirth": "1995-01-30",
+    "teamName": "Atlético Madrid",
+    "contract": {
+      "startDate": "2021-08-18",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 8000000
+    }
+  },
+  {
+    "firstname": "Álvaro",
+    "lastname": "Morata",
+    "position": "Forward",
+    "shirtNumber": 19,
+    "nationality": "Spanish",
+    "dateOfBirth": "1992-10-23",
+    "teamName": "Atlético Madrid",
+    "contract": {
+      "startDate": "2023-07-01",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 9000000
+    }
+  },
+  {
+    "firstname": "Axel",
+    "lastname": "Witsel",
+    "position": "Midfielder",
+    "shirtNumber": 20,
+    "nationality": "Belgian",
+    "dateOfBirth": "1989-01-12",
+    "teamName": "Atlético Madrid",
+    "contract": {
+      "startDate": "2023-07-01",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 4000000
+    }
+  },
+  {
+    "firstname": "Ørjan",
+    "lastname": "Nyland",
+    "position": "Goalkeeper",
+    "shirtNumber": 13,
+    "nationality": "Norwegian",
+    "dateOfBirth": "1990-09-10",
+    "teamName": "Sevilla",
+    "contract": {
+      "startDate": "2023-08-20",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 1000000
+    }
+  },
+  {
+    "firstname": "Jesús",
+    "lastname": "Navas",
+    "position": "Right-back",
+    "shirtNumber": 16,
+    "nationality": "Spanish",
+    "dateOfBirth": "1985-11-21",
+    "teamName": "Sevilla",
+    "contract": {
+      "startDate": "2017-08-01",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 3000000
+    }
+  },
+  {
+    "firstname": "Sergio",
+    "lastname": "Ramos",
+    "position": "Centre-back",
+    "shirtNumber": 4,
+    "nationality": "Spanish",
+    "dateOfBirth": "1986-03-30",
+    "teamName": "Sevilla",
+    "contract": {
+      "startDate": "2023-09-04",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 2000000
+    }
+  },
+  {
+    "firstname": "Loïc",
+    "lastname": "Badé",
+    "position": "Centre-back",
+    "shirtNumber": 22,
+    "nationality": "French",
+    "dateOfBirth": "2000-04-11",
+    "teamName": "Sevilla",
+    "contract": {
+      "startDate": "2023-07-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 1500000
+    }
+  },
+  {
+    "firstname": "Marcos",
+    "lastname": "Acuña",
+    "position": "Left-back",
+    "shirtNumber": 19,
+    "nationality": "Argentinian",
+    "dateOfBirth": "1991-10-28",
+    "teamName": "Sevilla",
+    "contract": {
+      "startDate": "2020-09-14",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 2500000
+    }
+  },
+  {
+    "firstname": "Nemanja",
+    "lastname": "Gudelj",
+    "position": "Midfielder",
+    "shirtNumber": 6,
+    "nationality": "Serbian",
+    "dateOfBirth": "1991-11-16",
+    "teamName": "Sevilla",
+    "contract": {
+      "startDate": "2019-07-23",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 2000000
+    }
+  },
+  {
+    "firstname": "Ivan",
+    "lastname": "Rakitić",
+    "position": "Midfielder",
+    "shirtNumber": 10,
+    "nationality": "Croatian",
+    "dateOfBirth": "1988-03-10",
+    "teamName": "Sevilla",
+    "contract": {
+      "startDate": "2020-09-01",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 3000000
+    }
+  },
+  {
+    "firstname": "Suso",
+    "lastname": "",
+    "position": "Forward",
+    "shirtNumber": 7,
+    "nationality": "Spanish",
+    "dateOfBirth": "1993-11-19",
+    "teamName": "Sevilla",
+    "contract": {
+      "startDate": "2020-07-20",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 2500000
+    }
+  },
+  {
+    "firstname": "Lucas",
+    "lastname": "Ocampos",
+    "position": "Forward",
+    "shirtNumber": 5,
+    "nationality": "Argentinian",
+    "dateOfBirth": "1994-07-11",
+    "teamName": "Sevilla",
+    "contract": {
+      "startDate": "2019-07-03",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 2500000
+    }
+  },
+  {
+    "firstname": "Youssef",
+    "lastname": "En-Nesyri",
+    "position": "Forward",
+    "shirtNumber": 15,
+    "nationality": "Moroccan",
+    "dateOfBirth": "1997-06-01",
+    "teamName": "Sevilla",
+    "contract": {
+      "startDate": "2020-01-16",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 2000000
+    }
+  },
+  {
+    "firstname": "Dodi",
+    "lastname": "Lukebakio",
+    "position": "Forward",
+    "shirtNumber": 11,
+    "nationality": "Belgian",
+    "dateOfBirth": "1997-09-24",
+    "teamName": "Sevilla",
+    "contract": {
+      "startDate": "2023-08-24",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 1500000
+    }
+  },
+  {
+    "firstname": "Giorgi",
+    "lastname": "Mamardashvili",
+    "position": "Goalkeeper",
+    "shirtNumber": 25,
+    "nationality": "Georgian",
+    "dateOfBirth": "2000-09-29",
+    "teamName": "Valencia",
+    "contract": {
+      "startDate": "2022-01-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 1000000
+    }
+  },
+  {
+    "firstname": "José",
+    "lastname": "Gayà",
+    "position": "Left-back",
+    "shirtNumber": 14,
+    "nationality": "Spanish",
+    "dateOfBirth": "1995-05-25",
+    "teamName": "Valencia",
+    "contract": {
+      "startDate": "2012-07-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 3000000
+    }
+  },
+  {
+    "firstname": "Mouctar",
+    "lastname": "Diakhaby",
+    "position": "Centre-back",
+    "shirtNumber": 4,
+    "nationality": "Guinean",
+    "dateOfBirth": "1996-12-19",
+    "teamName": "Valencia",
+    "contract": {
+      "startDate": "2018-07-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 2500000
+    }
+  },
+  {
+    "firstname": "Cristhian",
+    "lastname": "Mosquera",
+    "position": "Centre-back",
+    "shirtNumber": 3,
+    "nationality": "Spanish",
+    "dateOfBirth": "2004-06-27",
+    "teamName": "Valencia",
+    "contract": {
+      "startDate": "2021-07-01",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 500000
+    }
+  },
+  {
+    "firstname": "Dimitri",
+    "lastname": "Foulquier",
+    "position": "Right-back",
+    "shirtNumber": 20,
+    "nationality": "Guadeloupean",
+    "dateOfBirth": "1993-03-23",
+    "teamName": "Valencia",
+    "contract": {
+      "startDate": "2021-08-30",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 1000000
+    }
+  },
+  {
+    "firstname": "Pepelu",
+    "lastname": "",
+    "position": "Midfielder",
+    "shirtNumber": 18,
+    "nationality": "Spanish",
+    "dateOfBirth": "1998-08-11",
+    "teamName": "Valencia",
+    "contract": {
+      "startDate": "2023-07-08",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 1500000
+    }
+  },
+  {
+    "firstname": "André",
+    "lastname": "Almeida",
+    "position": "Midfielder",
+    "shirtNumber": 10,
+    "nationality": "Portuguese",
+    "dateOfBirth": "2000-05-30",
+    "teamName": "Valencia",
+    "contract": {
+      "startDate": "2022-08-25",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 1200000
+    }
+  },
+  {
+    "firstname": "Javi",
+    "lastname": "Guerra",
+    "position": "Midfielder",
+    "shirtNumber": 8,
+    "nationality": "Spanish",
+    "dateOfBirth": "2003-05-13",
+    "teamName": "Valencia",
+    "contract": {
+      "startDate": "2023-05-16",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 800000
+    }
+  },
+  {
+    "firstname": "Hugo",
+    "lastname": "Duro",
+    "position": "Forward",
+    "shirtNumber": 9,
+    "nationality": "Spanish",
+    "dateOfBirth": "1999-11-10",
+    "teamName": "Valencia",
+    "contract": {
+      "startDate": "2022-07-01",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 1500000
+    }
+  },
+  {
+    "firstname": "Fran",
+    "lastname": "Pérez",
+    "position": "Forward",
+    "shirtNumber": 23,
+    "nationality": "Spanish",
+    "dateOfBirth": "2002-09-09",
+    "teamName": "Valencia",
+    "contract": {
+      "startDate": "2023-05-16",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 500000
+    }
+  },
+  {
+    "firstname": "Diego",
+    "lastname": "López",
+    "position": "Forward",
+    "shirtNumber": 16,
+    "nationality": "Spanish",
+    "dateOfBirth": "2002-05-13",
+    "teamName": "Valencia",
+    "contract": {
+      "startDate": "2023-08-14",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 500000
+    }
+  },
+  {
+    "firstname": "Filip",
+    "lastname": "Jörgensen",
+    "position": "Goalkeeper",
+    "shirtNumber": 13,
+    "nationality": "Danish",
+    "dateOfBirth": "2002-04-16",
+    "teamName": "Villarreal",
+    "contract": {
+      "startDate": "2020-07-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 500000
+    }
+  },
+  {
+    "firstname": "Raúl",
+    "lastname": "Albiol",
+    "position": "Centre-back",
+    "shirtNumber": 3,
+    "nationality": "Spanish",
+    "dateOfBirth": "1985-09-04",
+    "teamName": "Villarreal",
+    "contract": {
+      "startDate": "2019-07-04",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 2000000
+    }
+  },
+  {
+    "firstname": "Juan",
+    "lastname": "Foyth",
+    "position": "Right-back",
+    "shirtNumber": 8,
+    "nationality": "Argentinian",
+    "dateOfBirth": "1998-01-12",
+    "teamName": "Villarreal",
+    "contract": {
+      "startDate": "2021-07-01",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 2500000
+    }
+  },
+  {
+    "firstname": "Alfonso",
+    "lastname": "Pedraza",
+    "position": "Left-back",
+    "shirtNumber": 24,
+    "nationality": "Spanish",
+    "dateOfBirth": "1996-04-09",
+    "teamName": "Villarreal",
+    "contract": {
+      "startDate": "2016-07-01",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 1800000
+    }
+  },
+  {
+    "firstname": "Dani",
+    "lastname": "Parejo",
+    "position": "Midfielder",
+    "shirtNumber": 10,
+    "nationality": "Spanish",
+    "dateOfBirth": "1989-04-16",
+    "teamName": "Villarreal",
+    "contract": {
+      "startDate": "2020-08-12",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 3000000
+    }
+  },
+  {
+    "firstname": "Étienne",
+    "lastname": "Capoue",
+    "position": "Midfielder",
+    "shirtNumber": 6,
+    "nationality": "French",
+    "dateOfBirth": "1988-07-11",
+    "teamName": "Villarreal",
+    "contract": {
+      "startDate": "2021-01-04",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 2000000
+    }
+  },
+  {
+    "firstname": "Álex",
+    "lastname": "Baena",
+    "position": "Midfielder",
+    "shirtNumber": 16,
+    "nationality": "Spanish",
+    "dateOfBirth": "2001-07-20",
+    "teamName": "Villarreal",
+    "contract": {
+      "startDate": "2023-01-26",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 1200000
+    }
+  },
+  {
+    "firstname": "Gerard",
+    "lastname": "Moreno",
+    "position": "Forward",
+    "shirtNumber": 7,
+    "nationality": "Spanish",
+    "dateOfBirth": "1992-04-07",
+    "teamName": "Villarreal",
+    "contract": {
+      "startDate": "2018-07-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 3000000
+    }
+  },
+  {
+    "firstname": "Alexander",
+    "lastname": "Sørloth",
+    "position": "Forward",
+    "shirtNumber": 11,
+    "nationality": "Norwegian",
+    "dateOfBirth": "1995-12-05",
+    "teamName": "Villarreal",
+    "contract": {
+      "startDate": "2023-07-25",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 2500000
+    }
+  },
+  {
+    "firstname": "Yeremy",
+    "lastname": "Pino",
+    "position": "Forward",
+    "shirtNumber": 21,
+    "nationality": "Spanish",
+    "dateOfBirth": "2002-10-20",
+    "teamName": "Villarreal",
+    "contract": {
+      "startDate": "2021-11-15",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 1500000
+    }
+  },
+  {
+    "firstname": "Santi",
+    "lastname": "Comesaña",
+    "position": "Midfielder",
+    "shirtNumber": 4,
+    "nationality": "Spanish",
+    "dateOfBirth": "1996-10-05",
+    "teamName": "Villarreal",
+    "contract": {
+      "startDate": "2023-07-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 1000000
+    }
+  },
+  {
+    "firstname": "Álex",
+    "lastname": "Remiro",
+    "position": "Goalkeeper",
+    "shirtNumber": 1,
+    "nationality": "Spanish",
+    "dateOfBirth": "1995-03-24",
+    "teamName": "Real Sociedad",
+    "contract": {
+      "startDate": "2019-07-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 1500000
+    }
+  },
+  {
+    "firstname": "Robin",
+    "lastname": "Le Normand",
+    "position": "Centre-back",
+    "shirtNumber": 24,
+    "nationality": "French",
+    "dateOfBirth": "1996-11-11",
+    "teamName": "Real Sociedad",
+    "contract": {
+      "startDate": "2016-07-01",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 2000000
+    }
+  },
+  {
+    "firstname": "Igor",
+    "lastname": "Zubeldia",
+    "position": "Centre-back",
+    "shirtNumber": 5,
+    "nationality": "Spanish",
+    "dateOfBirth": "1997-03-30",
+    "teamName": "Real Sociedad",
+    "contract": {
+      "startDate": "2015-07-01",
+      "endDate": "2029-06-30",
+      "salaryPerYear": 1800000
+    }
+  },
+  {
+    "firstname": "Hamari",
+    "lastname": "Traoré",
+    "position": "Right-back",
+    "shirtNumber": 18,
+    "nationality": "Malian",
+    "dateOfBirth": "1992-01-27",
+    "teamName": "Real Sociedad",
+    "contract": {
+      "startDate": "2023-07-01",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 1500000
+    }
+  },
+  {
+    "firstname": "Aihen",
+    "lastname": "Muñoz",
+    "position": "Left-back",
+    "shirtNumber": 3,
+    "nationality": "Spanish",
+    "dateOfBirth": "1997-08-16",
+    "teamName": "Real Sociedad",
+    "contract": {
+      "startDate": "2019-01-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 1200000
+    }
+  },
+  {
+    "firstname": "Martín",
+    "lastname": "Zubimendi",
+    "position": "Midfielder",
+    "shirtNumber": 4,
+    "nationality": "Spanish",
+    "dateOfBirth": "1999-02-02",
+    "teamName": "Real Sociedad",
+    "contract": {
+      "startDate": "2018-07-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 2500000
+    }
+  },
+  {
+    "firstname": "Mikel",
+    "lastname": "Merino",
+    "position": "Midfielder",
+    "shirtNumber": 8,
+    "nationality": "Spanish",
+    "dateOfBirth": "1996-06-22",
+    "teamName": "Real Sociedad",
+    "contract": {
+      "startDate": "2018-07-12",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 3000000
+    }
+  },
+  {
+    "firstname": "Brais",
+    "lastname": "Méndez",
+    "position": "Midfielder",
+    "shirtNumber": 23,
+    "nationality": "Spanish",
+    "dateOfBirth": "1997-01-07",
+    "teamName": "Real Sociedad",
+    "contract": {
+      "startDate": "2022-07-06",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 2000000
+    }
+  },
+  {
+    "firstname": "Takefusa",
+    "lastname": "Kubo",
+    "position": "Forward",
+    "shirtNumber": 14,
+    "nationality": "Japanese",
+    "dateOfBirth": "2001-06-04",
+    "teamName": "Real Sociedad",
+    "contract": {
+      "startDate": "2022-07-19",
+      "endDate": "2029-06-30",
+      "salaryPerYear": 2000000
+    }
+  },
+  {
+    "firstname": "Mikel",
+    "lastname": "Oyarzabal",
+    "position": "Forward",
+    "shirtNumber": 10,
+    "nationality": "Spanish",
+    "dateOfBirth": "1997-04-21",
+    "teamName": "Real Sociedad",
+    "contract": {
+      "startDate": "2015-07-01",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 3000000
+    }
+  },
+  {
+    "firstname": "Ander",
+    "lastname": "Barrenetxea",
+    "position": "Forward",
+    "shirtNumber": 7,
+    "nationality": "Spanish",
+    "dateOfBirth": "2001-12-27",
+    "teamName": "Real Sociedad",
+    "contract": {
+      "startDate": "2019-07-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 1500000
+    }
+  },
+  {
+    "firstname": "Unai",
+    "lastname": "Simón",
+    "position": "Goalkeeper",
+    "shirtNumber": 1,
+    "nationality": "Spanish",
+    "dateOfBirth": "1997-06-11",
+    "teamName": "Athletic Bilbao",
+    "contract": {
+      "startDate": "2015-07-01",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 1500000
+    }
+  },
+  {
+    "firstname": "Daniel",
+    "lastname": "Vivian",
+    "position": "Centre-back",
+    "shirtNumber": 3,
+    "nationality": "Spanish",
+    "dateOfBirth": "1999-07-05",
+    "teamName": "Athletic Bilbao",
+    "contract": {
+      "startDate": "2017-07-01",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 1000000
+    }
+  },
+  {
+    "firstname": "Aitor",
+    "lastname": "Paredes",
+    "position": "Centre-back",
+    "shirtNumber": 4,
+    "nationality": "Spanish",
+    "dateOfBirth": "2000-04-29",
+    "teamName": "Athletic Bilbao",
+    "contract": {
+      "startDate": "2019-07-01",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 800000
+    }
+  },
+  {
+    "firstname": "Yuri",
+    "lastname": "Berchiche",
+    "position": "Left-back",
+    "shirtNumber": 17,
+    "nationality": "Spanish",
+    "dateOfBirth": "1990-02-10",
+    "teamName": "Athletic Bilbao",
+    "contract": {
+      "startDate": "2018-07-02",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 2000000
+    }
+  },
+  {
+    "firstname": "Óscar",
+    "lastname": "de Marcos",
+    "position": "Right-back",
+    "shirtNumber": 18,
+    "nationality": "Spanish",
+    "dateOfBirth": "1989-04-14",
+    "teamName": "Athletic Bilbao",
+    "contract": {
+      "startDate": "2009-07-01",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 2500000
+    }
+  },
+  {
+    "firstname": "Oihan",
+    "lastname": "Sancet",
+    "position": "Midfielder",
+    "shirtNumber": 8,
+    "nationality": "Spanish",
+    "dateOfBirth": "2000-04-25",
+    "teamName": "Athletic Bilbao",
+    "contract": {
+      "startDate": "2019-07-01",
+      "endDate": "2032-06-30",
+      "salaryPerYear": 2000000
+    }
+  },
+  {
+    "firstname": "Iñigo",
+    "lastname": "Ruiz de Galarreta",
+    "position": "Midfielder",
+    "shirtNumber": 16,
+    "nationality": "Spanish",
+    "dateOfBirth": "1993-08-06",
+    "teamName": "Athletic Bilbao",
+    "contract": {
+      "startDate": "2023-07-01",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 1200000
+    }
+  },
+  {
+    "firstname": "Iñaki",
+    "lastname": "Williams",
+    "position": "Forward",
+    "shirtNumber": 9,
+    "nationality": "Ghanaian",
+    "dateOfBirth": "1994-06-15",
+    "teamName": "Athletic Bilbao",
+    "contract": {
+      "startDate": "2014-07-01",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 5000000
+    }
+  },
+  {
+    "firstname": "Nico",
+    "lastname": "Williams",
+    "position": "Forward",
+    "shirtNumber": 11,
+    "nationality": "Spanish",
+    "dateOfBirth": "2002-07-12",
+    "teamName": "Athletic Bilbao",
+    "contract": {
+      "startDate": "2020-07-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 5000000
+    }
+  },
+  {
+    "firstname": "Gorka",
+    "lastname": "Guruzeta",
+    "position": "Forward",
+    "shirtNumber": 12,
+    "nationality": "Spanish",
+    "dateOfBirth": "1996-09-12",
+    "teamName": "Athletic Bilbao",
+    "contract": {
+      "startDate": "2022-07-01",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 1500000
+    }
+  },
+  {
+    "firstname": "Álex",
+    "lastname": "Berenguer",
+    "position": "Forward",
+    "shirtNumber": 7,
+    "nationality": "Spanish",
+    "dateOfBirth": "1995-07-04",
+    "teamName": "Athletic Bilbao",
+    "contract": {
+      "startDate": "2020-10-05",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 2000000
+    }
+  },
+  {
+    "firstname": "Ederson",
+    "lastname": "",
+    "position": "Goalkeeper",
+    "shirtNumber": 31,
+    "nationality": "Brazilian",
+    "dateOfBirth": "1993-08-17",
+    "teamName": "Manchester City",
+    "contract": {
+      "startDate": "2017-07-01",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 5200000
+    }
+  },
+  {
+    "firstname": "Kyle",
+    "lastname": "Walker",
+    "position": "Right-back",
+    "shirtNumber": 2,
+    "nationality": "English",
+    "dateOfBirth": "1990-05-28",
+    "teamName": "Manchester City",
+    "contract": {
+      "startDate": "2017-07-14",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 8000000
+    }
+  },
+  {
+    "firstname": "Rúben",
+    "lastname": "Dias",
+    "position": "Centre-back",
+    "shirtNumber": 3,
+    "nationality": "Portuguese",
+    "dateOfBirth": "1997-05-14",
+    "teamName": "Manchester City",
+    "contract": {
+      "startDate": "2020-09-29",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 8000000
+    }
+  },
+  {
+    "firstname": "John",
+    "lastname": "Stones",
+    "position": "Centre-back",
+    "shirtNumber": 5,
+    "nationality": "English",
+    "dateOfBirth": "1994-05-28",
+    "teamName": "Manchester City",
+    "contract": {
+      "startDate": "2016-08-09",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 12000000
+    }
+  },
+  {
+    "firstname": "Nathan",
+    "lastname": "Aké",
+    "position": "Centre-back",
+    "shirtNumber": 6,
+    "nationality": "Dutch",
+    "dateOfBirth": "1995-02-18",
+    "teamName": "Manchester City",
+    "contract": {
+      "startDate": "2020-08-05",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 8000000
+    }
+  },
+  {
+    "firstname": "Rodri",
+    "lastname": "",
+    "position": "Midfielder",
+    "shirtNumber": 16,
+    "nationality": "Spanish",
+    "dateOfBirth": "1996-06-22",
+    "teamName": "Manchester City",
+    "contract": {
+      "startDate": "2019-07-04",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 10000000
+    }
+  },
+  {
+    "firstname": "Kevin",
+    "lastname": "De Bruyne",
+    "position": "Midfielder",
+    "shirtNumber": 17,
+    "nationality": "Belgian",
+    "dateOfBirth": "1991-06-28",
+    "teamName": "Manchester City",
+    "contract": {
+      "startDate": "2015-08-30",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 20800000
+    }
+  },
+  {
+    "firstname": "Bernardo",
+    "lastname": "Silva",
+    "position": "Midfielder",
+    "shirtNumber": 20,
+    "nationality": "Portuguese",
+    "dateOfBirth": "1994-08-10",
+    "teamName": "Manchester City",
+    "contract": {
+      "startDate": "2017-07-01",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 15000000
+    }
+  },
+  {
+    "firstname": "Phil",
+    "lastname": "Foden",
+    "position": "Midfielder",
+    "shirtNumber": 47,
+    "nationality": "English",
+    "dateOfBirth": "2000-05-28",
+    "teamName": "Manchester City",
+    "contract": {
+      "startDate": "2017-07-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 11700000
+    }
+  },
+  {
+    "firstname": "Erling",
+    "lastname": "Haaland",
+    "position": "Forward",
+    "shirtNumber": 9,
+    "nationality": "Norwegian",
+    "dateOfBirth": "2000-07-21",
+    "teamName": "Manchester City",
+    "contract": {
+      "startDate": "2022-07-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 19500000
+    }
+  },
+  {
+    "firstname": "Jack",
+    "lastname": "Grealish",
+    "position": "Forward",
+    "shirtNumber": 10,
+    "nationality": "English",
+    "dateOfBirth": "1995-09-10",
+    "teamName": "Manchester City",
+    "contract": {
+      "startDate": "2021-08-05",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 15600000
+    }
+  },
+  {
+    "firstname": "André",
+    "lastname": "Onana",
+    "position": "Goalkeeper",
+    "shirtNumber": 24,
+    "nationality": "Cameroonian",
+    "dateOfBirth": "1996-04-02",
+    "teamName": "Manchester United",
+    "contract": {
+      "startDate": "2023-07-20",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 6240000
+    }
+  },
+  {
+    "firstname": "Diogo",
+    "lastname": "Dalot",
+    "position": "Right-back",
+    "shirtNumber": 20,
+    "nationality": "Portuguese",
+    "dateOfBirth": "1999-03-18",
+    "teamName": "Manchester United",
+    "contract": {
+      "startDate": "2018-06-06",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 4420000
+    }
+  },
+  {
+    "firstname": "Lisandro",
+    "lastname": "Martínez",
+    "position": "Centre-back",
+    "shirtNumber": 6,
+    "nationality": "Argentinian",
+    "dateOfBirth": "1998-01-18",
+    "teamName": "Manchester United",
+    "contract": {
+      "startDate": "2022-07-27",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 6240000
+    }
+  },
+  {
+    "firstname": "Harry",
+    "lastname": "Maguire",
+    "position": "Centre-back",
+    "shirtNumber": 5,
+    "nationality": "English",
+    "dateOfBirth": "1993-03-05",
+    "teamName": "Manchester United",
+    "contract": {
+      "startDate": "2019-08-05",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 9880000
+    }
+  },
+  {
+    "firstname": "Luke",
+    "lastname": "Shaw",
+    "position": "Left-back",
+    "shirtNumber": 23,
+    "nationality": "English",
+    "dateOfBirth": "1995-07-12",
+    "teamName": "Manchester United",
+    "contract": {
+      "startDate": "2014-06-27",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 7800000
+    }
+  },
+  {
+    "firstname": "Casemiro",
+    "lastname": "",
+    "position": "Midfielder",
+    "shirtNumber": 18,
+    "nationality": "Brazilian",
+    "dateOfBirth": "1992-02-23",
+    "teamName": "Manchester United",
+    "contract": {
+      "startDate": "2022-08-22",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 18200000
+    }
+  },
+  {
+    "firstname": "Bruno",
+    "lastname": "Fernandes",
+    "position": "Midfielder",
+    "shirtNumber": 8,
+    "nationality": "Portuguese",
+    "dateOfBirth": "1994-09-08",
+    "teamName": "Manchester United",
+    "contract": {
+      "startDate": "2020-01-30",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 12480000
+    }
+  },
+  {
+    "firstname": "Mason",
+    "lastname": "Mount",
+    "position": "Midfielder",
+    "shirtNumber": 7,
+    "nationality": "English",
+    "dateOfBirth": "1999-01-10",
+    "teamName": "Manchester United",
+    "contract": {
+      "startDate": "2023-07-05",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 10400000
+    }
+  },
+  {
+    "firstname": "Marcus",
+    "lastname": "Rashford",
+    "position": "Forward",
+    "shirtNumber": 10,
+    "nationality": "English",
+    "dateOfBirth": "1997-10-31",
+    "teamName": "Manchester United",
+    "contract": {
+      "startDate": "2015-07-01",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 15600000
+    }
+  },
+  {
+    "firstname": "Rasmus",
+    "lastname": "Højlund",
+    "position": "Forward",
+    "shirtNumber": 11,
+    "nationality": "Danish",
+    "dateOfBirth": "2003-02-04",
+    "teamName": "Manchester United",
+    "contract": {
+      "startDate": "2023-08-05",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 4420000
+    }
+  },
+  {
+    "firstname": "Alejandro",
+    "lastname": "Garnacho",
+    "position": "Forward",
+    "shirtNumber": 17,
+    "nationality": "Argentinian",
+    "dateOfBirth": "2004-07-01",
+    "teamName": "Manchester United",
+    "contract": {
+      "startDate": "2023-04-28",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 2600000
+    }
+  },
+  {
+    "firstname": "Alisson",
+    "lastname": "Becker",
+    "position": "Goalkeeper",
+    "shirtNumber": 1,
+    "nationality": "Brazilian",
+    "dateOfBirth": "1992-10-02",
+    "teamName": "Liverpool",
+    "contract": {
+      "startDate": "2018-07-19",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 7800000
+    }
+  },
+  {
+    "firstname": "Trent",
+    "lastname": "Alexander-Arnold",
+    "position": "Right-back",
+    "shirtNumber": 66,
+    "nationality": "English",
+    "dateOfBirth": "1998-10-07",
+    "teamName": "Liverpool",
+    "contract": {
+      "startDate": "2016-07-01",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 9360000
+    }
+  },
+  {
+    "firstname": "Virgil",
+    "lastname": "van Dijk",
+    "position": "Centre-back",
+    "shirtNumber": 4,
+    "nationality": "Dutch",
+    "dateOfBirth": "1991-07-08",
+    "teamName": "Liverpool",
+    "contract": {
+      "startDate": "2018-01-01",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 11440000
+    }
+  },
+  {
+    "firstname": "Ibrahima",
+    "lastname": "Konaté",
+    "position": "Centre-back",
+    "shirtNumber": 5,
+    "nationality": "French",
+    "dateOfBirth": "1999-05-25",
+    "teamName": "Liverpool",
+    "contract": {
+      "startDate": "2021-07-01",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 3640000
+    }
+  },
+  {
+    "firstname": "Andrew",
+    "lastname": "Robertson",
+    "position": "Left-back",
+    "shirtNumber": 26,
+    "nationality": "Scottish",
+    "dateOfBirth": "1994-03-11",
+    "teamName": "Liverpool",
+    "contract": {
+      "startDate": "2017-07-21",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 5200000
+    }
+  },
+  {
+    "firstname": "Alexis",
+    "lastname": "Mac Allister",
+    "position": "Midfielder",
+    "shirtNumber": 10,
+    "nationality": "Argentinian",
+    "dateOfBirth": "1998-12-24",
+    "teamName": "Liverpool",
+    "contract": {
+      "startDate": "2023-06-08",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 7800000
+    }
+  },
+  {
+    "firstname": "Dominik",
+    "lastname": "Szoboszlai",
+    "position": "Midfielder",
+    "shirtNumber": 8,
+    "nationality": "Hungarian",
+    "dateOfBirth": "2000-10-25",
+    "teamName": "Liverpool",
+    "contract": {
+      "startDate": "2023-07-02",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 6240000
+    }
+  },
+  {
+    "firstname": "Mohamed",
+    "lastname": "Salah",
+    "position": "Forward",
+    "shirtNumber": 11,
+    "nationality": "Egyptian",
+    "dateOfBirth": "1992-06-15",
+    "teamName": "Liverpool",
+    "contract": {
+      "startDate": "2017-07-01",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 18200000
+    }
+  },
+  {
+    "firstname": "Darwin",
+    "lastname": "Núñez",
+    "position": "Forward",
+    "shirtNumber": 9,
+    "nationality": "Uruguayan",
+    "dateOfBirth": "1999-06-24",
+    "teamName": "Liverpool",
+    "contract": {
+      "startDate": "2022-06-14",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 7280000
+    }
+  },
+  {
+    "firstname": "Luis",
+    "lastname": "Díaz",
+    "position": "Forward",
+    "shirtNumber": 7,
+    "nationality": "Colombian",
+    "dateOfBirth": "1997-01-13",
+    "teamName": "Liverpool",
+    "contract": {
+      "startDate": "2022-01-30",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 2912000
+    }
+  },
+  {
+    "firstname": "Diogo",
+    "lastname": "Jota",
+    "position": "Forward",
+    "shirtNumber": 20,
+    "nationality": "Portuguese",
+    "dateOfBirth": "1996-12-04",
+    "teamName": "Liverpool",
+    "contract": {
+      "startDate": "2020-09-19",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 7280000
+    }
+  },
+  {
+    "firstname": "David",
+    "lastname": "Raya",
+    "position": "Goalkeeper",
+    "shirtNumber": 22,
+    "nationality": "Spanish",
+    "dateOfBirth": "1995-09-15",
+    "teamName": "Arsenal",
+    "contract": {
+      "startDate": "2023-08-15",
+      "endDate": "2024-06-30",
+      "salaryPerYear": 2080000
+    }
+  },
+  {
+    "firstname": "Ben",
+    "lastname": "White",
+    "position": "Right-back",
+    "shirtNumber": 4,
+    "nationality": "English",
+    "dateOfBirth": "1997-10-08",
+    "teamName": "Arsenal",
+    "contract": {
+      "startDate": "2021-07-30",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 8000000
+    }
+  },
+  {
+    "firstname": "William",
+    "lastname": "Saliba",
+    "position": "Centre-back",
+    "shirtNumber": 2,
+    "nationality": "French",
+    "dateOfBirth": "2001-03-24",
+    "teamName": "Arsenal",
+    "contract": {
+      "startDate": "2019-07-25",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 10000000
+    }
+  },
+  {
+    "firstname": "Gabriel",
+    "lastname": "Magalhães",
+    "position": "Centre-back",
+    "shirtNumber": 6,
+    "nationality": "Brazilian",
+    "dateOfBirth": "1997-12-19",
+    "teamName": "Arsenal",
+    "contract": {
+      "startDate": "2020-09-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 5200000
+    }
+  },
+  {
+    "firstname": "Oleksandr",
+    "lastname": "Zinchenko",
+    "position": "Left-back",
+    "shirtNumber": 35,
+    "nationality": "Ukrainian",
+    "dateOfBirth": "1996-12-15",
+    "teamName": "Arsenal",
+    "contract": {
+      "startDate": "2022-07-22",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 7800000
+    }
+  },
+  {
+    "firstname": "Declan",
+    "lastname": "Rice",
+    "position": "Midfielder",
+    "shirtNumber": 41,
+    "nationality": "English",
+    "dateOfBirth": "1999-01-14",
+    "teamName": "Arsenal",
+    "contract": {
+      "startDate": "2023-07-15",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 12480000
+    }
+  },
+  {
+    "firstname": "Martin",
+    "lastname": "Ødegaard",
+    "position": "Midfielder",
+    "shirtNumber": 8,
+    "nationality": "Norwegian",
+    "dateOfBirth": "1998-12-17",
+    "teamName": "Arsenal",
+    "contract": {
+      "startDate": "2021-08-20",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 10400000
+    }
+  },
+  {
+    "firstname": "Kai",
+    "lastname": "Havertz",
+    "position": "Midfielder",
+    "shirtNumber": 29,
+    "nationality": "German",
+    "dateOfBirth": "1999-06-11",
+    "teamName": "Arsenal",
+    "contract": {
+      "startDate": "2023-06-28",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 14560000
+    }
+  },
+  {
+    "firstname": "Bukayo",
+    "lastname": "Saka",
+    "position": "Forward",
+    "shirtNumber": 7,
+    "nationality": "English",
+    "dateOfBirth": "2001-09-05",
+    "teamName": "Arsenal",
+    "contract": {
+      "startDate": "2020-07-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 10140000
+    }
+  },
+  {
+    "firstname": "Gabriel",
+    "lastname": "Jesus",
+    "position": "Forward",
+    "shirtNumber": 9,
+    "nationality": "Brazilian",
+    "dateOfBirth": "1997-04-03",
+    "teamName": "Arsenal",
+    "contract": {
+      "startDate": "2022-07-04",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 13780000
+    }
+  },
+  {
+    "firstname": "Gabriel",
+    "lastname": "Martinelli",
+    "position": "Forward",
+    "shirtNumber": 11,
+    "nationality": "Brazilian",
+    "dateOfBirth": "2001-06-18",
+    "teamName": "Arsenal",
+    "contract": {
+      "startDate": "2019-07-02",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 9360000
+    }
+  },
+  {
+    "firstname": "Robert",
+    "lastname": "Sánchez",
+    "position": "Goalkeeper",
+    "shirtNumber": 1,
+    "nationality": "Spanish",
+    "dateOfBirth": "1997-11-18",
+    "teamName": "Chelsea",
+    "contract": {
+      "startDate": "2023-08-05",
+      "endDate": "2030-06-30",
+      "salaryPerYear": 2860000
+    }
+  },
+  {
+    "firstname": "Reece",
+    "lastname": "James",
+    "position": "Right-back",
+    "shirtNumber": 24,
+    "nationality": "English",
+    "dateOfBirth": "1999-12-08",
+    "teamName": "Chelsea",
+    "contract": {
+      "startDate": "2017-07-01",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 13000000
+    }
+  },
+  {
+    "firstname": "Benoît",
+    "lastname": "Badiashile",
+    "position": "Centre-back",
+    "shirtNumber": 5,
+    "nationality": "French",
+    "dateOfBirth": "2001-03-26",
+    "teamName": "Chelsea",
+    "contract": {
+      "startDate": "2023-01-06",
+      "endDate": "2030-06-30",
+      "salaryPerYear": 4680000
+    }
+  },
+  {
+    "firstname": "Levi",
+    "lastname": "Colwill",
+    "position": "Centre-back",
+    "shirtNumber": 26,
+    "nationality": "English",
+    "dateOfBirth": "2003-02-26",
+    "teamName": "Chelsea",
+    "contract": {
+      "startDate": "2023-08-02",
+      "endDate": "2029-06-30",
+      "salaryPerYear": 5200000
+    }
+  },
+  {
+    "firstname": "Ben",
+    "lastname": "Chilwell",
+    "position": "Left-back",
+    "shirtNumber": 21,
+    "nationality": "English",
+    "dateOfBirth": "1996-12-21",
+    "teamName": "Chelsea",
+    "contract": {
+      "startDate": "2020-08-26",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 10400000
+    }
+  },
+  {
+    "firstname": "Moisés",
+    "lastname": "Caicedo",
+    "position": "Midfielder",
+    "shirtNumber": 25,
+    "nationality": "Ecuadorian",
+    "dateOfBirth": "2001-11-02",
+    "teamName": "Chelsea",
+    "contract": {
+      "startDate": "2023-08-14",
+      "endDate": "2031-06-30",
+      "salaryPerYear": 7800000
+    }
+  },
+  {
+    "firstname": "Enzo",
+    "lastname": "Fernández",
+    "position": "Midfielder",
+    "shirtNumber": 8,
+    "nationality": "Argentinian",
+    "dateOfBirth": "2001-01-17",
+    "teamName": "Chelsea",
+    "contract": {
+      "startDate": "2023-01-31",
+      "endDate": "2031-06-30",
+      "salaryPerYear": 9360000
+    }
+  },
+  {
+    "firstname": "Cole",
+    "lastname": "Palmer",
+    "position": "Midfielder",
+    "shirtNumber": 20,
+    "nationality": "English",
+    "dateOfBirth": "2002-05-06",
+    "teamName": "Chelsea",
+    "contract": {
+      "startDate": "2023-09-01",
+      "endDate": "2030-06-30",
+      "salaryPerYear": 3900000
+    }
+  },
+  {
+    "firstname": "Mykhailo",
+    "lastname": "Mudryk",
+    "position": "Forward",
+    "shirtNumber": 10,
+    "nationality": "Ukrainian",
+    "dateOfBirth": "2001-01-05",
+    "teamName": "Chelsea",
+    "contract": {
+      "startDate": "2023-01-15",
+      "endDate": "2031-06-30",
+      "salaryPerYear": 5200000
+    }
+  },
+  {
+    "firstname": "Raheem",
+    "lastname": "Sterling",
+    "position": "Forward",
+    "shirtNumber": 7,
+    "nationality": "English",
+    "dateOfBirth": "1994-12-08",
+    "teamName": "Chelsea",
+    "contract": {
+      "startDate": "2022-07-13",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 16900000
+    }
+  },
+  {
+    "firstname": "Nicolas",
+    "lastname": "Jackson",
+    "position": "Forward",
+    "shirtNumber": 15,
+    "nationality": "Senegalese",
+    "dateOfBirth": "2001-06-20",
+    "teamName": "Chelsea",
+    "contract": {
+      "startDate": "2023-06-30",
+      "endDate": "2031-06-30",
+      "salaryPerYear": 3380000
+    }
+  },
+  {
+    "firstname": "Guglielmo",
+    "lastname": "Vicario",
+    "position": "Goalkeeper",
+    "shirtNumber": 13,
+    "nationality": "Italian",
+    "dateOfBirth": "1996-10-07",
+    "teamName": "Tottenham Hotspur",
+    "contract": {
+      "startDate": "2023-06-27",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 3900000
+    }
+  },
+  {
+    "firstname": "Pedro",
+    "lastname": "Porro",
+    "position": "Right-back",
+    "shirtNumber": 23,
+    "nationality": "Spanish",
+    "dateOfBirth": "1999-09-13",
+    "teamName": "Tottenham Hotspur",
+    "contract": {
+      "startDate": "2023-07-01",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 3900000
+    }
+  },
+  {
+    "firstname": "Cristian",
+    "lastname": "Romero",
+    "position": "Centre-back",
+    "shirtNumber": 17,
+    "nationality": "Argentinian",
+    "dateOfBirth": "1998-04-27",
+    "teamName": "Tottenham Hotspur",
+    "contract": {
+      "startDate": "2022-08-30",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 8580000
+    }
+  },
+  {
+    "firstname": "Micky",
+    "lastname": "van de Ven",
+    "position": "Centre-back",
+    "shirtNumber": 37,
+    "nationality": "Dutch",
+    "dateOfBirth": "2001-04-19",
+    "teamName": "Tottenham Hotspur",
+    "contract": {
+      "startDate": "2023-08-08",
+      "endDate": "2029-06-30",
+      "salaryPerYear": 3900000
+    }
+  },
+  {
+    "firstname": "Destiny",
+    "lastname": "Udogie",
+    "position": "Left-back",
+    "shirtNumber": 38,
+    "nationality": "Italian",
+    "dateOfBirth": "2002-11-28",
+    "teamName": "Tottenham Hotspur",
+    "contract": {
+      "startDate": "2022-08-16",
+      "endDate": "2030-06-30",
+      "salaryPerYear": 3900000
+    }
+  },
+  {
+    "firstname": "Yves",
+    "lastname": "Bissouma",
+    "position": "Midfielder",
+    "shirtNumber": 8,
+    "nationality": "Malian",
+    "dateOfBirth": "1996-08-30",
+    "teamName": "Tottenham Hotspur",
+    "contract": {
+      "startDate": "2022-06-17",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 2860000
+    }
+  },
+  {
+    "firstname": "Pape",
+    "lastname": "Matar Sarr",
+    "position": "Midfielder",
+    "shirtNumber": 29,
+    "nationality": "Senegalese",
+    "dateOfBirth": "2002-09-14",
+    "teamName": "Tottenham Hotspur",
+    "contract": {
+      "startDate": "2021-08-27",
+      "endDate": "2030-06-30",
+      "salaryPerYear": 2600000
+    }
+  },
+  {
+    "firstname": "James",
+    "lastname": "Maddison",
+    "position": "Midfielder",
+    "shirtNumber": 10,
+    "nationality": "English",
+    "dateOfBirth": "1996-11-23",
+    "teamName": "Tottenham Hotspur",
+    "contract": {
+      "startDate": "2023-06-28",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 8840000
+    }
+  },
+  {
+    "firstname": "Dejan",
+    "lastname": "Kulusevski",
+    "position": "Forward",
+    "shirtNumber": 21,
+    "nationality": "Swedish",
+    "dateOfBirth": "2000-04-25",
+    "teamName": "Tottenham Hotspur",
+    "contract": {
+      "startDate": "2023-06-17",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 5720000
+    }
+  },
+  {
+    "firstname": "Son",
+    "lastname": "Heung-min",
+    "position": "Forward",
+    "shirtNumber": 7,
+    "nationality": "South Korean",
+    "dateOfBirth": "1992-07-08",
+    "teamName": "Tottenham Hotspur",
+    "contract": {
+      "startDate": "2015-08-28",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 9880000
+    }
+  },
+  {
+    "firstname": "Richarlison",
+    "lastname": "",
+    "position": "Forward",
+    "shirtNumber": 9,
+    "nationality": "Brazilian",
+    "dateOfBirth": "1997-05-10",
+    "teamName": "Tottenham Hotspur",
+    "contract": {
+      "startDate": "2022-07-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 4680000
+    }
+  },
+  {
+    "firstname": "Nick",
+    "lastname": "Pope",
+    "position": "Goalkeeper",
+    "shirtNumber": 22,
+    "nationality": "English",
+    "dateOfBirth": "1992-04-19",
+    "teamName": "Newcastle United",
+    "contract": {
+      "startDate": "2022-06-23",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 3120000
+    }
+  },
+  {
+    "firstname": "Kieran",
+    "lastname": "Trippier",
+    "position": "Right-back",
+    "shirtNumber": 2,
+    "nationality": "English",
+    "dateOfBirth": "1990-09-19",
+    "teamName": "Newcastle United",
+    "contract": {
+      "startDate": "2022-01-07",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 6240000
+    }
+  },
+  {
+    "firstname": "Sven",
+    "lastname": "Botman",
+    "position": "Centre-back",
+    "shirtNumber": 4,
+    "nationality": "Dutch",
+    "dateOfBirth": "2000-01-12",
+    "teamName": "Newcastle United",
+    "contract": {
+      "startDate": "2022-07-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 4680000
+    }
+  },
+  {
+    "firstname": "Fabian",
+    "lastname": "Schär",
+    "position": "Centre-back",
+    "shirtNumber": 5,
+    "nationality": "Swiss",
+    "dateOfBirth": "1991-12-20",
+    "teamName": "Newcastle United",
+    "contract": {
+      "startDate": "2018-07-26",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 3120000
+    }
+  },
+  {
+    "firstname": "Dan",
+    "lastname": "Burn",
+    "position": "Left-back",
+    "shirtNumber": 33,
+    "nationality": "English",
+    "dateOfBirth": "1992-05-09",
+    "teamName": "Newcastle United",
+    "contract": {
+      "startDate": "2022-01-31",
+      "endDate": "2025-06-30",
+      "salaryPerYear": 2600000
+    }
+  },
+  {
+    "firstname": "Bruno",
+    "lastname": "Guimarães",
+    "position": "Midfielder",
+    "shirtNumber": 39,
+    "nationality": "Brazilian",
+    "dateOfBirth": "1997-11-16",
+    "teamName": "Newcastle United",
+    "contract": {
+      "startDate": "2022-01-30",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 6240000
+    }
+  },
+  {
+    "firstname": "Sandro",
+    "lastname": "Tonali",
+    "position": "Midfielder",
+    "shirtNumber": 8,
+    "nationality": "Italian",
+    "dateOfBirth": "2000-05-08",
+    "teamName": "Newcastle United",
+    "contract": {
+      "startDate": "2023-07-03",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 6240000
+    }
+  },
+  {
+    "firstname": "Joelinton",
+    "lastname": "",
+    "position": "Midfielder",
+    "shirtNumber": 7,
+    "nationality": "Brazilian",
+    "dateOfBirth": "1996-08-14",
+    "teamName": "Newcastle United",
+    "contract": {
+      "startDate": "2019-07-23",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 4420000
+    }
+  },
+  {
+    "firstname": "Anthony",
+    "lastname": "Gordon",
+    "position": "Forward",
+    "shirtNumber": 10,
+    "nationality": "English",
+    "dateOfBirth": "2001-02-24",
+    "teamName": "Newcastle United",
+    "contract": {
+      "startDate": "2023-01-29",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 3120000
+    }
+  },
+  {
+    "firstname": "Alexander",
+    "lastname": "Isak",
+    "position": "Forward",
+    "shirtNumber": 14,
+    "nationality": "Swedish",
+    "dateOfBirth": "1999-09-21",
+    "teamName": "Newcastle United",
+    "contract": {
+      "startDate": "2022-08-26",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 6240000
+    }
+  },
+  {
+    "firstname": "Harvey",
+    "lastname": "Barnes",
+    "position": "Forward",
+    "shirtNumber": 15,
+    "nationality": "English",
+    "dateOfBirth": "1997-12-09",
+    "teamName": "Newcastle United",
+    "contract": {
+      "startDate": "2023-07-23",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 4160000
+    }
+  },
+  {
+    "firstname": "Emiliano",
+    "lastname": "Martínez",
+    "position": "Goalkeeper",
+    "shirtNumber": 1,
+    "nationality": "Argentinian",
+    "dateOfBirth": "1992-09-02",
+    "teamName": "Aston Villa",
+    "contract": {
+      "startDate": "2020-09-16",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 6240000
+    }
+  },
+  {
+    "firstname": "Matty",
+    "lastname": "Cash",
+    "position": "Right-back",
+    "shirtNumber": 2,
+    "nationality": "Polish",
+    "dateOfBirth": "1997-08-07",
+    "teamName": "Aston Villa",
+    "contract": {
+      "startDate": "2020-09-03",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 4160000
+    }
+  },
+  {
+    "firstname": "Ezri",
+    "lastname": "Konsa",
+    "position": "Centre-back",
+    "shirtNumber": 4,
+    "nationality": "English",
+    "dateOfBirth": "1997-10-23",
+    "teamName": "Aston Villa",
+    "contract": {
+      "startDate": "2019-07-11",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 4680000
+    }
+  },
+  {
+    "firstname": "Pau",
+    "lastname": "Torres",
+    "position": "Centre-back",
+    "shirtNumber": 14,
+    "nationality": "Spanish",
+    "dateOfBirth": "1997-01-16",
+    "teamName": "Aston Villa",
+    "contract": {
+      "startDate": "2023-07-12",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 6760000
+    }
+  },
+  {
+    "firstname": "Lucas",
+    "lastname": "Digne",
+    "position": "Left-back",
+    "shirtNumber": 12,
+    "nationality": "French",
+    "dateOfBirth": "1993-07-20",
+    "teamName": "Aston Villa",
+    "contract": {
+      "startDate": "2022-01-13",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 6240000
+    }
+  },
+  {
+    "firstname": "Douglas",
+    "lastname": "Luiz",
+    "position": "Midfielder",
+    "shirtNumber": 6,
+    "nationality": "Brazilian",
+    "dateOfBirth": "1998-05-09",
+    "teamName": "Aston Villa",
+    "contract": {
+      "startDate": "2019-07-25",
+      "endDate": "2026-06-30",
+      "salaryPerYear": 3900000
+    }
+  },
+  {
+    "firstname": "John",
+    "lastname": "McGinn",
+    "position": "Midfielder",
+    "shirtNumber": 7,
+    "nationality": "Scottish",
+    "dateOfBirth": "1994-10-18",
+    "teamName": "Aston Villa",
+    "contract": {
+      "startDate": "2018-08-08",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 3120000
+    }
+  },
+  {
+    "firstname": "Youri",
+    "lastname": "Tielemans",
+    "position": "Midfielder",
+    "shirtNumber": 8,
+    "nationality": "Belgian",
+    "dateOfBirth": "1997-05-07",
+    "teamName": "Aston Villa",
+    "contract": {
+      "startDate": "2023-07-01",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 7800000
+    }
+  },
+  {
+    "firstname": "Ollie",
+    "lastname": "Watkins",
+    "position": "Forward",
+    "shirtNumber": 11,
+    "nationality": "English",
+    "dateOfBirth": "1995-12-30",
+    "teamName": "Aston Villa",
+    "contract": {
+      "startDate": "2020-09-09",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 6500000
+    }
+  },
+  {
+    "firstname": "Leon",
+    "lastname": "Bailey",
+    "position": "Forward",
+    "shirtNumber": 31,
+    "nationality": "Jamaican",
+    "dateOfBirth": "1997-08-09",
+    "teamName": "Aston Villa",
+    "contract": {
+      "startDate": "2021-08-04",
+      "endDate": "2027-06-30",
+      "salaryPerYear": 5200000
+    }
+  },
+  {
+    "firstname": "Moussa",
+    "lastname": "Diaby",
+    "position": "Forward",
+    "shirtNumber": 19,
+    "nationality": "French",
+    "dateOfBirth": "1999-07-07",
+    "teamName": "Aston Villa",
+    "contract": {
+      "startDate": "2023-07-22",
+      "endDate": "2028-06-30",
+      "salaryPerYear": 6240000
+    }
+  }
+]
