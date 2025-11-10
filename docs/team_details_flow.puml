@@ -1,0 +1,80 @@
+@startuml
+title "Interaction Diagram: Rendering the Team Details Page"
+
+actor User
+box "Frontend (Browser)" #LightBlue
+  participant "TeamDetailPage.tsx" as Page
+  participant "TeamService.tsx" as TeamFeService
+  participant "CoachService.tsx" as CoachFeService
+  participant "PlayerService.tsx" as PlayerFeService
+end box
+
+box "Backend (Spring Boot)" #LightGreen
+  participant "TeamController" as TeamCtrl
+  participant "CoachController" as CoachCtrl
+  participant "PlayerController" as PlayerCtrl
+  participant "Service/Repo Layers" as BackendLogic
+end box
+
+database "Database" as DB
+
+autonumber
+
+User -> Page: Navigates to /teams/{id}
+activate Page
+
+par
+  Page -> TeamFeService: getTeamById(id)
+  activate TeamFeService
+  TeamFeService -> TeamCtrl: GET /api/teams/{id}
+  activate TeamCtrl
+  TeamCtrl -> BackendLogic: Fetch team by id
+  activate BackendLogic
+  BackendLogic -> DB: SELECT * FROM team WHERE id=?
+  DB --> BackendLogic: TeamEntity
+  BackendLogic --> TeamCtrl: TeamDto (with coachId)
+  deactivate BackendLogic
+  TeamCtrl --> TeamFeService: 200 OK (TeamDto)
+  deactivate TeamCtrl
+  TeamFeService --> Page: teamData
+  deactivate TeamFeService
+else
+  Page -> PlayerFeService: getPlayersByTeamId(id)
+  activate PlayerFeService
+  PlayerFeService -> PlayerCtrl: GET /api/teams/{id}/players
+  activate PlayerCtrl
+  PlayerCtrl -> BackendLogic: Fetch players by team
+  activate BackendLogic
+  BackendLogic -> DB: SELECT * FROM player WHERE team_id=?
+  DB --> BackendLogic: List<PlayerSummaryDto>
+  BackendLogic --> PlayerCtrl: List<PlayerSummaryDto>
+  deactivate BackendLogic
+  PlayerCtrl --> PlayerFeService: 200 OK (List<PlayerSummaryDto>)
+  deactivate PlayerCtrl
+  PlayerFeService --> Page: playersData
+  deactivate PlayerFeService
+end
+
+Page -> Page: Set team state, check for coachId
+alt if team.coachId exists
+  Page -> CoachFeService: getCoachById(coachId)
+  activate CoachFeService
+  CoachFeService -> CoachCtrl: GET /api/coaches/{coachId}
+  activate CoachCtrl
+  CoachCtrl -> BackendLogic: Fetch coach by id
+  activate BackendLogic
+  BackendLogic -> DB: SELECT * FROM coach WHERE id=?
+  DB --> BackendLogic: CoachEntity
+  BackendLogic --> CoachCtrl: CoachDto
+  deactivate BackendLogic
+  CoachCtrl --> CoachFeService: 200 OK (CoachDto)
+  deactivate CoachCtrl
+  CoachFeService --> Page: coachData
+  deactivate CoachFeService
+end
+
+Page -> Page: Update state with all data
+Page --> User: Display fully rendered page
+deactivate Page
+
+@enduml
