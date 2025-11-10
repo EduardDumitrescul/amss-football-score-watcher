@@ -1,43 +1,49 @@
 @startuml
-title Use Case Diagram - Football Platform
+title "Players and Teams Use Cases"
 
 left to right direction
 
-actor "User (Visitor)" as User
-actor "Administrator" as Admin
+actor "Fan"
+actor "Administrator"
 
-rectangle "Platform System" {
-  usecase "View Standings" as UC_ViewStandings
-  usecase "View Match Schedule" as UC_ViewSchedule
-  usecase "View Match Results" as UC_ViewResults
-  usecase "Explore Team/Player Profiles" as UC_ViewProfiles
+Administrator --|> Fan
 
-  usecase "Manage Competitions" as UC_ManageComp
-  usecase "Manage Teams" as UC_ManageTeams
-  usecase "Manage Players" as UC_ManagePlayers
-  usecase "Generate Match Schedule" as UC_GenerateSchedule
-  usecase "Enter/Validate Results" as UC_EnterResults
-  usecase "Automatically Update Standings" as UC_CalcStandings
+rectangle "Football Management System" {
+  
+  package "Viewing Features" {
+    usecase "View Team List" as UC_ViewTeams
+    usecase "View Team Details" as UC_ViewTeamDetail
+    usecase "View Player List" as UC_ViewPlayers
+    usecase "View Player Details" as UC_ViewPlayerDetail
+    usecase "View Coach List" as UC_ViewCoaches
+    usecase "View Coach Details" as UC_ViewCoachDetail
+  }
+
+  package "Administrative Features" {
+    usecase "Create New Team" as UC_CreateTeam
+    usecase "Create New Player" as UC_CreatePlayer
+    usecase "Create New Coach" as UC_CreateCoach
+    usecase "Sign Player to a Contract" as UC_SignContract
+    usecase "Assign Coach to Team" as UC_AssignCoach
+    usecase "Unassign Coach from Team" as UC_UnassignCoach
+  }
 }
 
-' User Relationships (Read-Only)
-User --> UC_ViewStandings
-User --> UC_ViewSchedule
-User --> UC_ViewResults
-User --> UC_ViewProfiles
 
-' The Administrator inherits all viewing rights
-Admin --|> User
+Fan -- (Viewing Features)
 
-' Administrator Relationships (Full Control)
-Admin --> UC_ManageComp
-Admin --> UC_ManageTeams
-Admin --> UC_ManagePlayers
-Admin --> UC_GenerateSchedule
-Admin --> UC_EnterResults
+Administrator -- (Administrative Features)
 
-' Internal Business Logic
-UC_EnterResults ..> UC_CalcStandings : <<triggers>>
-UC_ViewStandings ..> UC_CalcStandings : <<uses>>
+
+UC_ViewTeamDetail .up.> UC_ViewTeams : <<extends>>
+UC_ViewPlayerDetail .up.> UC_ViewPlayers : <<extends>>
+UC_ViewCoachDetail .up.> UC_ViewCoaches : <<extends>>
+
+UC_ViewTeamDetail ..> UC_ViewCoachDetail : <<includes>>
+UC_ViewTeamDetail ..> UC_ViewPlayers : <<includes>>
+
+UC_AssignCoach .up.> UC_ViewTeamDetail : <<extends>>
+UC_UnassignCoach .up.> UC_ViewTeamDetail : <<extends>>
+UC_SignContract .up.> UC_ViewTeamDetail : <<extends>>
 
 @enduml
