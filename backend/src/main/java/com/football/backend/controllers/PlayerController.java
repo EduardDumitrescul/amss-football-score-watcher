@@ -76,6 +76,12 @@ public class PlayerController {
         return new ResponseEntity<>(players, HttpStatus.OK);
     }
 
+    @GetMapping("/team-eval/{teamId}")
+    public ResponseEntity<Integer> getPlayersSalaryByTeamId(@PathVariable String teamId) {
+         Integer evaluation = playerService.getPlayersSalaryPerYearByTeamId(teamId);
+        return new ResponseEntity<>(evaluation, HttpStatus.OK);
+    }
+
     /**
      * POST /api/players/sign-contract : Signs a contract for a player with a team.
      */

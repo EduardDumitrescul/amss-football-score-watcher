@@ -95,6 +95,23 @@ public class PlayerService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<PlayerEntity> getPlayersEntityByTeamId(String teamId) {
+        return playerRepository.findAllByTeamId(UUID.fromString(teamId));
+    }
+
+    @Transactional(readOnly = true)
+    public Integer getPlayersSalaryPerYearByTeamId(String teamId) {
+        List<PlayerEntity> players = getPlayersEntityByTeamId(teamId);
+        Integer teamEvaluation = 0;
+        for (var player : players) {
+            teamEvaluation += contractService.getLatestContractSalary(player.getContracts());
+        }
+
+        return teamEvaluation;
+    }
+
+
     /**
      * Signs a contract for a player with a team.
      * @param request DTO with contract data.
