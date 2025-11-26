@@ -1,9 +1,12 @@
 package com.football.backend.models;
 
+import lombok.Getter;
+
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
+@Getter
 public class Player {
 
     private UUID id;
@@ -30,14 +33,4 @@ public class Player {
         this.contracts = contracts;
         this.team = team;
     }
-
-    public UUID getId() { return id; }
-    public String getFirstname() { return firstname; }
-    public String getLastname() { return lastname; }
-    public String getPosition() { return position; }
-    public Integer getShirtNumber() { return shirtNumber; }
-    public String getNationality() { return nationality; }
-    public Date getDateOfBirth() { return dateOfBirth; }
-    public Set<Contract> getContracts() { return contracts; }
-    public Team getTeam() { return team; }
 }

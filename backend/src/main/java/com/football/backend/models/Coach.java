@@ -1,7 +1,10 @@
 package com.football.backend.models;
 
+import lombok.Getter;
+
 import java.util.UUID;
 
+@Getter
 public class Coach {
     private UUID id;
     private Team team;
@@ -18,22 +21,5 @@ public class Coach {
         this.team = team;
         this.firstname = firstname;
         this.lastname = lastname;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
     }
 }
