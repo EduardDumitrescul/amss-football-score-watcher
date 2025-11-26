@@ -1,10 +1,12 @@
 package com.football.backend.dto;
 
 import com.football.backend.entities.ContractEntity;
+import lombok.Getter;
 
 import java.util.Date;
 import java.util.UUID;
 
+@Getter
 public class ContractDto {
     private UUID id;
     private String teamName;
@@ -20,24 +22,4 @@ public class ContractDto {
         this.salaryPerYear = contract.getSalaryPerYear();
     }
 
-    // Getters
-    public UUID getId() {
-        return id;
-    }
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public Integer getSalaryPerYear() {
-        return salaryPerYear;
-    }
 }

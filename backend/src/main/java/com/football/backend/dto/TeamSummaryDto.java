@@ -2,7 +2,11 @@ package com.football.backend.dto;
 
 import com.football.backend.entities.CoachEntity;
 import com.football.backend.entities.TeamEntity;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 public class TeamSummaryDto {
 
     private String id;
@@ -23,13 +27,4 @@ public class TeamSummaryDto {
         }
     }
 
-    // Getters
-    public String getId() { return id; }
-    public String getName() { return name; }
-    public String getCoachName() { return coachName; }
-
-    // Setters
-    public void setId(String id) { this.id = id; }
-    public void setName(String name) { this.name = name; }
-    public void setCoachName(String coachName) { this.coachName = coachName; }
 }
