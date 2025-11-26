@@ -1,5 +1,6 @@
 package com.football.backend.mappers;
 
+import com.football.backend.dto.TeamDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -16,4 +17,7 @@ public interface TeamMapper {
     TeamEntity toEntity(Team team);
 
     Team toDomain(TeamEntity entity);
+
+    TeamDto toTeamDto(Team team);
+
 }
