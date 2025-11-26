@@ -2,10 +2,7 @@ package com.football.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.Set;
@@ -35,21 +32,15 @@ public class PlayerEntity {
 
     private Date dateOfBirth;
 
+    @Setter
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<ContractEntity> contracts;
 
+    @Setter
     @ManyToOne
     @JoinColumn(name = "team_id")
     private TeamEntity team;
-
-    public void setContracts(Set<ContractEntity> contracts) {
-        this.contracts = contracts;
-    }
-
-    public void setTeam(TeamEntity team) {
-        this.team = team;
-    }
 
 }
 

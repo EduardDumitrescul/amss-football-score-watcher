@@ -1,8 +1,11 @@
 package com.football.backend.models;
 
+import lombok.Getter;
+
 import java.util.Date;
 import java.util.UUID;
 
+@Getter
 public class Contract {
     private UUID id;
     private Player player;
@@ -23,30 +26,6 @@ public class Contract {
         this.startDate = startDate;
         this.endDate = endDate;
         this.salaryPerYear = salaryPerYear;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public Integer getSalaryPerYear() {
-        return salaryPerYear;
     }
 
 }

@@ -94,6 +94,9 @@
                 <!-- Version inherited from parent -->
                 <configuration>
                     <release>21</release> <!-- Use <release> instead of source/target -->
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                     <annotationProcessorPaths>
                         <!-- 1. MapStruct Processor -->
                         <path>
