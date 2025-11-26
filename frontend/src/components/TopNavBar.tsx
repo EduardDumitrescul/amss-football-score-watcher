@@ -33,6 +33,10 @@ const playerMenuItems = [
 ];
 // --- END NEW ---
 
+const matchMenuItems = [
+  { label: 'View All Matches', path: '/matches' }
+];
+
 
 /**
  * Reusable hook to manage a dropdown menu
@@ -117,7 +121,8 @@ export const TopNavBar: React.FC = () => {
   // Create menu state hooks
   const coachesMenu = useMenu();
   const teamsMenu = useMenu();
-  const playersMenu = useMenu(); // --- NEW ---
+  const playersMenu = useMenu();
+  const matchesMenu = useMenu();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -182,7 +187,6 @@ export const TopNavBar: React.FC = () => {
               Teams
             </Button>
             
-            {/* --- NEW Player Menu Button --- */}
             <Button
               sx={{ color: '#fff' }}
               onClick={playersMenu.openMenu}
@@ -193,7 +197,17 @@ export const TopNavBar: React.FC = () => {
             >
               Players
             </Button>
-            {/* --- END NEW --- */}
+
+            <Button
+              sx={{ color: '#fff' }}
+              onClick={matchesMenu.openMenu}
+              endIcon={<ArrowDropDownIcon />}
+              aria-controls={playersMenu.isOpen ? 'matches-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={playersMenu.isOpen ? 'true' : undefined}
+            >
+              Matches
+            </Button>
 
           </Box>
         </Toolbar>
@@ -212,14 +226,18 @@ export const TopNavBar: React.FC = () => {
         onClose={teamsMenu.closeMenu}
         items={teamMenuItems}
       />
-      {/* --- NEW Player Menu --- */}
       <DropdownMenu
         id="players-menu"
         {...playersMenu}
         onClose={playersMenu.closeMenu}
         items={playerMenuItems}
       />
-      {/* --- END NEW --- */}
+      <DropdownMenu
+        id="matches-menu"
+        {...matchesMenu}
+        onClose={matchesMenu.closeMenu}
+        items={matchMenuItems}
+      />
     </Box>
   );
 };
