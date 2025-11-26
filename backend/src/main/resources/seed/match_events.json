@@ -1,0 +1,48 @@
+[
+  {
+    "homeTeamName": "Real Madrid",
+    "awayTeamName": "Barcelona",
+    "matchDate": "2024-02-10T21:00:00",
+    "minute": 15,
+    "type": "GOAL",
+    "details": "Mbappé scores, assist Kroos",
+    "primaryPlayer": {
+      "firstname": "Kylian",
+      "lastname": "Mbappé",
+      "teamName": "Real Madrid"
+    },
+    "secondaryPlayer": {
+      "firstname": "Toni",
+      "lastname": "Kroos",
+      "teamName": "Real Madrid"
+    }
+  },
+  {
+    "homeTeamName": "Real Madrid",
+    "awayTeamName": "Barcelona",
+    "matchDate": "2024-02-10T21:00:00",
+    "minute": 45,
+    "type": "GOAL",
+    "details": "Lewandowski equalises",
+    "primaryPlayer": {
+      "firstname": "Robert",
+      "lastname": "Lewandowski",
+      "teamName": "Barcelona"
+    },
+    "secondaryPlayer": null
+  },
+  {
+    "homeTeamName": "Real Madrid",
+    "awayTeamName": "Barcelona",
+    "matchDate": "2024-02-10T21:00:00",
+    "minute": 78,
+    "type": "GOAL",
+    "details": "Mbappé scores",
+    "primaryPlayer": {
+      "firstname": "Kylian",
+      "lastname": "Mbappé",
+      "teamName": "Real Madrid"
+    },
+    "secondaryPlayer": null
+  }
+]
