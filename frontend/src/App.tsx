@@ -14,6 +14,9 @@ import { CoachListPage } from "./pages/CoachListPage";
 import { CreateCoachPage } from "./pages/CreateCoachPage";
 import { CoachDetailPage } from "./pages/CoachDetailPage";
 import { AssignCoachPage } from "./pages/AssignCoachPage";
+import { MatchesPage } from "./pages/MatchesPage";
+import { MatchDetailsPage } from "./pages/MatchDetailsPage";
+import { CreateMatchPage } from "./pages/CreateMatchPage";
 import React from "react";
 import { CssBaseline } from "@mui/material";
 
@@ -36,6 +39,10 @@ function App() {
         <Route path="/coaches" element={<CoachListPage />} />
         <Route path="/coaches/create" element={<CreateCoachPage />} />
         <Route path="/coaches/:id" element={<CoachDetailPage />} />
+
+        <Route path="/matches/" element={<MatchesPage />} />
+        <Route path="/matches/:id" element={<MatchDetailsPage />} />
+        <Route path="/matches/create" element={<CreateMatchPage />} />
 
         <Route
           path="/assign-coach-to-team"
