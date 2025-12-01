@@ -1,0 +1,68 @@
+@startuml
+title "Interaction Diagram: Rendering the Matches Page and Match Details"
+
+actor User
+box "Frontend (Browser)" #LightBlue
+  participant "MatchesPage.tsx" as MatchesPage
+  participant "MatchDetailsPage.tsx" as DetailsPage
+  participant "MatchService.tsx" as MatchFeService
+end box
+
+box "Backend (Spring Boot)" #LightGreen
+  participant "MatchController" as MatchCtrl
+  participant "Service/Repo Layers" as BackendLogic
+end box
+
+database "Database" as DB
+
+autonumber
+
+== View Match List ==
+
+User -> MatchesPage: Navigates to /matches
+activate MatchesPage
+
+MatchesPage -> MatchFeService: getAllMatches()
+activate MatchFeService
+MatchFeService -> MatchCtrl: GET /api/matches
+activate MatchCtrl
+MatchCtrl -> BackendLogic: Fetch all matches
+activate BackendLogic
+BackendLogic -> DB: SELECT * FROM match
+DB --> BackendLogic: List<MatchEntity>
+BackendLogic --> MatchCtrl: List<MatchDto>
+deactivate BackendLogic
+MatchCtrl --> MatchFeService: 200 OK (List<MatchDto>)
+deactivate MatchCtrl
+MatchFeService --> MatchesPage: matchesData
+deactivate MatchFeService
+
+MatchesPage -> MatchesPage: Render match list
+MatchesPage --> User: Display matches with filters
+deactivate MatchesPage
+
+== View Match Details ==
+
+User -> DetailsPage: Clicks on match → /matches/{id}
+activate DetailsPage
+
+DetailsPage -> MatchFeService: getMatchById(id)
+activate MatchFeService
+MatchFeService -> MatchCtrl: GET /api/matches/{id}
+activate MatchCtrl
+MatchCtrl -> BackendLogic: Fetch match details by id
+activate BackendLogic
+BackendLogic -> DB: SELECT * FROM match WHERE id=?\nJOIN team, events, players
+DB --> BackendLogic: MatchEntity with events
+BackendLogic --> MatchCtrl: MatchDetailsDto
+deactivate BackendLogic
+MatchCtrl --> MatchFeService: 200 OK (MatchDetailsDto)
+deactivate MatchCtrl
+MatchFeService --> DetailsPage: matchDetailsData
+deactivate MatchFeService
+
+DetailsPage -> DetailsPage: Update state with match data
+DetailsPage --> User: Display match details\n(teams, score, events, date)
+deactivate DetailsPage
+
+@enduml

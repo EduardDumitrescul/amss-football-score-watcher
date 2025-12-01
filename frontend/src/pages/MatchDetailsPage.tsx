@@ -119,7 +119,8 @@ export const MatchDetailsPage: React.FC = () => {
     const [secondaryPlayerId, setSecondaryPlayerId] = useState<string>('');
     const [eventMinute, setEventMinute] = useState<string>('');
     const [eventDetails, setEventDetails] = useState<string>('');
-    const [players, setPlayers] = useState<{ id: string; name: string }[]>([]);
+    const [homePlayers, setHomePlayers] = useState<{ id: string; name: string }[]>([]);
+    const [awayPlayers, setAwayPlayers] = useState<{ id: string; name: string }[]>([]);
     const [selectedTeamId, setSelectedTeamId] = useState<string>('');
 
     // Load match
@@ -302,34 +303,30 @@ export const MatchDetailsPage: React.FC = () => {
         setSecondaryPlayerId('');
         setEventMinute('');
         setEventDetails('');
-        const defaultTeamId = match.homeTeam?.id ? String(match.homeTeam.id) : match.awayTeam?.id ? String(match.awayTeam.id) : '';
+        
+        const homeTeamId = match.homeTeam?.id ? String(match.homeTeam.id) : '';
+        const awayTeamId = match.awayTeam?.id ? String(match.awayTeam.id) : '';
+        const defaultTeamId = homeTeamId || awayTeamId;
         setSelectedTeamId(defaultTeamId);
-        if (!defaultTeamId) {
-            setPlayers([]);
-            return;
-        }
+        
+        // Fetch both teams' players in parallel
         try {
-            const list = await getPlayersByTeamId(defaultTeamId);
-            setPlayers(list.map((p: PlayerSummary) => ({ id: String(p.id), name: toPlayerName(p) })));
+            const [homeList, awayList] = await Promise.all([
+                homeTeamId ? getPlayersByTeamId(homeTeamId) : Promise.resolve([]),
+                awayTeamId ? getPlayersByTeamId(awayTeamId) : Promise.resolve([])
+            ]);
+            
+            setHomePlayers(homeList.map((p: PlayerSummary) => ({ 
+                id: String(p.id), 
+                name: toPlayerName(p) 
+            })));
+            setAwayPlayers(awayList.map((p: PlayerSummary) => ({ 
+                id: String(p.id), 
+                name: toPlayerName(p) 
+            })));
         } catch {
-            setPlayers([]);
-        }
-    };
-
-    const handleTeamChange = async (e: SelectChangeEvent<string>) => {
-        const teamId = String(e.target.value || '');
-        setSelectedTeamId(teamId);
-        setPrimaryPlayerId('');
-        setSecondaryPlayerId('');
-        if (!teamId) {
-            setPlayers([]);
-            return;
-        }
-        try {
-            const list = await getPlayersByTeamId(teamId);
-            setPlayers(list.map((p: PlayerSummary) => ({ id: String(p.id), name: toPlayerName(p) })));
-        } catch {
-            setPlayers([]);
+            setHomePlayers([]);
+            setAwayPlayers([]);
         }
     };
 
@@ -367,6 +364,10 @@ export const MatchDetailsPage: React.FC = () => {
         const mb = b?.minute ?? 0;
         return ma - mb;
     });
+
+    const currentPlayers = selectedTeamId === String(match?.homeTeam?.id) 
+        ? homePlayers 
+        : awayPlayers;
 
     const renderPlayerCell = (idValue?: string | number | null, fallback?: string): JSX.Element => {
         const sid = idValue ? String(idValue) : undefined;
@@ -546,7 +547,7 @@ export const MatchDetailsPage: React.FC = () => {
                                 labelId="event-team-label"
                                 label="Team"
                                 value={selectedTeamId}
-                                onChange={handleTeamChange}
+                                onChange={(e) => setSelectedTeamId(String(e.target.value))}
                                 displayEmpty
                                 renderValue={(val) => {
                                     if (!val) return '—';
@@ -593,10 +594,10 @@ export const MatchDetailsPage: React.FC = () => {
                                 onChange={(e: SelectChangeEvent<string>) => setPrimaryPlayerId(String(e.target.value || ''))}
                                 size="small"
                                 displayEmpty
-                                renderValue={(val) => players.find((p) => p.id === String(val))?.name ?? (String(val) || '—')}
+                                renderValue={(val) => currentPlayers.find((p) => p.id === String(val))?.name ?? (String(val) || '—')}
                             >
                                 <MenuItem value="">—</MenuItem>
-                                {players.map((p) => (
+                                {currentPlayers.map((p) => (
                                     <MenuItem key={p.id} value={p.id}>
                                         {p.name}
                                     </MenuItem>
@@ -613,10 +614,10 @@ export const MatchDetailsPage: React.FC = () => {
                                 onChange={(e: SelectChangeEvent<string>) => setSecondaryPlayerId(String(e.target.value || ''))}
                                 size="small"
                                 displayEmpty
-                                renderValue={(val) => players.find((p) => p.id === String(val))?.name ?? (String(val) || '—')}
+                                renderValue={(val) => currentPlayers.find((p) => p.id === String(val))?.name ?? (String(val) || '—')}
                             >
                                 <MenuItem value="">—</MenuItem>
-                                {players.map((p) => (
+                                {currentPlayers.map((p) => (
                                     <MenuItem key={p.id} value={p.id}>
                                         {p.name}
                                     </MenuItem>

@@ -1,0 +1,98 @@
+@startuml
+title "Match Use Cases"
+
+left to right direction
+
+actor "Fan"
+actor "Administrator"
+
+Administrator --|> Fan
+
+rectangle "Match Management System" {
+  
+  package "Viewing Features" {
+      usecase "View Match List" as UC_ViewMatches
+      usecase "View Match Details" as UC_ViewMatchDetails
+      usecase "View Event List" as UC_ViewEvents
+      usecase "View Team Details from Match" as UC_ViewTeamFromMatch
+      usecase "View Player Details from Match" as UC_ViewPlayerFromMatch
+      usecase "Filter Matches by Status" as UC_FilterMatches
+  }
+
+  package "Administrative Features" {
+      usecase "Create new Match" as UC_CreateMatch
+      usecase "Add Match Events" as UC_AddMatchEvents
+      usecase "Edit Match Date and Time" as UC_EditMatchDateTime
+      usecase "Delete Match" as UC_DeleteMatch
+  }
+}
+
+
+Fan -- (Viewing Features)
+
+Administrator -- (Administrative Features)
+
+UC_ViewMatchDetails .up.> UC_ViewMatches : <<extends>>
+UC_FilterMatches .up.> UC_ViewMatches : <<extends>>
+UC_CreateMatch .up.> UC_ViewMatches : <<extends>>
+
+UC_ViewEvents .up.> UC_ViewMatchDetails : <<includes>>
+UC_AddMatchEvents .up.> UC_ViewMatchDetails : <<extends>>
+UC_EditMatchDateTime .up.> UC_ViewMatchDetails : <<extends>>
+UC_DeleteMatch .up.> UC_ViewMatchDetails : <<extends>>
+UC_ViewTeamFromMatch .up.> UC_ViewMatchDetails : <<extends>>
+UC_ViewPlayerFromMatch .up.> UC_ViewMatchDetails : <<extends>>
+
+
+
+@enduml
+
+' @startuml
+' title "Players and Teams Use Cases"
+
+' left to right direction
+
+' actor "Fan"
+' actor "Administrator"
+
+' Administrator --|> Fan
+
+' rectangle "Football Management System" {
+  
+'   package "Viewing Features" {
+'     usecase "View Team List" as UC_ViewTeams
+'     usecase "View Team Details" as UC_ViewTeamDetail
+'     usecase "View Player List" as UC_ViewPlayers
+'     usecase "View Player Details" as UC_ViewPlayerDetail
+'     usecase "View Coach List" as UC_ViewCoaches
+'     usecase "View Coach Details" as UC_ViewCoachDetail
+'   }
+
+'   package "Administrative Features" {
+'     usecase "Create New Team" as UC_CreateTeam
+'     usecase "Create New Player" as UC_CreatePlayer
+'     usecase "Create New Coach" as UC_CreateCoach
+'     usecase "Sign Player to a Contract" as UC_SignContract
+'     usecase "Assign Coach to Team" as UC_AssignCoach
+'     usecase "Unassign Coach from Team" as UC_UnassignCoach
+'   }
+' }
+
+
+' Fan -- (Viewing Features)
+
+' Administrator -- (Administrative Features)
+
+
+' UC_ViewTeamDetail .up.> UC_ViewTeams : <<extends>>
+' UC_ViewPlayerDetail .up.> UC_ViewPlayers : <<extends>>
+' UC_ViewCoachDetail .up.> UC_ViewCoaches : <<extends>>
+
+' UC_ViewTeamDetail ..> UC_ViewCoachDetail : <<includes>>
+' UC_ViewTeamDetail ..> UC_ViewPlayers : <<includes>>
+
+' UC_AssignCoach .up.> UC_ViewTeamDetail : <<extends>>
+' UC_UnassignCoach .up.> UC_ViewTeamDetail : <<extends>>
+' UC_SignContract .up.> UC_ViewTeamDetail : <<extends>>
+
+' @enduml

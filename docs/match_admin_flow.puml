@@ -1,0 +1,204 @@
+@startuml
+title "Interaction Diagram: Administrator Match Management"
+
+actor Administrator
+box "Frontend (Browser)" #LightBlue
+  participant "CreateMatchPage.tsx" as CreatePage
+  participant "MatchDetailsPage.tsx" as DetailsPage
+  participant "MatchService.tsx" as MatchFeService
+  participant "TeamService.tsx" as TeamFeService
+  participant "PlayerService.tsx" as PlayerFeService
+end box
+
+box "Backend (Spring Boot)" #LightGreen
+  participant "MatchController" as MatchCtrl
+  participant "TeamController" as TeamCtrl
+  participant "PlayerController" as PlayerCtrl
+  participant "Service/Repo Layers" as BackendLogic
+end box
+
+database "Database" as DB
+
+autonumber
+
+== Create New Match ==
+
+Administrator -> CreatePage: Navigates to /matches/create
+activate CreatePage
+
+CreatePage -> TeamFeService: getAllTeams()
+activate TeamFeService
+TeamFeService -> TeamCtrl: GET /api/teams
+activate TeamCtrl
+TeamCtrl -> BackendLogic: Fetch all teams
+activate BackendLogic
+BackendLogic -> DB: SELECT * FROM team
+DB --> BackendLogic: List<TeamEntity>
+BackendLogic --> TeamCtrl: List<TeamDto>
+deactivate BackendLogic
+TeamCtrl --> TeamFeService: 200 OK (List<TeamDto>)
+deactivate TeamCtrl
+TeamFeService --> CreatePage: teamsData
+deactivate TeamFeService
+
+CreatePage -> CreatePage: Render form with team options
+CreatePage --> Administrator: Display create match form
+
+Administrator -> CreatePage: Fills form (home, away, date)\nand clicks Create
+CreatePage -> CreatePage: Validate form data
+
+CreatePage -> MatchFeService: createMatch(formData)
+activate MatchFeService
+MatchFeService -> MatchCtrl: POST /api/matches\n{homeTeamId, awayTeamId, matchDate}
+activate MatchCtrl
+MatchCtrl -> BackendLogic: Create new match
+activate BackendLogic
+BackendLogic -> DB: INSERT INTO match\nVALUES (...)
+DB --> BackendLogic: MatchEntity (created)
+BackendLogic --> MatchCtrl: MatchDto
+deactivate BackendLogic
+MatchCtrl --> MatchFeService: 201 Created (MatchDto)
+deactivate MatchCtrl
+MatchFeService --> CreatePage: newMatchData
+deactivate MatchFeService
+
+CreatePage -> CreatePage: Navigate to /matches/{id}
+deactivate CreatePage
+
+== Update Match Date ==
+
+Administrator -> DetailsPage: Views match and clicks Edit Date
+activate DetailsPage
+
+DetailsPage -> DetailsPage: Enable edit mode\nwith datetime input
+
+Administrator -> DetailsPage: Changes date and clicks Save
+DetailsPage -> DetailsPage: Validate new date
+
+DetailsPage -> MatchFeService: updateMatch(id, {matchDate})
+activate MatchFeService
+MatchFeService -> MatchCtrl: PUT /api/matches/{id}\n{matchDate}
+activate MatchCtrl
+MatchCtrl -> BackendLogic: Update match date
+activate BackendLogic
+BackendLogic -> DB: UPDATE match\nSET match_date=?\nWHERE id=?
+DB --> BackendLogic: MatchEntity (updated)
+BackendLogic --> MatchCtrl: MatchDto
+deactivate BackendLogic
+MatchCtrl --> MatchFeService: 200 OK (MatchDto)
+deactivate MatchCtrl
+MatchFeService --> DetailsPage: updatedMatchData
+deactivate MatchFeService
+
+DetailsPage -> DetailsPage: Update state and exit edit mode
+DetailsPage --> Administrator: Display updated match date
+deactivate DetailsPage
+
+== Add Match Event ==
+
+Administrator -> DetailsPage: Clicks Add Event
+activate DetailsPage
+
+DetailsPage -> DetailsPage: Open event dialog\nSet default team (home)
+
+par
+    DetailsPage -> PlayerFeService: getPlayersByTeamId(homeTeamId)
+    activate PlayerFeService
+    PlayerFeService -> PlayerCtrl: GET /api/teams/{homeTeamId}/players
+    activate PlayerCtrl
+    PlayerCtrl -> BackendLogic: Fetch home team players
+    activate BackendLogic
+    BackendLogic -> DB: SELECT * FROM player\nWHERE team_id=homeTeamId
+    DB --> BackendLogic: List<PlayerEntity>
+    BackendLogic --> PlayerCtrl: List<PlayerSummaryDto>
+    deactivate BackendLogic
+    PlayerCtrl --> PlayerFeService: 200 OK (List<PlayerSummaryDto>)
+    deactivate PlayerCtrl
+    PlayerFeService --> DetailsPage: homePlayersData
+    deactivate PlayerFeService
+else
+    DetailsPage -> PlayerFeService: getPlayersByTeamId(awayTeamId)
+    activate PlayerFeService
+    PlayerFeService -> PlayerCtrl: GET /api/teams/{awayTeamId}/players
+    activate PlayerCtrl
+    PlayerCtrl -> BackendLogic: Fetch away team players
+    activate BackendLogic
+    BackendLogic -> DB: SELECT * FROM player\nWHERE team_id=awayTeamId
+    DB --> BackendLogic: List<PlayerEntity>
+    BackendLogic --> PlayerCtrl: List<PlayerSummaryDto>
+    deactivate BackendLogic
+    PlayerCtrl --> PlayerFeService: 200 OK (List<PlayerSummaryDto>)
+    deactivate PlayerCtrl
+    PlayerFeService --> DetailsPage: awayPlayersData
+    deactivate PlayerFeService
+end
+
+DetailsPage --> Administrator: Display event form\nwith both teams' players loaded
+
+Administrator -> DetailsPage: Selects team, event details\n(type, player, minute, etc.)\nand clicks Add
+
+DetailsPage -> MatchFeService: addEvent(matchId, eventData)
+activate MatchFeService
+MatchFeService -> MatchCtrl: POST /api/matches/{id}/events\n{type, playerId, minute, details}
+activate MatchCtrl
+MatchCtrl -> BackendLogic: Create match event
+activate BackendLogic
+BackendLogic -> DB: INSERT INTO match_event\nVALUES (...)
+DB --> BackendLogic: MatchEventEntity
+BackendLogic -> DB: UPDATE match\nSET home_goals/away_goals\n(if goal)
+DB --> BackendLogic: Updated scores
+BackendLogic --> MatchCtrl: MatchEventDto
+deactivate BackendLogic
+MatchCtrl --> MatchFeService: 201 Created (MatchEventDto)
+deactivate MatchCtrl
+MatchFeService --> DetailsPage: eventData
+deactivate MatchFeService
+
+DetailsPage -> MatchFeService: getMatchById(id)
+activate MatchFeService
+MatchFeService -> MatchCtrl: GET /api/matches/{id}
+activate MatchCtrl
+MatchCtrl -> BackendLogic: Fetch updated match
+activate BackendLogic
+BackendLogic -> DB: SELECT * FROM match\nJOIN events\nWHERE id=?
+DB --> BackendLogic: MatchEntity with events
+BackendLogic --> MatchCtrl: MatchDetailsDto
+deactivate BackendLogic
+MatchCtrl --> MatchFeService: 200 OK (MatchDetailsDto)
+deactivate MatchCtrl
+MatchFeService --> DetailsPage: refreshedMatchData
+deactivate MatchFeService
+
+DetailsPage -> DetailsPage: Update state with new event
+DetailsPage --> Administrator: Display updated match\nwith new event
+deactivate DetailsPage
+
+== Delete Match ==
+
+Administrator -> DetailsPage: Clicks Delete button
+activate DetailsPage
+
+DetailsPage -> DetailsPage: Confirm deletion dialog
+
+Administrator -> DetailsPage: Confirms deletion
+
+DetailsPage -> MatchFeService: deleteMatch(id)
+activate MatchFeService
+MatchFeService -> MatchCtrl: DELETE /api/matches/{id}
+activate MatchCtrl
+MatchCtrl -> BackendLogic: Delete match
+activate BackendLogic
+BackendLogic -> DB: DELETE FROM match_event\nWHERE match_id=?
+BackendLogic -> DB: DELETE FROM match\nWHERE id=?
+DB --> BackendLogic: Success
+BackendLogic --> MatchCtrl: void
+deactivate BackendLogic
+MatchCtrl --> MatchFeService: 204 No Content
+deactivate MatchCtrl
+MatchFeService --> DetailsPage: success
+deactivate MatchFeService
+
+DetailsPage -> DetailsPage: Navigate to /matches
+deactivate DetailsPage
+
+@enduml
