@@ -6,6 +6,7 @@ import com.football.backend.entities.PlayerEntity;
 import com.football.backend.entities.TeamEntity;
 import com.football.backend.exceptions.InvalidContractException;
 import com.football.backend.exceptions.ResourceNotFoundException;
+import com.football.backend.models.Contract;
 import com.football.backend.repositories.ContractRepository;
 import com.football.backend.repositories.PlayerRepository;
 import com.football.backend.repositories.TeamRepository;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -66,5 +68,19 @@ public class ContractService {
     @Transactional(readOnly = true)
     public List<ContractEntity> getContractsByPlayerId(String playerId) {
         return contractRepository.findAllByPlayerId(UUID.fromString(playerId));
+    }
+
+    @Transactional(readOnly = true)
+    public Integer getLatestContractSalary(Set<ContractEntity> contractEntities) {
+
+        ContractEntity latestContract = contractEntities
+                .stream()
+                .max(Comparator.comparing(ContractEntity::getStartDate))
+                .orElse(null);
+
+        Integer salary = latestContract.getSalaryPerYear();
+        if (salary == null)
+            return 0;
+        return salary;
     }
 }
