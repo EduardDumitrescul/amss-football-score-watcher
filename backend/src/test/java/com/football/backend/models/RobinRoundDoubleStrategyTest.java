@@ -20,16 +20,16 @@ public class RobinRoundDoubleStrategyTest {
 
 
         Strategy doubleStrategy = new RobinRoundDoubleStrategy();
-        List<List<Pair<Team, Team>>> doubleResult = doubleStrategy.generateStrategy(teams);
+        List<List<Match>> doubleResult = doubleStrategy.generateStrategy(teams);
 
         printRounds(doubleResult);
     }
 
-    private static void printRounds(List<List<Pair<Team, Team>>> rounds) {
+    private static void printRounds(List<List<Match>> rounds) {
         for (int i = 0; i < rounds.size(); i++) {
             System.out.println("Runda " + (i + 1) + ":");
-            for (Pair<Team, Team> match : rounds.get(i)) {
-                System.out.println("  " + match.getFirst().getName() + " vs " + match.getSecond().getName());
+            for (Match match : rounds.get(i)) {
+                System.out.println("  " + match.getHomeTeam().getName() + " vs " + match.getAwayTeam().getName());
             }
             System.out.println();
         }

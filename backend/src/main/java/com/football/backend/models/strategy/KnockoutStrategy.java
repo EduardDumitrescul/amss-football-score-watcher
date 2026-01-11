@@ -1,18 +1,21 @@
 package com.football.backend.models.strategy;
 
+import com.football.backend.models.Match;
 import com.football.backend.models.Team;
+import com.football.backend.models.decider.Decider;
 import org.springframework.data.util.Pair;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class KnockoutStrategy implements Strategy{
 
+    private final Decider decider;
+    public KnockoutStrategy(Decider decider) {
+        this.decider = decider;
+    }
     @Override
-    public List<List<Pair<Team, Team>>> generateStrategy(List<Team> teams) {
-        List<List<Pair<Team, Team>>> rounds = new ArrayList<>();
+    public List<List<Match>> generateStrategy(List<Team> teams) {
+        List<List<Match>> rounds = new ArrayList<>();
 
         List<Team> currentTeams = new ArrayList<>(teams);
         Collections.shuffle(currentTeams);
@@ -20,7 +23,7 @@ public class KnockoutStrategy implements Strategy{
         Random random = new Random();
 
         while (currentTeams.size() > 1) {
-            List<Pair<Team, Team>> matchesInThisRound = new ArrayList<>();
+            List<Match> matchesInThisRound = new ArrayList<>();
             List<Team> winners = new ArrayList<>();
 
             for (int i = 0; i < currentTeams.size(); i += 2) {
@@ -29,12 +32,11 @@ public class KnockoutStrategy implements Strategy{
                     Team team1 = currentTeams.get(i);
                     Team team2 = currentTeams.get(i + 1);
 
-                    boolean decider = random.nextBoolean();
-                    Team winner = decider ? team1 : team2;
-                    Team loser = decider ? team2 : team1;
+                    Team winner = decider.decideWinner(team1, team2);
                     winners.add(winner);
 
-                    matchesInThisRound.add(Pair.of(winner, loser));
+                    Match m = new Match(UUID.randomUUID(), team1, team2, null, null, null, null, null);
+                    matchesInThisRound.add(m);
                 } else {
                     winners.add(currentTeams.get(i));
                 }
@@ -44,7 +46,6 @@ public class KnockoutStrategy implements Strategy{
 
             currentTeams = winners;
         }
-
         return rounds;
     }
 }

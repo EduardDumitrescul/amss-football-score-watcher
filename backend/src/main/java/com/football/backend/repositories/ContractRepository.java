@@ -11,6 +11,4 @@ import java.util.UUID;
 @Repository
 public interface ContractRepository extends JpaRepository<ContractEntity, UUID> {
     List<ContractEntity> findAllByPlayerId(UUID playerId);
-    Integer getLatestContractSalary(Set<ContractEntity> contractEntities);
-
 }

@@ -1,24 +1,28 @@
 package com.football.backend.models.strategy;
 
+import com.football.backend.models.Match;
 import com.football.backend.models.Team;
 import org.springframework.data.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class RobinRoundDoubleStrategy implements Strategy {
     private final Strategy singleStrategy = new RobinRoundStrategy();
 
     @Override
-    public List<List<Pair<Team, Team>>> generateStrategy(List<Team> teams) {
-        List<List<Pair<Team, Team>>> singleRounds = singleStrategy.generateStrategy(teams);
+    public List<List<Match>> generateStrategy(List<Team> teams) {
+        List<List<Match>> singleRounds = singleStrategy.generateStrategy(teams);
 
-        List<List<Pair<Team, Team>>> doubleRounds = new ArrayList<>(singleRounds);
+        List<List<Match>> doubleRounds = new ArrayList<>(singleRounds);
 
-        for (List<Pair<Team, Team>> round : singleRounds) {
-            List<Pair<Team, Team>> returnRound = new ArrayList<>();
-            for (Pair<Team, Team> match : round) {
-                returnRound.add(Pair.of(match.getSecond(), match.getFirst()));
+        for (List<Match> round : singleRounds) {
+            List<Match> returnRound = new ArrayList<>();
+            for (Match match : round) {
+                //needs new id, so cannot put same match in return round
+                Match m = new Match(UUID.randomUUID(), match.getHomeTeam(), match.getAwayTeam(), null, null, null, null, null);
+                returnRound.add(m);
             }
             doubleRounds.add(returnRound);
         }
