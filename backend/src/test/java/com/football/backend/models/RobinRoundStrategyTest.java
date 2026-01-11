@@ -18,12 +18,12 @@ public class RobinRoundStrategyTest {
         );
 
         Strategy strategy = new RobinRoundStrategy();
-        List<List<Pair<Team, Team>>> result = strategy.generateStrategy(teams);
+        List<List<Match>> result = strategy.generateStrategy(teams);
 
         for (int i = 0; i < result.size(); i++) {
             System.out.println("Runda " + (i + 1) + ":");
-            for (Pair<Team, Team> match : result.get(i)) {
-                System.out.println("  " + match.getFirst().getName() + " vs " + match.getSecond().getName());
+            for (Match match : result.get(i)) {
+                System.out.println("  " + match.getHomeTeam().getName() + " vs " + match.getAwayTeam().getName());
             }
             System.out.println();
         }
