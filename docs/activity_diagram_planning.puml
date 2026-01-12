@@ -1,0 +1,69 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+' Aceasta comanda forteaza liniile sa fie drepte (fara curbe ciudate)
+skinparam linetype ortho
+
+title Activity Diagram: Tournament Flow (Optimized Layout)
+
+|#LightGrey|KnockoutStrategy|
+|#White|MatchStrategyService|
+|#EAEAEA|TeamPowerService|
+
+|KnockoutStrategy|
+start
+:Receive Team List;
+:Shuffle Teams;
+
+' Bucla Principala
+while (Teams > 1?) is (Yes)
+  :Init Round Lists;
+  
+  ' Bucla Secundara (Perechi)
+  while (Has Pairs?) is (Yes)
+    :Extract Team A & Team B;
+
+    |MatchStrategyService|
+    :Generate Random(0-5);
+    
+    ' AICI AM SIMPLIFICAT VIZUAL:
+    ' In loc de 6 ramuri, punem o actiune cu o nota explicativa
+    :Select Scoring Criterion;
+    note right
+      Logic switches between:
+      0. Total Power
+      1. Financial
+      2. Age
+      3. Cohesion
+      4. Tactical
+      5. Squad Depth
+    end note
+
+    |TeamPowerService|
+    ' Calculam secvential ca sa nu se incruciseze liniile
+    :Calculate Score for Team A;
+    :Calculate Score for Team B;
+
+    |MatchStrategyService|
+    ' Zona de decizie clara
+    if (Score A > Score B) then (Yes)
+      :Winner = Team A;
+    else (No)
+      if (Score B > Score A) then (Yes)
+        :Winner = Team B;
+      else (Tie)
+        :Coin Flip Winner;
+      endif
+    endif
+
+    |KnockoutStrategy|
+    :Create Match Object;
+    :Add Match & Winner to Lists;
+  endwhile (End Pairs)
+  
+  :Current Teams = Winners;
+endwhile (Tournament End)
+
+stop
+
+@enduml

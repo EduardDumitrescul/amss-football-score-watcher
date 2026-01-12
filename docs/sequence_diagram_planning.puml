@@ -1,0 +1,91 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam style strictuml
+skinparam linetype ortho
+skinparam ParticipantPadding 20
+skinparam BoxPadding 10
+
+title Sequence Diagram: Tournament Generation Strategies
+
+actor "Admin" as User
+
+box "Tournament Orchestration" #F9F9F9
+    participant "TournamentService" as Service
+    participant "KnockoutStrategy" as Knockout
+    participant "RobinRoundStrategy" as SingleRR
+    participant "DoubleRoundStrategy" as DoubleRR
+end box
+
+box "Helper Logic" #EFEFEF
+    participant "MatchStrategyService\n(Decider)" as Decider
+end box
+
+User -> Service: Generate Tournament
+activate Service
+
+alt #EBF5FB Case 1: KNOCKOUT (Elimination)
+    
+    Service -> Knockout: 1. new KnockoutStrategy(decider)
+    Service -> Knockout: 2. generateStrategy()
+    activate Knockout
+    
+    loop Until Winner is found
+        Knockout -> Decider: decideWinner(Team A, Team B)
+        activate Decider
+        Decider --> Knockout: Return Winner (based on power)
+        deactivate Decider
+        
+        Knockout -> Knockout: Create Match & Advance
+    end
+    
+    Knockout --> Service: Return Bracket
+    deactivate Knockout
+
+    |||
+
+else #F4FBF5 Case 2: ROUND ROBIN (Simple)
+
+    Service -> SingleRR: 1. new RobinRoundStrategy()
+    Service -> SingleRR: 2. generateStrategy()
+    activate SingleRR
+    
+    loop For each Round
+        SingleRR -> SingleRR: Pair Teams (Home vs Away)
+        SingleRR -> SingleRR: Rotate Teams Algo
+    end
+    
+    SingleRR --> Service: Return Matches
+    deactivate SingleRR
+
+    |||
+
+else #FEF9E7 Case 3: ROUND ROBIN (Double)
+
+    Service -> DoubleRR: 1. new RobinRoundDouble()
+    Service -> DoubleRR: 2. generateStrategy()
+    activate DoubleRR
+    
+    note right of DoubleRR
+      Delegate generation to
+      Single Strategy first
+    end note
+    
+    DoubleRR -> SingleRR: generateStrategy()
+    activate SingleRR
+    SingleRR --> DoubleRR: Return Single Rounds
+    deactivate SingleRR
+    
+    loop For each Match in Single Rounds
+        DoubleRR -> DoubleRR: Create Return Match\n(Swap Home/Away)
+    end
+    
+    DoubleRR --> Service: Return Double List
+    deactivate DoubleRR
+
+end
+
+Service --> User: Tournament Created Successfully
+deactivate Service
+
+@enduml
