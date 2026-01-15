@@ -26,7 +26,7 @@ public class EditionEntity {
     @JoinColumn(name = "competition_id")
     private CompetitionEntity competition;
 
-    @OneToOne(mappedBy = "edition", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "edition", cascade = CascadeType.ALL)
     private StandingsEntity standings;
 
     @OneToMany(mappedBy = "edition", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

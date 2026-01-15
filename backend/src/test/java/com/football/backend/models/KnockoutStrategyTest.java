@@ -4,7 +4,6 @@ import com.football.backend.models.strategy.KnockoutStrategy;
 import com.football.backend.models.strategy.Strategy;
 import com.football.backend.services.MatchStrategyService;
 import com.football.backend.services.TeamPowerService;
-import org.springframework.data.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
