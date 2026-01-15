@@ -15,4 +15,6 @@ public interface MatchRepository extends JpaRepository<MatchEntity, UUID> {
     List<MatchEntity> findByMatchDateAfterOrderByMatchDateAsc(LocalDateTime from);
 
     List<MatchEntity> findByStatusOrderByMatchDateDesc(MatchStatus status);
+
+    List<MatchEntity> findByEditionIdOrderByMatchDateAsc(UUID editionId);
 }
