@@ -14,6 +14,9 @@ public class KnockoutStrategyTest {
 
     public static void main(String[] args) {
 
+        Competition competition = new Competition(UUID.randomUUID(), "Premier League");
+        Edition edition = new Edition(UUID.randomUUID(), "25/26 Season", competition, null);
+
         List<Team> teams = new ArrayList<>();
         teams.add(new Team(UUID.randomUUID(), null, "Barcelona"));
         teams.add(new Team(UUID.randomUUID(), null, "Real Madrid"));
@@ -54,7 +57,7 @@ public class KnockoutStrategyTest {
 
         MatchStrategyService realDecider = new MatchStrategyService(dummyPowerService);
         Strategy strategy = new KnockoutStrategy(realDecider);
-        List<List<Match>> result = strategy.generateStrategy(teams);
+        List<List<Match>> result = strategy.generateStrategy(edition, teams);
 
         for (int i = 0; i < result.size(); i++) {
             System.out.println("====== RUNDA " + (i + 1) + " ======");

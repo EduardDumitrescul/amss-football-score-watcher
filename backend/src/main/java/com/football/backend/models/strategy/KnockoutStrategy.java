@@ -1,5 +1,6 @@
 package com.football.backend.models.strategy;
 
+import com.football.backend.models.Edition;
 import com.football.backend.models.Match;
 import com.football.backend.models.Team;
 import com.football.backend.models.decider.Decider;
@@ -14,7 +15,7 @@ public class KnockoutStrategy implements Strategy{
         this.decider = decider;
     }
     @Override
-    public List<List<Match>> generateStrategy(List<Team> teams) {
+    public List<List<Match>> generateStrategy(Edition edition, List<Team> teams) {
         List<List<Match>> rounds = new ArrayList<>();
 
         List<Team> currentTeams = new ArrayList<>(teams);
@@ -35,7 +36,7 @@ public class KnockoutStrategy implements Strategy{
                     Team winner = decider.decideWinner(team1, team2);
                     winners.add(winner);
 
-                    Match m = new Match(UUID.randomUUID(), team1, team2, null, null, null, null, null);
+                    Match m = new Match(UUID.randomUUID(), edition, team1, team2, null, null, null, null, null);
                     matchesInThisRound.add(m);
                 } else {
                     winners.add(currentTeams.get(i));

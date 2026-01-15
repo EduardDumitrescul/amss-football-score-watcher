@@ -1,5 +1,6 @@
 package com.football.backend.models.strategy;
 
+import com.football.backend.models.Edition;
 import com.football.backend.models.Match;
 import com.football.backend.models.Team;
 import org.springframework.data.util.Pair;
@@ -12,8 +13,8 @@ public class RobinRoundDoubleStrategy implements Strategy {
     private final Strategy singleStrategy = new RobinRoundStrategy();
 
     @Override
-    public List<List<Match>> generateStrategy(List<Team> teams) {
-        List<List<Match>> singleRounds = singleStrategy.generateStrategy(teams);
+    public List<List<Match>> generateStrategy(Edition edition, List<Team> teams) {
+        List<List<Match>> singleRounds = singleStrategy.generateStrategy(edition, teams);
 
         List<List<Match>> doubleRounds = new ArrayList<>(singleRounds);
 
@@ -21,7 +22,7 @@ public class RobinRoundDoubleStrategy implements Strategy {
             List<Match> returnRound = new ArrayList<>();
             for (Match match : round) {
                 //needs new id, so cannot put same match in return round
-                Match m = new Match(UUID.randomUUID(), match.getHomeTeam(), match.getAwayTeam(), null, null, null, null, null);
+                Match m = new Match(UUID.randomUUID(), edition, match.getHomeTeam(), match.getAwayTeam(), null, null, null, null, null);
                 returnRound.add(m);
             }
             doubleRounds.add(returnRound);
