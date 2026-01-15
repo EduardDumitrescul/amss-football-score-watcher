@@ -3,6 +3,7 @@ package com.football.backend.services;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.football.backend.entities.*;
+import com.football.backend.models.CompetitionStrategy;
 import com.football.backend.models.MatchEventType;
 import com.football.backend.models.MatchStatus;
 import com.football.backend.repositories.*;
@@ -30,6 +31,8 @@ public class DatabaseSeeder {
     private final ContractRepository contractRepository;
     private final MatchRepository matchRepository;
     private final MatchEventRepository matchEventRepository;
+    private final CompetitionRepository competitionRepository;
+    private final EditionRepository editionRepository;
 
     @Autowired
     public DatabaseSeeder(
@@ -38,7 +41,9 @@ public class DatabaseSeeder {
             PlayerRepository playerRepository,
             ContractRepository contractRepository,
             MatchRepository matchRepository,
-            MatchEventRepository matchEventRepository
+            MatchEventRepository matchEventRepository,
+            CompetitionRepository competitionRepository,
+            EditionRepository editionRepository
     ) {
         this.teamRepository = teamRepository;
         this.coachRepository = coachRepository;
@@ -46,6 +51,8 @@ public class DatabaseSeeder {
         this.contractRepository = contractRepository;
         this.matchRepository = matchRepository;
         this.matchEventRepository = matchEventRepository;
+        this.competitionRepository = competitionRepository;
+        this.editionRepository = editionRepository;
     }
 
     @Transactional
@@ -85,6 +92,42 @@ public class DatabaseSeeder {
                     teamRepository.save(coach.getTeam());
                 }
             });
+
+            InputStream competitionsInputStream = new ClassPathResource("seed/competitions.json").getInputStream();
+            List<CompetitionSeedDto> competitionDtos = mapper.readValue(competitionsInputStream, new TypeReference<>() {});
+
+            List<CompetitionEntity> competitionEntities = competitionDtos.stream()
+                    .map(dto -> CompetitionEntity.builder()
+                            .name(dto.getName())
+                            .build())
+                    .collect(Collectors.toList());
+            competitionRepository.saveAll(competitionEntities);
+
+            Map<String, CompetitionEntity> competitionsByName = competitionEntities.stream()
+                    .collect(Collectors.toMap(CompetitionEntity::getName, Function.identity()));
+
+            // 4. Seed Editions [NEW]
+            InputStream editionsInputStream = new ClassPathResource("seed/editions.json").getInputStream();
+            List<EditionSeedDto> editionDtos = mapper.readValue(editionsInputStream, new TypeReference<>() {});
+
+            List<EditionEntity> editionEntities = new ArrayList<>();
+            for (EditionSeedDto dto : editionDtos) {
+                CompetitionEntity competition = competitionsByName.get(dto.getCompetitionName());
+                if (competition == null) {
+                    throw new IllegalStateException("Competition not found: " + dto.getCompetitionName());
+                }
+
+                EditionEntity edition = EditionEntity.builder()
+                        .name(dto.getName())
+                        .competition(competition)
+                        .strategyType(CompetitionStrategy.valueOf(dto.getStrategyType())) // Maps string to Enum
+                        .build();
+                editionEntities.add(edition);
+            }
+            editionRepository.saveAll(editionEntities);
+
+            Map<String, EditionEntity> editionsByName = editionEntities.stream()
+                    .collect(Collectors.toMap(EditionEntity::getName, Function.identity()));
 
 
             // Seed Players and Contracts
@@ -130,14 +173,20 @@ public class DatabaseSeeder {
                 TeamEntity homeTeam = teamsByName.get(dto.getHomeTeamName());
                 TeamEntity awayTeam = teamsByName.get(dto.getAwayTeamName());
 
+                EditionEntity edition = editionsByName.get(dto.getEditionName());
+
                 if (homeTeam == null || awayTeam == null) {
                     throw new IllegalStateException("Team not found for match seed: " + dto);
+                }
+                if (edition == null) {
+                    throw new IllegalStateException("Edition not found for match seed: " + dto.getEditionName());
                 }
 
                 LocalDateTime matchDate = LocalDateTime.parse(dto.getMatchDate());
                 MatchStatus status = MatchStatus.valueOf(dto.getStatus());
 
                 MatchEntity match = MatchEntity.builder()
+                        .edition(edition)
                         .homeTeam(homeTeam)
                         .awayTeam(awayTeam)
                         .matchDate(matchDate)
@@ -261,7 +310,20 @@ public class DatabaseSeeder {
     }
 
     @Data
+    private static class CompetitionSeedDto {
+        private String name;
+    }
+
+    @Data
+    private static class EditionSeedDto {
+        private String name;
+        private String competitionName;
+        private String strategyType;
+    }
+
+    @Data
     private static class MatchSeedDto {
+        private String editionName;
         private String homeTeamName;
         private String awayTeamName;
         private String matchDate;

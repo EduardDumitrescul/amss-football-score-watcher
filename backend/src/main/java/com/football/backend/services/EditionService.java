@@ -3,20 +3,17 @@ package com.football.backend.services;
 import com.football.backend.dto.CreateEditionDto;
 import com.football.backend.entities.CompetitionEntity;
 import com.football.backend.entities.EditionEntity;
-import com.football.backend.entities.MatchEntity;
 import com.football.backend.entities.TeamEntity;
 import com.football.backend.mappers.EditionMapper;
 import com.football.backend.mappers.MatchMapper;
 import com.football.backend.mappers.TeamMapper;
-import com.football.backend.models.CompetitionStrategy;
-import com.football.backend.models.Match;
+import com.football.backend.models.*;
 import com.football.backend.models.strategy.KnockoutStrategy;
 import com.football.backend.models.strategy.RobinRoundDoubleStrategy;
 import com.football.backend.models.strategy.RobinRoundStrategy;
 import com.football.backend.models.strategy.Strategy;
 import com.football.backend.repositories.CompetitionRepository;
 import com.football.backend.repositories.EditionRepository;
-import com.football.backend.repositories.MatchRepository;
 import com.football.backend.repositories.TeamRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -26,16 +23,13 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class EditionService {
 
     private final EditionRepository editionRepository;
     private final CompetitionRepository competitionRepository;
     private final TeamRepository teamRepository;
-    private final MatchRepository matchRepository;
     private final StandingsService standingsService;
 
     private final KnockoutStrategy knockoutStrategy;
@@ -48,10 +42,9 @@ public class EditionService {
 
     @Transactional
     public UUID createEdition(CreateEditionDto dto) {
-
         CompetitionEntity competition = competitionRepository
                 .findById(dto.getCompetitionId())
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("Competition not found"));
 
         EditionEntity editionEntity = new EditionEntity();
         editionEntity.setName(dto.getName());
@@ -63,7 +56,6 @@ public class EditionService {
         List<TeamEntity> teams = teamRepository.findAllById(dto.getTeamsIds());
 
         Strategy strategy = resolveStrategy(dto.getStrategyType());
-
         List<List<Match>> generatedRounds = strategy.generateStrategy(
                 editionMapper.toDomain(editionEntity),
                 teams.stream()
@@ -74,15 +66,47 @@ public class EditionService {
         generatedRounds.stream()
                 .flatMap(List::stream)
                 .map(matchMapper::toEntity)
+                .map(entity -> {
+                    entity.setId(null);
+
+                    entity.setEdition(editionEntity);
+                    return entity;
+                })
                 .forEach(editionEntity::addMatch);
 
         editionRepository.save(editionEntity);
 
-        standingsService.initializeStandings(editionEntity, teams);
+        if (dto.getStrategyType() != CompetitionStrategy.KNOCKOUT) {
+            standingsService.initializeStandings(editionEntity, teams);
+        }
 
         return editionEntity.getId();
     }
 
+    public List<Edition> getEditionsByCompetitionId(UUID competitionId) {
+        return editionRepository.findByCompetition_Id(competitionId)
+                .stream()
+                .map(editionMapper::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void updateEdition(UUID id, CreateEditionDto dto) {
+        EditionEntity edition = editionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Edition not found with ID: " + id));
+
+        edition.setName(dto.getName());
+
+        editionRepository.save(edition);
+    }
+
+    @Transactional
+    public void deleteEdition(UUID id) {
+        if (!editionRepository.existsById(id)) {
+            throw new RuntimeException("Cannot delete. Edition not found with ID: " + id);
+        }
+        editionRepository.deleteById(id);
+    }
 
     private Strategy resolveStrategy(CompetitionStrategy type) {
         return switch (type) {

@@ -21,7 +21,7 @@ public class EditionEntity {
     private UUID id;
 
     private String name;
-    private CompetitionStrategy StrategyType;
+    private CompetitionStrategy strategyType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "competition_id")
