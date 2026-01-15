@@ -36,6 +36,10 @@ public class MatchEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "edition_id", nullable = false)
+    private EditionEntity edition;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "home_team_id", nullable = false)
     private TeamEntity homeTeam;
