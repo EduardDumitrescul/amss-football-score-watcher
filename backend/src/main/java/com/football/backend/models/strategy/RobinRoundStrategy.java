@@ -3,9 +3,11 @@ package com.football.backend.models.strategy;
 import com.football.backend.models.Edition;
 import com.football.backend.models.Match;
 import com.football.backend.models.Team;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Component
 public class RobinRoundStrategy implements Strategy {
     @Override
     public List<List<Match>> generateStrategy(Edition edition, List<Team> teams) {

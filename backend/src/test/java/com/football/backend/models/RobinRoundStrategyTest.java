@@ -10,7 +10,7 @@ public class RobinRoundStrategyTest {
 
     public static void main(String[] args) {
         Competition competition = new Competition(UUID.randomUUID(), "Test");
-        Edition edition = new Edition(UUID.randomUUID(), "25/26 Season", competition, null);
+        Edition edition = new Edition(UUID.randomUUID(), "25/26 Season", competition.getId(), CompetitionStrategy.ROBIN_ROUND, null);
 
         List<Team> teams = List.of(
                 new Team(new UUID(1,3), null, "A"),

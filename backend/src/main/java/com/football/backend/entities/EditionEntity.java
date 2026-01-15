@@ -1,16 +1,16 @@
 package com.football.backend.entities;
 
+import com.football.backend.models.CompetitionStrategy;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,6 +21,7 @@ public class EditionEntity {
     private UUID id;
 
     private String name;
+    private CompetitionStrategy StrategyType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "competition_id")
@@ -29,6 +30,11 @@ public class EditionEntity {
     @OneToOne(mappedBy = "edition", cascade = CascadeType.ALL)
     private StandingsEntity standings;
 
-    @OneToMany(mappedBy = "edition", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<MatchEntity> matches;
+    @OneToMany(mappedBy = "edition", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MatchEntity> matches = new ArrayList<>();
+
+    public void addMatch(MatchEntity match) {
+        matches.add(match);
+        match.setEdition(this);
+    }
 }

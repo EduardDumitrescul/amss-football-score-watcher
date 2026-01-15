@@ -3,11 +3,13 @@ package com.football.backend.models.strategy;
 import com.football.backend.models.Edition;
 import com.football.backend.models.Match;
 import com.football.backend.models.Team;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Component
 public class RobinRoundDoubleStrategy implements Strategy {
     private final Strategy singleStrategy = new RobinRoundStrategy();
 

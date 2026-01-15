@@ -12,6 +12,7 @@ import java.util.UUID;
 public class Edition {
     private UUID id;
     private String name;
-    private Competition competition;
+    private UUID competitionId;
+    private CompetitionStrategy StrategyType;
     private Standings standings;
 }

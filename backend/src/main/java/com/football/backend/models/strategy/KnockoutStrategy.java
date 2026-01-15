@@ -4,9 +4,11 @@ import com.football.backend.models.Edition;
 import com.football.backend.models.Match;
 import com.football.backend.models.Team;
 import com.football.backend.models.decider.Decider;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Component
 public class KnockoutStrategy implements Strategy{
 
     private final Decider decider;
