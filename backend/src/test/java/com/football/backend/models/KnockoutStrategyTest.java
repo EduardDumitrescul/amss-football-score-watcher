@@ -4,7 +4,6 @@ import com.football.backend.models.strategy.KnockoutStrategy;
 import com.football.backend.models.strategy.Strategy;
 import com.football.backend.services.MatchStrategyService;
 import com.football.backend.services.TeamPowerService;
-import org.springframework.data.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +12,9 @@ import java.util.UUID;
 public class KnockoutStrategyTest {
 
     public static void main(String[] args) {
+
+        Competition competition = new Competition(UUID.randomUUID(), "Premier League");
+        Edition edition = new Edition(UUID.randomUUID(), "25/26 Season", competition, null);
 
         List<Team> teams = new ArrayList<>();
         teams.add(new Team(UUID.randomUUID(), null, "Barcelona"));
@@ -54,7 +56,7 @@ public class KnockoutStrategyTest {
 
         MatchStrategyService realDecider = new MatchStrategyService(dummyPowerService);
         Strategy strategy = new KnockoutStrategy(realDecider);
-        List<List<Match>> result = strategy.generateStrategy(teams);
+        List<List<Match>> result = strategy.generateStrategy(edition, teams);
 
         for (int i = 0; i < result.size(); i++) {
             System.out.println("====== RUNDA " + (i + 1) + " ======");

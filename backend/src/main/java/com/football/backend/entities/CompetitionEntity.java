@@ -1,7 +1,10 @@
 package com.football.backend.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,20 +14,14 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "team")
-public class TeamEntity {
+@Table(name = "competition")
+public class CompetitionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Setter
-    @OneToOne
-    @JoinColumn(name = "coach_id")
-    private CoachEntity coach;
-
-    @Setter
     private String name;
 
-    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
-    private List<StandingsEntryEntity> entries;
+    @OneToMany(mappedBy = "competition", cascade = CascadeType.ALL)
+    private List<EditionEntity> editions;
 }

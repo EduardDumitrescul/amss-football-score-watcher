@@ -2,7 +2,6 @@ package com.football.backend.models;
 
 import com.football.backend.models.strategy.RobinRoundStrategy;
 import com.football.backend.models.strategy.Strategy;
-import org.springframework.data.util.Pair;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,6 +9,9 @@ import java.util.UUID;
 public class RobinRoundStrategyTest {
 
     public static void main(String[] args) {
+        Competition competition = new Competition(UUID.randomUUID(), "Test");
+        Edition edition = new Edition(UUID.randomUUID(), "25/26 Season", competition, null);
+
         List<Team> teams = List.of(
                 new Team(new UUID(1,3), null, "A"),
                 new Team(new UUID(1,3), null, "B"),
@@ -18,7 +20,7 @@ public class RobinRoundStrategyTest {
         );
 
         Strategy strategy = new RobinRoundStrategy();
-        List<List<Match>> result = strategy.generateStrategy(teams);
+        List<List<Match>> result = strategy.generateStrategy(edition, teams);
 
         for (int i = 0; i < result.size(); i++) {
             System.out.println("Runda " + (i + 1) + ":");

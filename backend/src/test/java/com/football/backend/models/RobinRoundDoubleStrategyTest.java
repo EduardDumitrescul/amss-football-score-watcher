@@ -1,9 +1,8 @@
 package com.football.backend.models;
 
 import com.football.backend.models.strategy.RobinRoundDoubleStrategy;
-import com.football.backend.models.strategy.RobinRoundStrategy;
 import com.football.backend.models.strategy.Strategy;
-import org.springframework.data.util.Pair;
+
 
 import java.util.List;
 import java.util.UUID;
@@ -11,6 +10,9 @@ import java.util.UUID;
 public class RobinRoundDoubleStrategyTest {
 
     public static void main(String[] args) {
+        Competition competition = new Competition(UUID.randomUUID(), "Test");
+        Edition edition = new Edition(UUID.randomUUID(), "25/26 Season", competition, null);
+
         List<Team> teams = List.of(
                 new Team(new UUID(1,3), null, "A"),
                 new Team(new UUID(1,3), null, "B"),
@@ -20,7 +22,7 @@ public class RobinRoundDoubleStrategyTest {
 
 
         Strategy doubleStrategy = new RobinRoundDoubleStrategy();
-        List<List<Match>> doubleResult = doubleStrategy.generateStrategy(teams);
+        List<List<Match>> doubleResult = doubleStrategy.generateStrategy(edition, teams);
 
         printRounds(doubleResult);
     }

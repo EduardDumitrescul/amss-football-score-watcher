@@ -11,6 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Match {
     private UUID id;
+    private Edition edition;
     private Team homeTeam;
     private Team awayTeam;
     private LocalDateTime matchDate;
