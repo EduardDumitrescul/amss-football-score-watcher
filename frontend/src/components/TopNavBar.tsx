@@ -26,15 +26,17 @@ const teamMenuItems = [
   { label: 'New Team', path: '/teams/create' }
 ];
 
-// --- NEW ---
 const playerMenuItems = [
   { label: 'View Players', path: '/players' },
   { label: 'New Player', path: '/players/create' }
 ];
-// --- END NEW ---
 
 const matchMenuItems = [
   { label: 'View All Matches', path: '/matches' }
+];
+
+const competitionMenuItems = [
+  { label: 'View All Competitions', path: '/competitions' }
 ];
 
 
@@ -66,54 +68,53 @@ const DropdownMenu: React.FC<{
   onClose: () => void;
   items: Array<{ label: string, path: string }>;
 }> = ({ id, anchorEl, isOpen, onClose, items }) => (
-  <Menu
-    id={id}
-    anchorEl={anchorEl}
-    open={isOpen}
-    onClose={onClose}
-    // Fix for deprecation warning:
-    slotProps={{
-      paper: {
-        elevation: 0,
-        sx: {
-          overflow: 'visible',
-          filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-          mt: 1.5,
-          '& .MuiAvatar-root': {
-            width: 32,
-            height: 32,
-            ml: -0.5,
-            mr: 1,
-          },
-          '&:before': {
-            content: '""',
-            display: 'block',
-            position: 'absolute',
-            top: 0,
-            right: 14,
-            width: 10,
-            height: 10,
-            bgcolor: 'background.paper',
-            transform: 'translateY(-50%) rotate(45deg)',
-            zIndex: 0,
-          },
-        },
-      }
-    }}
-    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-  >
-    {items.map((item) => (
-      <MenuItem
-        key={item.label}
-        onClick={onClose} // Close menu on item click
-        component={RouterLink}
-        to={item.path}
-      >
-        {item.label}
-      </MenuItem>
-    ))}
-  </Menu>
+    <Menu
+        id={id}
+        anchorEl={anchorEl}
+        open={isOpen}
+        onClose={onClose}
+        slotProps={{
+          paper: {
+            elevation: 0,
+            sx: {
+              overflow: 'visible',
+              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+              mt: 1.5,
+              '& .MuiAvatar-root': {
+                width: 32,
+                height: 32,
+                ml: -0.5,
+                mr: 1,
+              },
+              '&:before': {
+                content: '""',
+                display: 'block',
+                position: 'absolute',
+                top: 0,
+                right: 14,
+                width: 10,
+                height: 10,
+                bgcolor: 'background.paper',
+                transform: 'translateY(-50%) rotate(45deg)',
+                zIndex: 0,
+              },
+            },
+          }
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+    >
+      {items.map((item) => (
+          <MenuItem
+              key={item.label}
+              onClick={onClose}
+              component={RouterLink}
+              to={item.path}
+          >
+            {item.label}
+          </MenuItem>
+      ))}
+    </Menu>
 );
 
 
@@ -123,122 +124,144 @@ export const TopNavBar: React.FC = () => {
   const teamsMenu = useMenu();
   const playersMenu = useMenu();
   const matchesMenu = useMenu();
+  const competitionsMenu = useMenu();
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          {/* Mobile Menu Icon */}
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-
-          {/* App Title */}
-          <Typography variant="h6" component="div">
-            My App
-          </Typography>
-
-          {/* Desktop Links (Centered) */}
-          <Box
-            sx={{
-              display: { xs: 'none', sm: 'flex' },
-              position: 'absolute',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              gap: 1, // Add spacing between buttons
-            }}
-          >
-            {/* Home Button */}
-            <Button
-              sx={{ color: '#fff' }}
-              component={RouterLink}
-              to={homeNavItem.path}
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            {/* Mobile Menu Icon */}
+            <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2, display: { sm: 'none' } }}
             >
-              {homeNavItem.label}
-            </Button>
+              <MenuIcon />
+            </IconButton>
 
-            {/* Coaches Menu Button */}
-            <Button
-              sx={{ color: '#fff' }}
-              onClick={coachesMenu.openMenu}
-              endIcon={<ArrowDropDownIcon />}
-              aria-controls={coachesMenu.isOpen ? 'coaches-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={coachesMenu.isOpen ? 'true' : undefined}
-            >
-              Coaches
-            </Button>
+            {/* App Title */}
+            <Typography variant="h6" component="div">
+              My App
+            </Typography>
 
-            {/* Teams Menu Button */}
-            <Button
-              sx={{ color: '#fff' }}
-              onClick={teamsMenu.openMenu}
-              endIcon={<ArrowDropDownIcon />}
-              aria-controls={teamsMenu.isOpen ? 'teams-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={teamsMenu.isOpen ? 'true' : undefined}
+            {/* Desktop Links (Centered) */}
+            <Box
+                sx={{
+                  display: { xs: 'none', sm: 'flex' },
+                  position: 'absolute',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  gap: 1,
+                }}
             >
-              Teams
-            </Button>
-            
-            <Button
-              sx={{ color: '#fff' }}
-              onClick={playersMenu.openMenu}
-              endIcon={<ArrowDropDownIcon />}
-              aria-controls={playersMenu.isOpen ? 'players-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={playersMenu.isOpen ? 'true' : undefined}
-            >
-              Players
-            </Button>
+              {/* Home Button */}
+              <Button
+                  sx={{ color: '#fff' }}
+                  component={RouterLink}
+                  to={homeNavItem.path}
+              >
+                {homeNavItem.label}
+              </Button>
 
-            <Button
-              sx={{ color: '#fff' }}
-              onClick={matchesMenu.openMenu}
-              endIcon={<ArrowDropDownIcon />}
-              aria-controls={playersMenu.isOpen ? 'matches-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={playersMenu.isOpen ? 'true' : undefined}
-            >
-              Matches
-            </Button>
+              {/* Coaches Menu Button */}
+              <Button
+                  sx={{ color: '#fff' }}
+                  onClick={coachesMenu.openMenu}
+                  endIcon={<ArrowDropDownIcon />}
+                  aria-controls={coachesMenu.isOpen ? 'coaches-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={coachesMenu.isOpen ? 'true' : undefined}
+              >
+                Coaches
+              </Button>
 
-          </Box>
-        </Toolbar>
-      </AppBar>
-      
-      {/* Menus (Rendered outside the AppBar) */}
-      <DropdownMenu
-        id="coaches-menu"
-        {...coachesMenu}
-        onClose={coachesMenu.closeMenu}
-        items={coachMenuItems}
-      />
-      <DropdownMenu
-        id="teams-menu"
-        {...teamsMenu}
-        onClose={teamsMenu.closeMenu}
-        items={teamMenuItems}
-      />
-      <DropdownMenu
-        id="players-menu"
-        {...playersMenu}
-        onClose={playersMenu.closeMenu}
-        items={playerMenuItems}
-      />
-      <DropdownMenu
-        id="matches-menu"
-        {...matchesMenu}
-        onClose={matchesMenu.closeMenu}
-        items={matchMenuItems}
-      />
-    </Box>
+              {/* Teams Menu Button */}
+              <Button
+                  sx={{ color: '#fff' }}
+                  onClick={teamsMenu.openMenu}
+                  endIcon={<ArrowDropDownIcon />}
+                  aria-controls={teamsMenu.isOpen ? 'teams-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={teamsMenu.isOpen ? 'true' : undefined}
+              >
+                Teams
+              </Button>
+
+              {/* Players Menu Button */}
+              <Button
+                  sx={{ color: '#fff' }}
+                  onClick={playersMenu.openMenu}
+                  endIcon={<ArrowDropDownIcon />}
+                  aria-controls={playersMenu.isOpen ? 'players-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={playersMenu.isOpen ? 'true' : undefined}
+              >
+                Players
+              </Button>
+
+              {/* Matches Menu Button */}
+              <Button
+                  sx={{ color: '#fff' }}
+                  onClick={matchesMenu.openMenu}
+                  endIcon={<ArrowDropDownIcon />}
+                  aria-controls={matchesMenu.isOpen ? 'matches-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={matchesMenu.isOpen ? 'true' : undefined}
+              >
+                Matches
+              </Button>
+
+              {/* --- NEW: Competitions Menu Button --- */}
+              <Button
+                  sx={{ color: '#fff' }}
+                  onClick={competitionsMenu.openMenu}
+                  endIcon={<ArrowDropDownIcon />}
+                  aria-controls={competitionsMenu.isOpen ? 'competitions-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={competitionsMenu.isOpen ? 'true' : undefined}
+              >
+                Competitions
+              </Button>
+
+            </Box>
+          </Toolbar>
+        </AppBar>
+
+        {/* Menus (Rendered outside the AppBar) */}
+        <DropdownMenu
+            id="coaches-menu"
+            {...coachesMenu}
+            onClose={coachesMenu.closeMenu}
+            items={coachMenuItems}
+        />
+        <DropdownMenu
+            id="teams-menu"
+            {...teamsMenu}
+            onClose={teamsMenu.closeMenu}
+            items={teamMenuItems}
+        />
+        <DropdownMenu
+            id="players-menu"
+            {...playersMenu}
+            onClose={playersMenu.closeMenu}
+            items={playerMenuItems}
+        />
+        <DropdownMenu
+            id="matches-menu"
+            {...matchesMenu}
+            onClose={matchesMenu.closeMenu}
+            items={matchMenuItems}
+        />
+
+        {/* --- NEW: Competitions Dropdown --- */}
+        <DropdownMenu
+            id="competitions-menu"
+            {...competitionsMenu}
+            onClose={competitionsMenu.closeMenu}
+            items={competitionMenuItems}
+        />
+      </Box>
   );
 };
-
