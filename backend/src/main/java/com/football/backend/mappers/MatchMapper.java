@@ -20,6 +20,7 @@ public interface MatchMapper {
     Match toDomain(MatchEntity entity);
 
     @InheritInverseConfiguration
+    @Mapping(target = "edition", ignore = true)
     @Mapping(target = "events", ignore = true)
     MatchEntity toEntity(Match model);
 
