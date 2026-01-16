@@ -1,0 +1,83 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+skinparam monochrome true
+skinparam linetype ortho
+skinparam packageStyle rectangle
+
+package "com.football.backend.models" {
+    class Team {
+        - id: UUID
+        - name: String
+    }
+
+    class Match {
+        - id: UUID
+        - matchDate: LocalDateTime
+        - homeGoals: Integer
+        - awayGoals: Integer
+        - status: MatchStatus
+    }
+
+    Match "1" --> "1" Team : homeTeam
+    Match "1" --> "1" Team : awayTeam
+}
+
+
+package "com.football.backend.models.strategy" {
+    interface Strategy {
+        + generateStrategy(teams: List<Team>): List<List<Match>>
+    }
+
+    class KnockoutStrategy {
+        - decider: Decider
+        + generateStrategy(teams: List<Team>): List<List<Match>>
+    }
+
+    class RobinRoundStrategy {
+        + generateStrategy(teams: List<Team>): List<List<Match>>
+    }
+
+    class RobinRoundDoubleStrategy {
+        - singleStrategy: Strategy
+        + generateStrategy(teams: List<Team>): List<List<Match>>
+    }
+
+    Strategy <|.. KnockoutStrategy
+    Strategy <|.. RobinRoundStrategy
+    Strategy <|.. RobinRoundDoubleStrategy
+
+    RobinRoundDoubleStrategy *-- RobinRoundStrategy : uses internal >
+    
+    Strategy ..> Match : creates >
+}
+
+package "com.football.backend.models.decider" {
+    interface Decider <<FunctionalInterface>> {
+        + decideWinner(team1: Team, team2: Team): Team
+    }
+}
+
+package "com.football.backend.services" {
+    
+    class TeamPowerService {
+        + calculateTotalTeamPower(teamId: String): int
+        + calculateFinancialEvaluationScore(teamId: String): double
+        + calculateAverageAgeScore(teamId: String): double
+        + calculateCohesionScore(teamId: String): double
+        + calculateTacticalBalanceScore(teamId: String): double
+        + calculateSquadDepthScore(teamId: String): double
+    }
+
+    class MatchStrategyService {
+        - random: Random
+        + decideWinner(team1: Team, team2: Team): Team
+    }
+
+    Decider <|.. MatchStrategyService
+    MatchStrategyService --> TeamPowerService : uses (inject) >
+}
+
+KnockoutStrategy o-- Decider : uses (inject) >
+
+@enduml
