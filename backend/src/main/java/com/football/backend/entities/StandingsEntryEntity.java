@@ -13,7 +13,8 @@ import lombok.*;
 @Table(name = "standings_entry")
 public class StandingsEntryEntity {
     @EmbeddedId
-    private StandingsEntryId id;
+    @Builder.Default
+    private StandingsEntryId id = new StandingsEntryId();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("editionId")

@@ -2,9 +2,11 @@ package com.football.backend.models.strategy;
 
 import com.football.backend.models.Edition;
 import com.football.backend.models.Match;
+import com.football.backend.models.MatchStatus;
 import com.football.backend.models.Team;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Component
@@ -22,6 +24,8 @@ public class RobinRoundStrategy implements Strategy {
 
         List<Team> tempTeams = new ArrayList<>(teams);
 
+        LocalDateTime matchDate = LocalDateTime.now().plusHours(3).withMinute(0).withSecond(0).withNano(0);
+
         for (int round = 0; round < numRounds; round++) {
             List<Match> matches = new ArrayList<>();
 
@@ -30,7 +34,17 @@ public class RobinRoundStrategy implements Strategy {
                 Team away = tempTeams.get(numTeams - 1 - i);
 
                 if (home != null && away != null) {
-                    Match m = new Match(UUID.randomUUID(), edition, home, away, null, null, null, null, null);
+                    Match m = new Match(
+                            UUID.randomUUID(),
+                            edition,
+                            home,
+                            away,
+                            matchDate,
+                            null,
+                            null,
+                            MatchStatus.SCHEDULED,
+                            new ArrayList<>()
+                    );
                     matches.add(m);
                 }
             }
@@ -39,6 +53,8 @@ public class RobinRoundStrategy implements Strategy {
 
             Team last = tempTeams.removeLast();
             tempTeams.add(1, last);
+
+            matchDate = matchDate.plusWeeks(1);
         }
 
         return rounds;

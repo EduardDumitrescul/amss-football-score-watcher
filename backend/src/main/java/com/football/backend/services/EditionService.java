@@ -8,8 +8,7 @@ import com.football.backend.entities.TeamEntity;
 import com.football.backend.mappers.EditionMapper;
 import com.football.backend.mappers.MatchMapper;
 import com.football.backend.mappers.TeamMapper;
-import com.football.backend.models.CompetitionStrategy;
-import com.football.backend.models.Match;
+import com.football.backend.models.*;
 import com.football.backend.models.strategy.KnockoutStrategy;
 import com.football.backend.models.strategy.RobinRoundDoubleStrategy;
 import com.football.backend.models.strategy.RobinRoundStrategy;
@@ -23,20 +22,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class EditionService {
 
     private final EditionRepository editionRepository;
     private final CompetitionRepository competitionRepository;
     private final TeamRepository teamRepository;
-    private final MatchRepository matchRepository;
     private final StandingsService standingsService;
+    private final MatchRepository matchRepository;
 
     private final KnockoutStrategy knockoutStrategy;
     private final RobinRoundStrategy robinRoundStrategy;
@@ -48,22 +46,22 @@ public class EditionService {
 
     @Transactional
     public UUID createEdition(CreateEditionDto dto) {
-
         CompetitionEntity competition = competitionRepository
                 .findById(dto.getCompetitionId())
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("Competition not found"));
 
         EditionEntity editionEntity = new EditionEntity();
         editionEntity.setName(dto.getName());
         editionEntity.setCompetition(competition);
         editionEntity.setStrategyType(dto.getStrategyType());
 
-        editionRepository.save(editionEntity);
+        editionEntity = editionRepository.save(editionEntity); // Saved & Managed
 
         List<TeamEntity> teams = teamRepository.findAllById(dto.getTeamsIds());
+        Map<UUID, TeamEntity> teamMap = teams.stream()
+                .collect(Collectors.toMap(TeamEntity::getId, t -> t));
 
         Strategy strategy = resolveStrategy(dto.getStrategyType());
-
         List<List<Match>> generatedRounds = strategy.generateStrategy(
                 editionMapper.toDomain(editionEntity),
                 teams.stream()
@@ -71,18 +69,68 @@ public class EditionService {
                         .collect(Collectors.toList())
         );
 
-        generatedRounds.stream()
+        final EditionEntity savedEdition = editionEntity;
+
+        List<MatchEntity> matchesToSave = generatedRounds.stream()
                 .flatMap(List::stream)
-                .map(matchMapper::toEntity)
-                .forEach(editionEntity::addMatch);
+                .map(matchModel -> {
+                    MatchEntity entity = matchMapper.toEntity(matchModel);
 
-        editionRepository.save(editionEntity);
+                    entity.setId(null);
 
-        standingsService.initializeStandings(editionEntity, teams);
+                    entity.setEdition(savedEdition);
 
-        return editionEntity.getId();
+                    if (matchModel.getHomeTeam() != null) {
+                        entity.setHomeTeam(teamMap.get(matchModel.getHomeTeam().getId()));
+                    }
+                    if (matchModel.getAwayTeam() != null) {
+                        entity.setAwayTeam(teamMap.get(matchModel.getAwayTeam().getId()));
+                    }
+
+                    return entity;
+                })
+                .collect(Collectors.toList());
+
+        matchRepository.saveAll(matchesToSave);
+
+        if (dto.getStrategyType() != CompetitionStrategy.KNOCKOUT) {
+            standingsService.initializeStandings(savedEdition, teams);
+        }
+
+        return savedEdition.getId();
     }
 
+    public List<Edition> getAllEditions() {
+        return editionRepository.findAll()
+                .stream()
+                .map(editionMapper::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    public List<Edition> getEditionsByCompetitionId(UUID competitionId) {
+        return editionRepository.findByCompetition_Id(competitionId)
+                .stream()
+                .map(editionMapper::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void updateEdition(UUID id, CreateEditionDto dto) {
+        EditionEntity edition = editionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Edition not found with ID: " + id));
+
+        edition.setName(dto.getName());
+
+        editionRepository.save(edition);
+    }
+
+    @Transactional
+    public void deleteEdition(UUID id) {
+        if (!editionRepository.existsById(id)) {
+            throw new RuntimeException("Cannot delete. Edition not found with ID: " + id);
+        }
+        editionRepository.deleteById(id);
+    }
 
     private Strategy resolveStrategy(CompetitionStrategy type) {
         return switch (type) {

@@ -17,21 +17,42 @@ import {
     InputLabel,
     FormControl,
 } from '@mui/material';
+import {getAllCompetitions} from "../services/CompetitionService.tsx";
+import {getAllEditions} from "../services/EditionService.tsx";
 
 type Team = {
     id: string;
     name: string;
 };
 
+type Competition = {
+    id: string;
+    name: string;
+};
+
+type Edition = {
+    id: string;
+    name: string;
+    competitionId: string;
+};
+
+type EditionOption = {
+    id: string;
+    label: string;
+};
+
 export const CreateMatchPage: React.FC = () => {
     const [homeTeamId, setHomeTeamId] = useState<string>('');
     const [awayTeamId, setAwayTeamId] = useState<string>('');
+    const [editionId, setEditionId] = useState<string>('');
     const [dateTime, setDateTime] = useState<string>(() => {
         const d = new Date();
         const tzOffset = d.getTimezoneOffset() * 60000;
         return new Date(d.getTime() - tzOffset).toISOString().slice(0, 16);
     });
     const [teams, setTeams] = useState<Team[]>([]);
+    const [editionOptions, setEditionOptions] = useState<EditionOption[]>([]);
+
     const [loading, setLoading] = useState<boolean>(false);
     const [fetching, setFetching] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -41,10 +62,31 @@ export const CreateMatchPage: React.FC = () => {
         let mounted = true;
         const load = async () => {
             try {
-                const t = await getAllTeams();
-                if (mounted) setTeams(t);
+                const [fetchedTeams, fetchedCompetitions, fetchedEditions] = await Promise.all([
+                    getAllTeams(),
+                    getAllCompetitions(),
+                    getAllEditions()
+                ]);
+
+                if (mounted) {
+                    setTeams(fetchedTeams);
+
+                    const compMap = new Map<string, string>();
+                    fetchedCompetitions.forEach((c: Competition) => compMap.set(c.id, c.name));
+
+                    const options: EditionOption[] = fetchedEditions.map((e: Edition) => {
+                        const compName = compMap.get(e.competitionId) || 'Unknown Competition';
+                        return {
+                            id: e.id,
+                            label: `${compName} - ${e.name}`
+                        };
+                    });
+
+                    options.sort((a, b) => a.label.localeCompare(b.label));
+                    setEditionOptions(options);
+                }
             } catch (e) {
-                if (mounted) setError(e instanceof Error ? e.message : 'Failed to load teams');
+                if (mounted) setError(e instanceof Error ? e.message : 'Failed to load data');
             } finally {
                 if (mounted) setFetching(false);
             }
@@ -69,17 +111,21 @@ export const CreateMatchPage: React.FC = () => {
             setError('Date and time are required.');
             return;
         }
+        if (!editionId) {
+            setError('Edition is required.');
+            return;
+        }
 
         setLoading(true);
         setError(null);
 
         try {
-            // backend expects `matchDate`; ensure seconds are present
             const normalized = dateTime.length === 16 ? `${dateTime}:00` : dateTime;
             const payload: CreateMatchFormData = {
                 homeTeamId,
                 awayTeamId,
                 matchDate: normalized,
+                editionId,
             };
             const newMatch = await createMatch(payload);
             navigate(`/matches/${newMatch.id}`);
@@ -102,6 +148,23 @@ export const CreateMatchPage: React.FC = () => {
                         </Box>
                     ) : (
                         <>
+                            <FormControl fullWidth margin="normal">
+                                <InputLabel id="edition-label">Edition</InputLabel>
+                                <Select
+                                    labelId="edition-label"
+                                    id="edition"
+                                    value={editionId}
+                                    label="Edition"
+                                    onChange={(e) => setEditionId(e.target.value as string)}
+                                >
+                                    {editionOptions.map((opt) => (
+                                        <MenuItem key={opt.id} value={opt.id}>
+                                            {opt.label}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+
                             <FormControl fullWidth margin="normal">
                                 <InputLabel id="home-team-label">Home Team</InputLabel>
                                 <Select

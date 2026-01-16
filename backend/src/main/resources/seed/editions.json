@@ -1,0 +1,17 @@
+[
+  {
+    "name": "2023/2024 Season",
+    "competitionName": "Premier League",
+    "strategyType": "ROBIN_ROUND_DOUBLE"
+  },
+  {
+    "name": "2024 Knockout Stage",
+    "competitionName": "Champions League",
+    "strategyType": "KNOCKOUT"
+  },
+  {
+    "name": "Qatar 2022",
+    "competitionName": "World Cup",
+    "strategyType": "ROBIN_ROUND"
+  }
+]

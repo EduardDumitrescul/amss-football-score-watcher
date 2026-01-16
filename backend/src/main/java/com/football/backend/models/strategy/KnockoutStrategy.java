@@ -2,10 +2,12 @@ package com.football.backend.models.strategy;
 
 import com.football.backend.models.Edition;
 import com.football.backend.models.Match;
+import com.football.backend.models.MatchStatus;
 import com.football.backend.models.Team;
 import com.football.backend.models.decider.Decider;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Component
@@ -24,6 +26,8 @@ public class KnockoutStrategy implements Strategy{
 
         Random random = new Random();
 
+        LocalDateTime matchDate = LocalDateTime.now().plusHours(3).withMinute(0).withSecond(0).withNano(0);
+
         while (currentTeams.size() > 1) {
             List<Match> matchesInThisRound = new ArrayList<>();
             List<Team> winners = new ArrayList<>();
@@ -37,7 +41,7 @@ public class KnockoutStrategy implements Strategy{
                     Team winner = decider.decideWinner(team1, team2);
                     winners.add(winner);
 
-                    Match m = new Match(UUID.randomUUID(), edition, team1, team2, null, null, null, null, null);
+                    Match m = new Match(UUID.randomUUID(), edition, team1, team2, matchDate, null, null, MatchStatus.SCHEDULED, null);
                     matchesInThisRound.add(m);
                 } else {
                     winners.add(currentTeams.get(i));
@@ -47,6 +51,8 @@ public class KnockoutStrategy implements Strategy{
             rounds.add(matchesInThisRound);
 
             currentTeams = winners;
+
+            matchDate = matchDate.plusWeeks(1);
         }
         return rounds;
     }
