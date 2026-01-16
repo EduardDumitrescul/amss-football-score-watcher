@@ -1,0 +1,77 @@
+@startuml
+
+' --- STILIZARE ---
+skinparam classAttributeIconSize 0
+skinparam monochrome true
+skinparam linetype ortho
+skinparam packageStyle rectangle
+
+title Structural Diagram: Competition & Match Making Domain
+
+package "com.football.backend.models" {
+
+    ' --- ENUMS ---
+    enum CompetitionStrategy {
+        KNOCKOUT
+        ROBIN_ROUND_DOUBLE
+        ROBIN_ROUND
+    }
+
+    ' --- ENTITIES ---
+    class Competition {
+        - id: UUID
+        - name: String
+    }
+
+    class Edition {
+        - id: UUID
+        - name: String
+        - competitionId: UUID
+        - strategyType: CompetitionStrategy
+    }
+
+    class Standings {
+        - editionId: UUID
+        ' Relatie Bidirectionala
+        - edition: Edition
+    }
+
+    class StandingsEntry {
+        - wins: Integer
+        - draws: Integer
+        - losses: Integer
+        - goalsFor: Integer
+        - goalsAgainst: Integer
+    }
+
+    class Match {
+        - id: UUID
+        - matchDate: LocalDateTime
+        - homeGoals: Integer
+        - awayGoals: Integer
+        - status: MatchStatus
+    }
+
+    class Team {
+        - id: UUID
+        - name: String
+    }
+}
+
+
+Competition "1" -- "0..*" Edition : has editions >
+
+Edition ..> CompetitionStrategy : uses type >
+
+Edition "1" <--> "1" Standings : has >
+
+Standings "1" *-- "0..*" StandingsEntry : contains >
+
+StandingsEntry --> Team : relates to >
+
+Edition "1" -- "0..*" Match : contains matches >
+
+Match --> Team : homeTeam
+Match --> Team : awayTeam
+
+@enduml

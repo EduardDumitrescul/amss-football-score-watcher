@@ -1,0 +1,65 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam linetype ortho
+
+title Activity Diagram: Competition & Edition Setup Flow
+
+|#White|Admin|
+|#F2F4F4|CompetitionService|
+|#D6EAF8|EditionService|
+|#EBDEF0|StandingsService|
+
+|Admin|
+start
+:Submit Competition & Edition Details
+(DTO: Names, Team IDs, Strategy Type);
+
+|CompetitionService|
+:Create & Save "Competition" Entity;
+:Call editionService.createEdition(dto);
+
+|EditionService|
+:Fetch "Competition" & "Team" Entities
+from Database;
+
+:Create "Edition" Entity
+(Set Strategy Type);
+
+:Resolve Strategy Implementation
+(Switch: KNOCKOUT / ROBIN / DOUBLE);
+
+:Generate Matches (In Memory)
+(Strategy.generateStrategy());
+
+:Map & Save Matches to Database
+(Status: SCHEDULED);
+
+
+if (Strategy Type == KNOCKOUT?) then (Yes)
+    note right
+      Knockout tournaments do not 
+      have a league table (Standings).
+    end note
+else (No - League/Robin)
+    
+    |StandingsService|
+    :Create "Standings" Entity;
+    
+    :Iterate through all Teams;
+    :Create "StandingsEntry" for Team
+    (Wins=0, Points=0, Goals=0);
+    
+    :Save Initial Standings to DB;
+endif
+
+|EditionService|
+:Return Edition ID;
+
+|CompetitionService|
+:Return Competition ID;
+
+|Admin|
+stop
+
+@enduml
