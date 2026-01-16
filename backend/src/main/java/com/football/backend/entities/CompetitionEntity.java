@@ -18,6 +18,7 @@ public class CompetitionEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(unique = true, nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "competition", cascade = CascadeType.ALL)

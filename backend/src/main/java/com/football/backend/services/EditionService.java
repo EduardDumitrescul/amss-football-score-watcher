@@ -3,6 +3,7 @@ package com.football.backend.services;
 import com.football.backend.dto.CreateEditionDto;
 import com.football.backend.entities.CompetitionEntity;
 import com.football.backend.entities.EditionEntity;
+import com.football.backend.entities.MatchEntity;
 import com.football.backend.entities.TeamEntity;
 import com.football.backend.mappers.EditionMapper;
 import com.football.backend.mappers.MatchMapper;
@@ -14,12 +15,14 @@ import com.football.backend.models.strategy.RobinRoundStrategy;
 import com.football.backend.models.strategy.Strategy;
 import com.football.backend.repositories.CompetitionRepository;
 import com.football.backend.repositories.EditionRepository;
+import com.football.backend.repositories.MatchRepository;
 import com.football.backend.repositories.TeamRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -31,6 +34,7 @@ public class EditionService {
     private final CompetitionRepository competitionRepository;
     private final TeamRepository teamRepository;
     private final StandingsService standingsService;
+    private final MatchRepository matchRepository;
 
     private final KnockoutStrategy knockoutStrategy;
     private final RobinRoundStrategy robinRoundStrategy;
@@ -51,9 +55,11 @@ public class EditionService {
         editionEntity.setCompetition(competition);
         editionEntity.setStrategyType(dto.getStrategyType());
 
-        editionRepository.save(editionEntity);
+        editionEntity = editionRepository.save(editionEntity); // Saved & Managed
 
         List<TeamEntity> teams = teamRepository.findAllById(dto.getTeamsIds());
+        Map<UUID, TeamEntity> teamMap = teams.stream()
+                .collect(Collectors.toMap(TeamEntity::getId, t -> t));
 
         Strategy strategy = resolveStrategy(dto.getStrategyType());
         List<List<Match>> generatedRounds = strategy.generateStrategy(
@@ -63,24 +69,42 @@ public class EditionService {
                         .collect(Collectors.toList())
         );
 
-        generatedRounds.stream()
+        final EditionEntity savedEdition = editionEntity;
+
+        List<MatchEntity> matchesToSave = generatedRounds.stream()
                 .flatMap(List::stream)
-                .map(matchMapper::toEntity)
-                .map(entity -> {
+                .map(matchModel -> {
+                    MatchEntity entity = matchMapper.toEntity(matchModel);
+
                     entity.setId(null);
 
-                    entity.setEdition(editionEntity);
+                    entity.setEdition(savedEdition);
+
+                    if (matchModel.getHomeTeam() != null) {
+                        entity.setHomeTeam(teamMap.get(matchModel.getHomeTeam().getId()));
+                    }
+                    if (matchModel.getAwayTeam() != null) {
+                        entity.setAwayTeam(teamMap.get(matchModel.getAwayTeam().getId()));
+                    }
+
                     return entity;
                 })
-                .forEach(editionEntity::addMatch);
+                .collect(Collectors.toList());
 
-        editionRepository.save(editionEntity);
+        matchRepository.saveAll(matchesToSave);
 
         if (dto.getStrategyType() != CompetitionStrategy.KNOCKOUT) {
-            standingsService.initializeStandings(editionEntity, teams);
+            standingsService.initializeStandings(savedEdition, teams);
         }
 
-        return editionEntity.getId();
+        return savedEdition.getId();
+    }
+
+    public List<Edition> getAllEditions() {
+        return editionRepository.findAll()
+                .stream()
+                .map(editionMapper::toDomain)
+                .collect(Collectors.toList());
     }
 
     public List<Edition> getEditionsByCompetitionId(UUID competitionId) {

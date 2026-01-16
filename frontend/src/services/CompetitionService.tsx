@@ -54,3 +54,19 @@ export const getEditionsByCompetitionId = async (competitionId: string): Promise
 
     return await response.json();
 };
+
+export const updateCompetition = async (id: string, name: string) => {
+    const response = await fetch(`${API_URL}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ competitionName: name })
+    });
+    if (!response.ok) throw new Error('Failed to update competition');
+};
+
+export const deleteCompetition = async (id: string) => {
+    const response = await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE'
+    });
+    if (!response.ok) throw new Error('Failed to delete competition');
+};

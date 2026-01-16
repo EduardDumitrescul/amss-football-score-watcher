@@ -2,8 +2,8 @@ export interface MatchListDto {
     id: string;
     homeTeamName: string;
     awayTeamName: string;
-    homeScore: number;
-    awayScore: number;
+    homeGoals: number;
+    awayGoals: number;
     matchDate: string;
     status: string;
 }
@@ -11,7 +11,7 @@ export interface MatchListDto {
 export interface StandingsEntryDto {
     teamId: string;
     teamName: string;
-    points: number;
+    poIntegers: number;
     played: number;
     wins: number;
     draws: number;

@@ -28,6 +28,11 @@ public class EditionController {
         return new ResponseEntity<>(editionId, HttpStatus.CREATED);
     }
 
+    @GetMapping
+    public ResponseEntity<List<Edition>> getAllEditions() {
+        return ResponseEntity.ok(editionService.getAllEditions());
+    }
+
     @GetMapping("/{id}/dashboard")
     public ResponseEntity<EditionDashboardDto> getDashboard(@PathVariable UUID id) {
         EditionDashboardDto dashboard = editionDashboardService.getDashboard(id);

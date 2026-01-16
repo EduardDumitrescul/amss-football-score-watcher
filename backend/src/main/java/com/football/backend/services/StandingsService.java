@@ -67,8 +67,8 @@ public class StandingsService {
     }
 
     private void updateStatsFromMatch(StandingsEntryEntity home, StandingsEntryEntity away, MatchEntity match) {
-        int hScore = match.getHomeGoals();
-        int aScore = match.getAwayGoals();
+        int hScore = match.getHomeGoals() != null ? match.getHomeGoals() : 0;
+        int aScore = match.getAwayGoals() != null ? match.getAwayGoals() : 0;
 
         home.setGoalsFor(home.getGoalsFor() + hScore);
         home.setGoalsAgainst(home.getGoalsAgainst() + aScore);

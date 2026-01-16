@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -51,10 +52,18 @@ public class EditionDashboardService {
 
     private List<List<MatchListDto>> groupByMatchDay(UUID editionId) {
 
+        LocalDateTime tbdDate = LocalDateTime.MAX;
+
         return matchRepository.findByEditionIdOrderByMatchDateAsc(editionId)
                 .stream()
                 .map(matchMapper::toDomain)
-                .collect(Collectors.groupingBy(Match::getMatchDate))
+                .collect(Collectors.groupingBy(
+                        m -> m.getMatchDate() != null ? m.getMatchDate().toLocalDate() : tbdDate,
+
+                        java.util.LinkedHashMap::new,
+
+                        Collectors.toList()
+                ))
                 .values()
                 .stream()
                 .map(list -> list.stream()

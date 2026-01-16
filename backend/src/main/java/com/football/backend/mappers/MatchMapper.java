@@ -17,6 +17,7 @@ import java.util.List;
 )
 public interface MatchMapper {
 
+    @Mapping(target = "edition", ignore = true)
     Match toDomain(MatchEntity entity);
 
     @InheritInverseConfiguration

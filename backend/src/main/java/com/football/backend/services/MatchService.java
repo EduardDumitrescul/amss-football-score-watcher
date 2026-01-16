@@ -1,11 +1,13 @@
 package com.football.backend.services;
 
 import com.football.backend.dto.MatchUpdateRequest;
+import com.football.backend.entities.EditionEntity;
 import com.football.backend.entities.MatchEntity;
 import com.football.backend.entities.TeamEntity;
 import com.football.backend.mappers.MatchMapper;
 import com.football.backend.models.Match;
 import com.football.backend.models.MatchStatus;
+import com.football.backend.repositories.EditionRepository;
 import com.football.backend.repositories.MatchRepository;
 import com.football.backend.repositories.TeamRepository;
 import com.football.backend.dto.MatchCreateRequest;
@@ -24,6 +26,7 @@ public class MatchService {
 
     private final MatchRepository matchRepository;
     private final TeamRepository teamRepository;
+    private final EditionRepository editionRepository;
     private final MatchMapper matchMapper;
 
     public Match createMatch(MatchCreateRequest request) {
@@ -32,7 +35,11 @@ public class MatchService {
         TeamEntity away = teamRepository.findById(request.getAwayTeamId())
                 .orElseThrow(() -> new IllegalArgumentException("Away team not found"));
 
+        EditionEntity edition = editionRepository.findById(request.getEditionId())
+                .orElseThrow(() -> new RuntimeException("Edition not found with ID: " + request.getEditionId()));
+
         MatchEntity entity = MatchEntity.builder()
+                .edition(edition)
                 .homeTeam(home)
                 .awayTeam(away)
                 .matchDate(request.getMatchDate())
