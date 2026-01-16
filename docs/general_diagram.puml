@@ -1,0 +1,109 @@
+@startuml
+title General Architecture of the Football Platform
+
+skinparam componentStyle uml2
+skinparam rectangle {
+  shadowing false
+  backgroundColor #EEE
+}
+skinparam database {
+  backgroundColor #White
+}
+skinparam actor {
+   backgroundColor #LightBlue
+}
+skinparam linetype ortho
+
+actor "User (Visitor)" as User
+actor "Administrator" as Admin
+
+rectangle "Client (Browser)" as Client {
+  rectangle "Single Page App (SPA)\n(React, TypeScript)" as SPA
+}
+
+package "Backend (API Server) - Java Spring Boot" {
+  component "Controllers" as Controllers
+
+  package "Business Logic & Data" {
+    ' --- Serviciile Vechi ---
+    component "Competition Service" as CompSvc
+    component "Match Service" as MatchSvc
+    component "Player Service" as PlayerSvc
+    component "Team Service" as TeamSvc
+    component "Scheduling Service" as SchedSvc
+    
+    ' --- Serviciile Noi ---
+    component "Edition Service" as EditSvc
+    component "Edition Dashboard Service" as DashSvc
+    component "Standings Service" as StandSvc
+    component "Team Power Service" as PowerSvc
+    component "Match Strategy Service" as StratSvc
+    component "Seeder Database" as SeedSvc
+  }
+
+  component "Repositories" as Repositories
+}
+
+database "Database\n(MySQL)" as DB
+
+' --- User -> Client Relationships ---
+
+User --> SPA : View (Read-Only)
+Admin --> SPA : Manage (Full CRUD)
+
+note right of User
+  Public access, no account required.
+  Only read requests (GET).
+end note
+
+note right of Admin
+    Unlimited access.
+end note
+
+' --- Client -> Backend Relationships ---
+
+SPA --> Controllers : HTTP Requests
+
+
+' --- Controllers -> Services ---
+' The controller directs requests to the corresponding services
+Controllers --> CompSvc
+Controllers --> MatchSvc 
+Controllers --> TeamSvc
+Controllers --> PlayerSvc
+Controllers --> SchedSvc
+Controllers --> EditSvc
+Controllers --> DashSvc
+Controllers ..> SeedSvc : trigger seed
+
+' --- Service -> Repository Relationships (ALL) ---
+
+' Standard Services
+CompSvc --> Repositories
+MatchSvc --> Repositories
+TeamSvc --> Repositories
+SchedSvc --> Repositories
+PlayerSvc --> Repositories
+
+' New Services to Repositories
+EditSvc --> Repositories
+DashSvc --> Repositories
+StandSvc --> Repositories
+PowerSvc --> Repositories
+StratSvc --> Repositories
+
+' Seeder writes to everything
+SeedSvc --> Repositories : bulk insert
+
+' --- Service -> Service Relationships (Logic Dependencies) ---
+' Grupare logica pentru a arata dependentele interne
+
+EditSvc ..> StratSvc : strategy gen
+EditSvc ..> StandSvc : init table
+StratSvc ..> PowerSvc : calc winner
+CompSvc ..> EditSvc : create edition
+
+' --- DB Connection ---
+Repositories <--> DB
+
+@enduml
